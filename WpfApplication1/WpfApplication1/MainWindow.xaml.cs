@@ -443,7 +443,13 @@ namespace WpfApplication1
         {
             bool readOk = true;
 
-            //TODO do without raising exceptions
+            //ignore buttons with no string
+            if (button.Tag == null || button.Tag.GetType() != typeof(string))
+            {
+                spherical = new Point3D(-1.0, -1.0f, -1.0f);
+                typeId = -1;
+                return false;
+            }
 
             //try to read latitude and longitude from the tag
             spherical = new Point3D(-1.0, -1.0, -1.0);
@@ -491,8 +497,17 @@ namespace WpfApplication1
             Regex missionTypeIdRegex = new Regex(@"\b" + typeName + @"TypeId=(?<typeId>\d{0,})\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
             try
             {
-                string res = missionTypeIdRegex.Match((string)button.Tag).Result("${typeId}");
-                typeId = int.Parse(res);
+                Match match = missionTypeIdRegex.Match((string)button.Tag);
+                if (match != Match.Empty)
+                {
+                    string res = match.Result("${typeId}");
+                    typeId = int.Parse(res);
+                }
+                else
+                {
+                    typeId = -1;
+                    readOk = false;
+                }
             }
             catch (Exception)
             {
@@ -630,6 +645,12 @@ namespace WpfApplication1
             }
             else
             {
+                //if the mouse is being dragged in normal mode, hide the plane type panel
+                if (isMouseDown)
+                {
+                    planePopOutUserControl.PopOut();
+                }
+
                 /*
                 //scale bounds to [0,0] - [2,2]
                 double x = p.X / (viewport.ActualWidth / 2);
@@ -894,10 +915,11 @@ namespace WpfApplication1
             if (planeTypeButtonState == PlaneTypeButtonStates.MouseDown)
             {
                 TimeSpan elapsedSinceMouseDown = now - planeTypeInfoButtonMouseDownTime;
-                double d = (planeTypeInfoButtonMouseDownPosition - lastMousePos).Length;
+                Vector d = (planeTypeInfoButtonMouseDownPosition - lastMousePos);
 
                 //see if the mouse moved far enough to start dragging the plane type button
-                if (d > 10)//TODO plane type button drag distance to config file
+                if (Math.Abs(d.X) > SystemParameters.MinimumHorizontalDragDistance
+                    || Math.Abs(d.Y) > SystemParameters.MinimumVerticalDragDistance)
                 {
                     //start dragging
                     planeTypeButtonState = PlaneTypeButtonStates.Dragging;
@@ -914,7 +936,7 @@ namespace WpfApplication1
                            planeTypeInfos[iPlaneTypeInfo].ResetPosition();
                     }
                 }
-                else if (elapsedSinceMouseDown.TotalMilliseconds > 500)//TODO plane type button popup time to config file
+                else if (elapsedSinceMouseDown.TotalMilliseconds > WpfApplication1.Properties.Settings.Default.PlaneTypePanelShowSeconds * 1000)
                 {
                     //if the mouse went down on a plane type button but the drag didn´t take place in time, we show the panel
                     if (!planeTypeInfoButtonMouseDown.IsOnWorld)

@@ -34,6 +34,14 @@ namespace WpfApplication1
 
         }
 
+        private enum States
+        {
+            PoppingIn,
+            PoppingOut,
+            PoppedIn,
+            PoppedOut,
+        }
+
         #endregion
 
         #region Data
@@ -44,7 +52,10 @@ namespace WpfApplication1
         private Point newPosition;
         bool triggerPopInAfterPopOut = false;
 
+        //id of the plane type that caused us to pop up
         private int planeTypeId;
+
+        private States state = States.PoppedOut;
 
         #endregion
 
@@ -68,6 +79,7 @@ namespace WpfApplication1
             popOutStoryboard = Resources["PopOut"] as Storyboard;
 
             popOutStoryboard.Completed += new EventHandler(popOutStoryboard_Completed);
+            popInStoryboard.Completed += new EventHandler(popInStoryboard_Completed);
         }
 
         #endregion
@@ -79,12 +91,17 @@ namespace WpfApplication1
             this.newPosition = newPosition;
             this.planeTypeId = planeTypeId;
 
+            state = States.PoppingOut;
             popOutStoryboard.Begin();
+
             triggerPopInAfterPopOut = true;
         }
 
         public void PopOut()
         {
+            if (state == States.PoppedOut || state == States.PoppingOut) return;
+
+            state = States.PoppingOut;
             popOutStoryboard.Begin();
             triggerPopInAfterPopOut = false;
         }
@@ -99,12 +116,20 @@ namespace WpfApplication1
             {
                 Margin = new Thickness(newPosition.X, 0, 0, newPosition.Y);
                 Visibility = System.Windows.Visibility.Visible;
+
+                state = States.PoppingIn;
                 popInStoryboard.Begin();
             }
             else
             {
+                state = States.PoppedOut;
                 Visibility = System.Windows.Visibility.Hidden;
             }
+        }
+
+        void popInStoryboard_Completed(object sender, EventArgs e)
+        {
+            state = States.PoppedIn;
         }
 
         private void locationsButton_Click(object sender, RoutedEventArgs e)

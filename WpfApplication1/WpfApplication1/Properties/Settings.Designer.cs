@@ -130,5 +130,17 @@ namespace WpfApplication1.Properties {
                 this["WorldRadius"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.3")]
+        public float PlaneTypePanelShowSeconds {
+            get {
+                return ((float)(this["PlaneTypePanelShowSeconds"]));
+            }
+            set {
+                this["PlaneTypePanelShowSeconds"] = value;
+            }
+        }
     }
 }
