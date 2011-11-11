@@ -1,0 +1,372 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:my="http://schemas.microsoft.com/surface/2008"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
+    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+    xmlns:ee="http://schemas.microsoft.com/expression/2010/effects"
+    xmlns:local="clr-namespace:WpfApplication1"
+    mc:Ignorable="d"
+	x:Class="WpfApplication1.MainWindow"
+	x:Name="Window"
+	Title="MainWindow"
+	Width="794" Height="580">
+
+	<Window.Resources>
+        
+        <!-- Mission type icons -->
+        <DataTemplate x:Key="missionIconId0">
+            <Grid>
+                <Path Data="M40.998843,6.8333337 L31.331842,30.833 7.8321759,30.999667 27.498509,46.833 11.831842,72.333 40.165176,59.499667 66.998509,72.333 52.331842,46.833 69.998509,30.666333 51.165176,30.999667 z" Fill="{x:Null}" Margin="0" Stretch="Fill" Stroke="Black" StrokeThickness="2"/>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="missionIconId1">
+            <Grid>
+                <Path Data="M49.332863,4.3379924 L87.331806,41.158886 48.166216,82.977741 11.833485,42.491757 z" Fill="{x:Null}" Margin="0" Stretch="Fill" Stroke="Black" StrokeThickness="3"/>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="missionIconId2">
+            <Grid>
+                <Path Data="M50,3.6666667 C43.267347,4.5448388 37.859494,4.7378604 33.158706,9.1529951 29.556801,12.536023 26.030145,15.855516 23.176583,19.940709 19.768424,24.819871 18.051364,30.9077 17.631656,36.783612 17.146923,43.569875 17.859371,47.902904 21.33527,54.159523 23.777533,58.555596 25.752956,58.981384 30,62.166667 34.55056,65.579587 38.163546,67.081595 44.412616,67.974319 50.945254,68.907553 57.706542,69.760272 64.783082,68.259368 69.483959,67.262332 72.402491,66.521091&#xd;&#xa;74.833333,64.333333 76.041227,63.246229 78.600786,61.138415 80.595103,58.432345 83.301677,53.447478 83.62242,52.693951 84.833333,49.666667 86.410953,45.722616 87.431439,42.349418 87.431439,37.922582 87.431439,32.881643 87.859253,29.092313 86.007969,22.540823 84.62395,17.642933 83.441751,15.704088 79.454345,11.716622 75.608162,8.2984274 70.820476,6.7179364 66.166667,5.1666667 60.712077,3.34847 55.808588,3.4561028 49.968087,3.598813" Fill="{x:Null}" Margin="0" Stretch="Fill" Stroke="Black" StrokeThickness="3"/>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="missionIconId3">
+            <Grid>
+                <Path Data="M9.5,11.5 L90.765805,85.429522" Fill="{x:Null}" Margin="0" Stretch="Fill" Stroke="Black" StrokeThickness="3"/>
+                <Path Data="M87.999286,10.749668 L7.9996727,84.249668" Fill="{x:Null}" Margin="0" Stretch="Fill" Stroke="Black" StrokeThickness="3"/>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="missionIconId4">
+            <Grid>
+                <Path Data="M12.500018,12.5 L88.74931,12.75 88.249655,79 12.000023,79.25 z" Fill="{x:Null}" Margin="0" Stretch="Fill" Stroke="Black" StrokeThickness="3"/>
+            </Grid>
+        </DataTemplate>
+
+        <!-- Plane type icons -->
+        <DataTemplate x:Key="planeIconId0">
+            <Grid>
+                <Image Margin="0" Source="icons\planeIconId0.png" Stretch="Fill"/>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="planeIconId1">
+            <Grid>
+                <Image Margin="0,0,0.009,0.009" Source="icons\planeIconId1.png" Stretch="Fill"/>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="planeIconId2">
+            <Grid>
+                <Image Margin="0,0,0.009,0.009" Source="icons\planeIconId2.png" Stretch="Fill"/>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="planeIconId3">
+            <Grid>
+                <Image Margin="0,0,0.009,0.009" Source="icons\planeIconId3.png" Stretch="Fill"/>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="planeIconId4">
+            <Grid>
+                <Image Margin="0,0,1.009,0.009" Source="icons\planeIconId4.png" Stretch="Fill"/>
+            </Grid>
+        </DataTemplate>
+        
+        <!-- Mission type toggle button -->
+        <ControlTemplate x:Key="missionTypeControlTemplate" TargetType="{x:Type ToggleButton}">
+			<Grid>
+                
+				<VisualStateManager.VisualStateGroups>
+					<VisualStateGroup x:Name="ValidationStates">
+						<VisualState x:Name="Valid"/>
+						<VisualState x:Name="InvalidFocused"/>
+						<VisualState x:Name="InvalidUnfocused"/>
+					</VisualStateGroup>
+					<VisualStateGroup x:Name="CommonStates">
+						<VisualState x:Name="Normal"/>
+						<VisualState x:Name="MouseOver"/>
+						<VisualState x:Name="Pressed"/>
+						<VisualState x:Name="Disabled"/>
+					</VisualStateGroup>
+					<VisualStateGroup x:Name="FocusStates">
+						<VisualState x:Name="Unfocused"/>
+						<VisualState x:Name="Focused"/>
+					</VisualStateGroup>
+					<VisualStateGroup x:Name="CheckStates">
+						<VisualStateGroup.Transitions>
+							<VisualTransition GeneratedDuration="0:0:0.3" To="Checked"/>
+							<VisualTransition GeneratedDuration="0:0:0.1" To="Unchecked"/>
+						</VisualStateGroup.Transitions>
+						<VisualState x:Name="Checked">
+							<Storyboard>
+								<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="border">
+									<EasingColorKeyFrame KeyTime="0" Value="Red"/>
+								</ColorAnimationUsingKeyFrames>
+								<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="grid">
+									<EasingDoubleKeyFrame KeyTime="0" Value="4"/>
+								</DoubleAnimationUsingKeyFrames>
+							</Storyboard>
+						</VisualState>
+						<VisualState x:Name="Unchecked"/>
+						<VisualState x:Name="Indeterminate"/>
+					</VisualStateGroup>
+				</VisualStateManager.VisualStateGroups>
+				<VisualStateManager.CustomVisualStateManager>
+					<ei:ExtendedVisualStateManager/>
+				</VisualStateManager.CustomVisualStateManager>
+                
+				<Path x:Name ="border" Stroke="Black" StrokeThickness="2" Fill ="White" Data="M1.5001365,1.5 C0.50016933,4.4990617 -1.8328892,85.833 1.6665692,87.16558 5.1660276,88.498159 29.001321,88.077742 39.334765,88.133298 L49.539502,88.521274 60.333127,87.998913 C76.999759,87.164492 95.886313,88.63175 99.500169,87.332667 100.3335,85.332667 101.50017,4.1666666 99.500169,1.4996667 97.500169,-1.1673333 2.5001038,-1.4990617 1.5001365,1.5 z" Margin="-0.798,0,0,0" Stretch="Fill" Width="Auto" Height="Auto" RenderTransformOrigin="0.5,0.5"></Path>
+                <Grid x:Name ="grid" RenderTransformOrigin="0.5,0.5">
+                	<Grid.RenderTransform>
+                		<TransformGroup>
+                			<ScaleTransform/>
+                			<SkewTransform/>
+                			<RotateTransform/>
+                			<TranslateTransform/>
+                		</TransformGroup>
+                	</Grid.RenderTransform>
+                    <!-- Mission icons get programatically hidden depending on the mission id which is assigned -->
+                    <ContentPresenter x:Name="missionIcon0" ContentTemplate="{StaticResource missionIconId0}" Margin="7" Width="Auto" RenderTransformOrigin="0.5,0.5" > </ContentPresenter>
+                    <ContentPresenter x:Name="missionIcon1" ContentTemplate="{StaticResource missionIconId1}" Margin="7" Width="Auto" RenderTransformOrigin="0.5,0.5" > </ContentPresenter>
+                    <ContentPresenter x:Name="missionIcon2" ContentTemplate="{StaticResource missionIconId2}" Margin="7" Width="Auto" RenderTransformOrigin="0.5,0.5" > </ContentPresenter>
+                    <ContentPresenter x:Name="missionIcon3" ContentTemplate="{StaticResource missionIconId3}" Margin="7" Width="Auto" RenderTransformOrigin="0.5,0.5" > </ContentPresenter>
+                    <ContentPresenter x:Name="missionIcon4" ContentTemplate="{StaticResource missionIconId4}" Margin="7" Width="Auto" RenderTransformOrigin="0.5,0.5" > </ContentPresenter>
+                </Grid>
+			</Grid>
+
+		</ControlTemplate>
+
+        <!-- Plane type button -->
+        <ControlTemplate x:Key="planeTypeControlTemplate" TargetType="{x:Type Button}">
+        	<ControlTemplate.Resources>
+        		<Storyboard x:Key="fadeIn">
+        			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="grid">
+        				<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+        				<EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1"/>
+        			</DoubleAnimationUsingKeyFrames>
+        		</Storyboard>
+        		<Storyboard x:Key="fadeOut">
+        			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="grid">
+        				<EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
+        			</DoubleAnimationUsingKeyFrames>
+        		</Storyboard>
+        	</ControlTemplate.Resources>
+            <Grid x:Name="grid" Background="{x:Null}">
+        		<VisualStateManager.VisualStateGroups>
+        			<VisualStateGroup x:Name="CommonStates">
+        				<VisualStateGroup.Transitions>
+        					<VisualTransition GeneratedDuration="0:0:0.1" To="Disabled"/>
+        					<VisualTransition GeneratedDuration="0:0:0.1" To="Normal"/>
+        				</VisualStateGroup.Transitions>
+        				<VisualState x:Name="Normal"/>
+        				<VisualState x:Name="MouseOver"/>
+        				<VisualState x:Name="Pressed"/>
+        				<VisualState x:Name="Disabled">
+        					<Storyboard>
+        						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="planeIcon0">
+        							<EasingDoubleKeyFrame KeyTime="0" Value="0.45"/>
+        						</DoubleAnimationUsingKeyFrames>
+        						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="planeIcon1">
+        							<EasingDoubleKeyFrame KeyTime="0" Value="0.45"/>
+        						</DoubleAnimationUsingKeyFrames>
+        						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="planeIcon2">
+        							<EasingDoubleKeyFrame KeyTime="0" Value="0.45"/>
+        						</DoubleAnimationUsingKeyFrames>
+        						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="planeIcon3">
+        							<EasingDoubleKeyFrame KeyTime="0" Value="0.45"/>
+        						</DoubleAnimationUsingKeyFrames>
+        						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="planeIcon4">
+        							<EasingDoubleKeyFrame KeyTime="0" Value="0.45"/>
+        						</DoubleAnimationUsingKeyFrames>
+        					</Storyboard>
+        				</VisualState>
+        			</VisualStateGroup>
+        			<VisualStateGroup x:Name="FocusStates">
+        				<VisualState x:Name="Unfocused"/>
+        				<VisualState x:Name="Focused"/>
+        			</VisualStateGroup>
+        			<VisualStateGroup x:Name="ValidationStates">
+        				<VisualState x:Name="Valid"/>
+        				<VisualState x:Name="InvalidFocused"/>
+        				<VisualState x:Name="InvalidUnfocused"/>
+        			</VisualStateGroup>
+        		</VisualStateManager.VisualStateGroups>
+        		<!-- Plane icons get programatically hidden depending on the plane id which is assigned -->
+        		<ContentPresenter x:Name="planeIcon0" ContentTemplate="{StaticResource planeIconId0}" Margin="0" Width="Auto" RenderTransformOrigin="0.5,0.5" />
+        		<ContentPresenter x:Name="planeIcon1" ContentTemplate="{StaticResource planeIconId1}" Margin="0" Width="Auto" RenderTransformOrigin="0.5,0.5" />
+        		<ContentPresenter x:Name="planeIcon2" ContentTemplate="{StaticResource planeIconId2}" Margin="0" Width="Auto" RenderTransformOrigin="0.5,0.5" />
+        		<ContentPresenter x:Name="planeIcon3" ContentTemplate="{StaticResource planeIconId3}" Margin="0" Width="Auto" RenderTransformOrigin="0.5,0.5" />
+        		<ContentPresenter x:Name="planeIcon4" ContentTemplate="{StaticResource planeIconId4}" Margin="0" Width="Auto" RenderTransformOrigin="0.5,0.5" />
+        	</Grid>
+        </ControlTemplate>
+    </Window.Resources>
+
+    <Grid x:Name="grid">
+
+        <Grid.Resources>
+
+            <!-- Template for the missions buttons on the world -->
+            <ControlTemplate x:Key="missionButtonTemplate" TargetType="{x:Type Button}" >
+
+                <!-- Visual Tree -->
+            	<Grid x:Name="layoutGrid" VerticalAlignment="Center" HorizontalAlignment="Center" ShowGridLines="False">
+                    
+            		<Grid.RowDefinitions>
+            			<RowDefinition Height="0.4*"/>
+            			<RowDefinition Height="0.05*"/>
+            		</Grid.RowDefinitions>
+            		<Grid.ColumnDefinitions>
+            			<ColumnDefinition/>
+            		</Grid.ColumnDefinitions>
+                    
+            		<VisualStateManager.VisualStateGroups>
+            			<VisualStateGroup x:Name="CommonStates">
+            				<VisualStateGroup.Transitions>
+            					<VisualTransition GeneratedDuration="0:0:0.2" To="Disabled"/>
+            					<VisualTransition GeneratedDuration="0:0:0.2" To="Normal"/>
+            				</VisualStateGroup.Transitions>
+            				<VisualState x:Name="Normal"/>
+            				<VisualState x:Name="MouseOver"/>
+            				<VisualState x:Name="Pressed"/>
+            				<VisualState x:Name="Disabled">
+            					<Storyboard>
+            						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="layoutGrid">
+            							<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+            						</DoubleAnimationUsingKeyFrames>
+            					</Storyboard>
+            				</VisualState>
+            			</VisualStateGroup>
+            		</VisualStateManager.VisualStateGroups>
+                    
+            		<Path Grid.Column ="0" Grid.Row="0" Stroke="Black" StrokeThickness="2" Fill ="White" Data="M99.474365,87.300044 C101.98424,86.483769 101.54083,3.6056299 99.540825,0.93862997 97.540825,-1.72837 2.5001038,-1.4990617 1.5001365,1.5 0.50016933,4.4990617 -1.8579982,86.130295 1.6414602,87.462875" Margin="-0.016,-0.186,-0.227,1.097" Stretch="Fill" Width="Auto" Height="Auto"/>
+            		<Path Data="M5.7433868,72.65594 C5.9159303,72.864671 27.589626,74.773338 38.555882,75.866826 L48.25,87.500324 57.775966,75.722247 C68.455748,74.537798 89.81566,72.169646 89.815318,72.169273" Fill="White" Margin="0.792,-3.698,0.4,0" Grid.Row="1" Stretch="Fill" Stroke="Black" StrokeThickness="2"/>
+
+            		<Grid x:Name="iconGrid">
+            			<!-- Mission icons get programatically hidden depending on the mission id which is assigned -->
+            			<ContentPresenter x:Name="missionIcon0" Grid.Column ="0" Grid.Row="0" ContentTemplate="{StaticResource missionIconId0}" Margin="8" Width="Auto" />
+            			<ContentPresenter x:Name="missionIcon1" Grid.Column ="0" Grid.Row="0" ContentTemplate="{StaticResource missionIconId1}" Margin="8" Width="Auto" />
+            			<ContentPresenter x:Name="missionIcon2" Grid.Column ="0" Grid.Row="0" ContentTemplate="{StaticResource missionIconId2}" Margin="8" Width="Auto" />
+            			<ContentPresenter x:Name="missionIcon3" Grid.Column ="0" Grid.Row="0" ContentTemplate="{StaticResource missionIconId3}" Margin="8" Width="Auto" />
+            			<ContentPresenter x:Name="missionIcon4" Grid.Column ="0" Grid.Row="0" ContentTemplate="{StaticResource missionIconId4}" Margin="8" Width="Auto" />
+            		</Grid>
+            	</Grid>
+                
+        	</ControlTemplate>
+
+
+        </Grid.Resources>
+
+        
+
+        <Image Panel.ZIndex="0"  Source="./textures/world_background.jpg" Stretch="UniformToFill"/>
+
+        <Viewport3D Panel.ZIndex="2" x:Name="viewport" RenderOptions.CachingHint="Cache" ClipToBounds="True" >
+            
+            <Viewport3D.Camera>
+                <PerspectiveCamera x:Name="myPerspectiveCamera" FarPlaneDistance="300" LookDirection="0,0,-1" UpDirection="0,1,0" NearPlaneDistance="1"  Position="0,0,100" FieldOfView="30">
+                    <PerspectiveCamera.Transform>
+                        <RotateTransform3D>
+                            <RotateTransform3D.Rotation>
+                                <AxisAngleRotation3D/>
+                            </RotateTransform3D.Rotation>
+                        </RotateTransform3D>
+                    </PerspectiveCamera.Transform>
+                </PerspectiveCamera>
+            </Viewport3D.Camera>
+
+            <ModelVisual3D x:Name="world">
+                <ModelVisual3D Content ="{StaticResource world}">
+                	<ModelVisual3D.Transform>
+                		<Transform3DGroup>
+                			<RotateTransform3D d:EulerAngles="0,0,0">
+                				<RotateTransform3D.Rotation>
+                					<AxisAngleRotation3D Axis="0,1,0" Angle="0"/>
+                				</RotateTransform3D.Rotation>
+                			</RotateTransform3D>
+                		</Transform3DGroup>
+                	</ModelVisual3D.Transform>
+                </ModelVisual3D>
+            </ModelVisual3D>
+
+            <ModelVisual3D x:Name="viewportLightsModelVisual3D">
+                <ModelVisual3D.Content>
+                    <Model3DGroup>
+                        <AmbientLight x:Name="ambientLight" Color="#666666"/>
+                        <DirectionalLight x:Name="directionalLight" Color="#444444" Direction="0 -1 -1"/>
+                        <SpotLight x:Name="spotLight" Color="#666666" Direction="0 0 -1" InnerConeAngle="30" OuterConeAngle="60" Position="0 1 30" />
+                    </Model3DGroup>
+                </ModelVisual3D.Content>
+                
+            </ModelVisual3D>
+                    
+        </Viewport3D>
+
+        <!-- Misiones individuales en el glogo terráqueo /////////////////////////////////////////////////////////////////////////////-->
+        <!-- Los parámetros especiales van en el tag, como un string-->
+        <!-- -->
+        <!-- Tipo de misión: -->
+        <!-- missionTypeId=0 o missionTypeId=1 etc-->
+        <!-- -->
+        <!-- Coordenadas: -->        
+        <!-- coger coordenadas paises de: http://www.infoplease.com/ipa/A0001769.html -->        
+        <!-- latitude = grados_latitud minutos_latitud N/S -->
+        <!-- longitude = grados_longitude minutos_longitude W/E -->
+        <!-- he puesto de ejemplo milán, madrid, tokyo, etc.-->
+        <Button Panel.ZIndex="3" Template="{StaticResource missionButtonTemplate}" Height="45" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="39" Tag="missionTypeId=0 latitude=45 27 N longitude=009 10 E"/>
+        <Button Panel.ZIndex="3" Template="{StaticResource missionButtonTemplate}" Height="45" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="39" Tag="missionTypeId=1 latitude=19 26 N longitude=099 07 W"/>
+        <Button Panel.ZIndex="3" Template="{StaticResource missionButtonTemplate}" Height="45" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="39" Tag="missionTypeId=2 latitude=40 26 N longitude=003 42 W"/>
+        <Button Panel.ZIndex="3" Template="{StaticResource missionButtonTemplate}" Height="45" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="39" Tag="missionTypeId=3 latitude=35 40 N longitude=139 45 E"/>
+
+        <!-- Aviones individuales en el glogo terráqueo /////////////////////////////////////////////////////////////////////////////-->
+        <!-- Los parámetros especiales van en el tag, como un string-->
+        <Button Panel.ZIndex="3" Template="{StaticResource planeTypeControlTemplate}" Height="45" HorizontalAlignment="Left" Margin="50" VerticalAlignment="Top" Width="45" Tag="planeTypeId=0 latitude=57 09 N longitude=002 09 W"/>
+        <Button Panel.ZIndex="3" Template="{StaticResource planeTypeControlTemplate}" Height="45" HorizontalAlignment="Left" Margin="50" VerticalAlignment="Top" Width="45" Tag="planeTypeId=1 latitude=34 55 S longitude=138 36 E"/>
+        <Button Panel.ZIndex="3" Template="{StaticResource planeTypeControlTemplate}" Height="45" HorizontalAlignment="Left" Margin="50" VerticalAlignment="Top" Width="45" Tag="planeTypeId=2 latitude=36 50 N longitude=003 00 E"/>
+        <Button Panel.ZIndex="3" Template="{StaticResource planeTypeControlTemplate}" Height="45" HorizontalAlignment="Left" Margin="50" VerticalAlignment="Top" Width="45" Tag="planeTypeId=3 latitude=52 22 N longitude=004 53 E"/>
+        <Button Panel.ZIndex="3" Template="{StaticResource planeTypeControlTemplate}" Height="45" HorizontalAlignment="Left" Margin="50" VerticalAlignment="Top" Width="45" Tag="planeTypeId=4 latitude=37 58 N longitude=023 43 E"/>
+
+        <!-- Plane types -->
+        <Rectangle x:Name="planeTypesRectangle" Panel.ZIndex="4" RadiusX="12" RadiusY="13" StrokeThickness="0" Fill="#99CECECE" HorizontalAlignment="Right" Width="376" Height="81" VerticalAlignment="Bottom"/>
+        <Rectangle Panel.ZIndex="4" HorizontalAlignment="Right" Margin="0,0,315.724,24" Width="45" Height="45" VerticalAlignment="Bottom" StrokeDashArray="1 0 1" Stroke="#FF007FC2" StrokeThickness="2" />
+        <Rectangle Panel.ZIndex="4" HorizontalAlignment="Right" Margin="0,0,238.391,24" Width="45" Height="45" VerticalAlignment="Bottom" StrokeDashArray="1 0 1" Stroke="#FF007FC2" StrokeThickness="2" />
+        <Rectangle Panel.ZIndex="4" HorizontalAlignment="Right" Margin="0,0,160.619,24" Width="45" Height="45" VerticalAlignment="Bottom" StrokeDashArray="1 0 1" Stroke="#FF007FC2" StrokeThickness="2" />
+        <Rectangle Panel.ZIndex="4" HorizontalAlignment="Right" Margin="0,0,87.495,24" Width="45" Height="45" VerticalAlignment="Bottom" StrokeDashArray="1 0 1" Stroke="#FF007FC2" StrokeThickness="2" />
+        <Rectangle Panel.ZIndex="4" HorizontalAlignment="Right" Margin="0,0,9.723,24" Width="45" Height="45" VerticalAlignment="Bottom" StrokeDashArray="1 0 1" Stroke="#FF007FC2" StrokeThickness="2" />
+        <Button Panel.ZIndex="5" x:Name ="planeType0" Template ="{StaticResource planeTypeControlTemplate}" HorizontalAlignment="Right" Margin="0,0,315.724,24" Width="45" Height="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height" />
+        <Button Panel.ZIndex="5" x:Name ="planeType1" Template ="{StaticResource planeTypeControlTemplate}" HorizontalAlignment="Right" Margin="0,0,238.391,24" Width="45" Height="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height" />
+        <Button Panel.ZIndex="5" x:Name ="planeType2" Template ="{StaticResource planeTypeControlTemplate}" HorizontalAlignment="Right" Margin="0,0,160.619,24" Width="45" Height="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height" />
+        <Button Panel.ZIndex="5" x:Name ="planeType3" Template ="{StaticResource planeTypeControlTemplate}" Margin="0,0,87.495,24" Height="45" HorizontalAlignment="Right" Width="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height" />
+        <Button Panel.ZIndex="5" x:Name ="planeType4" Template ="{StaticResource planeTypeControlTemplate}" Margin="0,0,9.723,24" Height="45" HorizontalAlignment="Right" Width="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height" />
+        <TextBlock Panel.ZIndex="4" HorizontalAlignment="Right" Margin="0,0,315.724,8" TextWrapping="Wrap" Text="C-212" VerticalAlignment="Bottom"/>
+        <TextBlock Panel.ZIndex="4" HorizontalAlignment="Right" Margin="0,0,242.774,8.04" TextWrapping="Wrap" Text="CN-235" VerticalAlignment="Bottom"/>
+        <TextBlock Panel.ZIndex="4" HorizontalAlignment="Right" Margin="0,0,173.979,8.04" TextWrapping="Wrap" Text="C-295" VerticalAlignment="Bottom"/>
+        <TextBlock Panel.ZIndex="4" HorizontalAlignment="Right" Margin="0,0,94.568,8.04" TextWrapping="Wrap" Text="A400M" VerticalAlignment="Bottom"/>
+        <TextBlock Panel.ZIndex="4" Margin="0,0,4.093,8.04" TextWrapping="Wrap" Text="A330 MRTT" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+        <local:PlanePopOutUserControl x:Name="planePopOutUserControl" Panel.ZIndex="4" Margin="0,0,0,0" HorizontalAlignment="Left" Width="185" Height="240" VerticalAlignment="Bottom"/>
+
+        <Grid Panel.ZIndex="3" >
+            
+            <!-- Mission types -->
+            <Rectangle RadiusX="12" RadiusY="13" StrokeThickness="0" Fill="#99CECECE" HorizontalAlignment="Left" Width="376" Height="81" VerticalAlignment="Bottom"/>
+            <ToggleButton x:Name ="missionType0" Template ="{StaticResource missionTypeControlTemplate}" HorizontalAlignment="Left" Margin="11.333,0,0,24" Width="45" Height="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height" />
+            <ToggleButton x:Name ="missionType1" Template ="{StaticResource missionTypeControlTemplate}" HorizontalAlignment="Left" Margin="88.666,0,0,24" Width="45" Height="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height" />
+            <ToggleButton x:Name ="missionType2" Template ="{StaticResource missionTypeControlTemplate}" HorizontalAlignment="Left" Margin="166.438,0,0,24" Width="45" Height="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height" />
+            <ToggleButton x:Name ="missionType3" Template ="{StaticResource missionTypeControlTemplate}" Margin="239.562,0,0,24" Height="45" HorizontalAlignment="Left" Width="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height" />
+            <ToggleButton x:Name ="missionType4" Template ="{StaticResource missionTypeControlTemplate}" Margin="317.334,0,0,24" Height="45" HorizontalAlignment="Left" Width="45" d:LayoutOverrides="HorizontalAlignment, Height" VerticalAlignment="Bottom" />
+            <TextBlock HorizontalAlignment="Left" Margin="2.666,0,0,8.04" TextWrapping="Wrap" Text="Humanitary" VerticalAlignment="Bottom"/>
+            <TextBlock HorizontalAlignment="Left" Margin="88.666,0,0,8.04" TextWrapping="Wrap" Text="Tactical" VerticalAlignment="Bottom"/>
+            <TextBlock HorizontalAlignment="Left" Margin="166.438,0,0,8.04" TextWrapping="Wrap" Text="Transport" VerticalAlignment="Bottom"/>
+            <TextBlock HorizontalAlignment="Left" Margin="250.665,0,0,8.04" TextWrapping="Wrap" Text="Civil" VerticalAlignment="Bottom"/>
+            <TextBlock Margin="317,0,0,8" TextWrapping="Wrap" Text="Factories" VerticalAlignment="Bottom" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment"/>
+
+        </Grid>
+
+    </Grid>
+</Window>
