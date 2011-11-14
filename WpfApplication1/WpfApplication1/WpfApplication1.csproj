@@ -77,6 +77,9 @@
     <Compile Include="PlanePopOutUserControl.xaml.cs">
       <DependentUpon>PlanePopOutUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WorldUserControl.xaml.cs">
+      <DependentUpon>WorldUserControl.xaml</DependentUpon>
+    </Compile>
     <Page Include="models\world.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -94,6 +97,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="PlanePopOutUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WorldUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
