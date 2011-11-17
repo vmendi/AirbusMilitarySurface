@@ -27,7 +27,7 @@ namespace WpfApplication1
         #region Classes
 
         //represents the data from a single mission, as loaded from the XAML
-        private struct MissionInfo
+        private class MissionInfo
         {
 
             #region Data
@@ -35,6 +35,8 @@ namespace WpfApplication1
             private Button button;//this is the button on the world map which represents this mission
             private Point3D position;
             private int missionTypeId;
+            private int missionIconId;//this is the id of the icon that gets displayed on the panel that appears when we click on a mission button
+            private string description;//for the mission panel
 
             #endregion
 
@@ -49,15 +51,23 @@ namespace WpfApplication1
             public int MissionTypeId
             {get { return missionTypeId; }}
 
+            public int MissionIconId
+            { get { return missionIconId; } }
+
+            public string Description
+            { get { return description; } }
+
             #endregion
 
             #region Construction
 
-            public MissionInfo(Button button, Point3D position, int missionTypeId)
+            public MissionInfo(Button button, Point3D position, int missionTypeId, int missionIconId, string description)
             {
                 this.button = button;
                 this.position = position;
                 this.missionTypeId = missionTypeId;
+                this.missionIconId = missionIconId;
+                this.description = description;
 
                 //hide all mission icons except the one corresponding to the assigned mission
                 HideAllChildrenExcept(FindChildWithName(button, "iconGrid"), "missionIcon" + missionTypeId);
@@ -353,6 +363,8 @@ namespace WpfApplication1
 
                 case DisplayMode.Planes:
 
+                    viewMissionUserControl.HideAnimated();
+
                     //hide all mission buttons in the world that aren´t already hidden
                     for (int iMissionInfo = 0; iMissionInfo < missionInfos.Count; iMissionInfo++)
                     {
@@ -449,6 +461,19 @@ namespace WpfApplication1
             return null;
         }
 
+        private MissionInfo MissionInfoByButton(Button button)
+        {
+            for (int iMissionInfo = 0; iMissionInfo < missionInfos.Count; iMissionInfo++)
+            {
+                if (button == missionInfos[iMissionInfo].Button)
+                {
+                    return missionInfos[iMissionInfo];
+                }
+            }
+
+            return null;
+        }
+
         bool ExtractTypeData(Button button, string typeName, out Point3D spherical, out int typeId)
         {
             bool readOk = true;
@@ -518,6 +543,47 @@ namespace WpfApplication1
                     typeId = -1;
                     readOk = false;
                 }
+            }
+            catch (Exception)
+            {
+                readOk = false;
+            }
+
+            return readOk;
+        }
+
+        bool ExtractMissionData(Button button, out int iconId, out string description)
+        {
+            bool readOk = true;
+
+            iconId = -1;
+            description = null;
+
+            //ignore buttons with no string
+            if (button.Tag == null || button.Tag.GetType() != typeof(string))
+            {
+                return false;
+            }
+
+            Regex iconIdregex = new Regex(@"\biconId=(?<iconId>\d+)\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+            try
+            {
+                //read iconId
+                Match match = iconIdregex.Match((string)button.Tag);
+                string res = match.Result("${iconId}");
+                iconId = int.Parse(res);
+            }
+            catch (Exception)
+            {
+                readOk = false;
+            }
+
+            Regex descriptionRegex = new Regex(@"\bdescription=_(?<description>.*)_\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+            try
+            {
+                //read iconId
+                Match match = descriptionRegex.Match((string)button.Tag);
+                description = match.Result("${description}");
             }
             catch (Exception)
             {
@@ -658,6 +724,19 @@ namespace WpfApplication1
                 if (isMouseDown)
                 {
                     planePopOutUserControl.PopOut();
+
+                    if (viewMissionUserControl.Opacity == 1.0)
+                    {
+                        //hide view mission panel
+                        viewMissionUserControl.HideAnimated();
+
+                        if (viewMissionUserControl.SourceButton != null)
+                        {
+                            //show mission button again (it was hidden when the view mission panel appeared)
+                            Storyboard storyboard = (Storyboard)viewMissionUserControl.SourceButton.Template.Resources["in"];
+                            storyboard.Begin((Grid)viewMissionUserControl.SourceButton.Template.FindName("layoutGrid", viewMissionUserControl.SourceButton));
+                        }
+                    }
                 }
 
                 /*
@@ -825,6 +904,22 @@ namespace WpfApplication1
 
         #region Event handlers
 
+        //this gets called when the user clicks on one of the buttons which represents an actual mission
+        //on the world map
+        void missionButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            MissionInfo missionInfo = MissionInfoByButton(button);
+
+            //display panel with mission information
+            Point p = new Point(button.Margin.Left + button.ActualWidth / 2, button.Margin.Top + button.ActualWidth);
+            viewMissionUserControl.ViewMissionInfo(missionInfo.MissionIconId, missionInfo.Description, p, button);
+
+            //hide mission icon
+            Storyboard storyboard = (Storyboard)button.Template.Resources["out"];
+            storyboard.Begin((Grid)button.Template.FindName("layoutGrid", button));
+        }
+
         //this gets called when the user wants to show the locations of a plane
         void planePopOutUserControl_ShowPlaneLocationsEvent(object sender, PlanePopOutUserControl.ShowPlaneLocationsEventArgs e)
         {
@@ -892,7 +987,13 @@ namespace WpfApplication1
                     int typeId;
                     if (ExtractTypeData(button, "mission", out spherical, out typeId))
                     {
-                        missionInfos.Add(new MissionInfo(button, spherical, typeId));
+                        int iconId;
+                        string description;
+                        if (ExtractMissionData(button, out iconId, out description))
+                        {
+                            missionInfos.Add(new MissionInfo(button, spherical, typeId, iconId, description));
+                            button.Click += new RoutedEventHandler(missionButton_Click);
+                        }
                     }
                     else if (ExtractTypeData(button, "plane", out spherical, out typeId))
                     {
@@ -927,6 +1028,10 @@ namespace WpfApplication1
 
             //hide plane type pop up
             planePopOutUserControl.Visibility = System.Windows.Visibility.Hidden;
+
+            //TODO
+            //hide view mission user control
+            //viewMissionUserControl.Visibility = System.Windows.Visibility.Hidden;
 
             //hide all planes on the world map
             ShowPlaneInfoButtonsWithId(-1);

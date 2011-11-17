@@ -1,0 +1,41 @@
+﻿<UserControl x:Name="userControl" x:Class="WpfApplication1.ViewMissionUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" Height="124" Width="99">
+	<UserControl.Resources>
+		<Storyboard x:Key="show">
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="userControl">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="userControl">
+				<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="hide">
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="userControl">
+				<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="userControl">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.5" Value="{x:Static Visibility.Hidden}"/>
+			</ObjectAnimationUsingKeyFrames>
+		</Storyboard>
+	</UserControl.Resources>
+	<UserControl.Triggers>
+		<EventTrigger RoutedEvent="FrameworkElement.Loaded">
+			<BeginStoryboard Storyboard="{StaticResource show}"/>
+			<BeginStoryboard Storyboard="{StaticResource hide}"/>
+		</EventTrigger>
+	</UserControl.Triggers>
+    <Grid x:Name="grid">
+    	<Rectangle Fill="#FFF4F4F5" Stroke="Black" Margin="8,0,0,0"/>
+    	<TextBlock x:Name="description" Margin="16,0,8,36" TextWrapping="Wrap" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et magna lorem." FontSize="8" Height="32" VerticalAlignment="Bottom"/>
+    	<Button Content="View Mission" Height="24" Margin="16,0,8,8" VerticalAlignment="Bottom" Click="Button_Click" />
+    	<Image x:Name="missionIcon" Margin="16,8,8,67.471" Source="icons/missionIconId0.png"/>
+    	<Path Data="M8.6666667,56.666667 L-0.16699968,64.833001 8.4996733,73.500353" Fill="#FFF4F4F5" Margin="0,56,87,54.8" Stretch="Fill" Stroke="Black"/>
+            
+    </Grid>
+</UserControl>

@@ -364,10 +364,10 @@
         <!-- latitude = grados_latitud minutos_latitud N/S -->
         <!-- longitude = grados_longitude minutos_longitude W/E -->
         <!-- he puesto de ejemplo milán, madrid, tokyo, etc.-->
-        <Button Panel.ZIndex="3" Template="{StaticResource missionButtonTemplate}" Height="45" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="39" Tag="missionTypeId=0 latitude=45 27 N longitude=009 10 E"/>
-        <Button Panel.ZIndex="3" Template="{StaticResource missionButtonTemplate}" Height="45" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="39" Tag="missionTypeId=1 latitude=19 26 N longitude=099 07 W"/>
-        <Button Panel.ZIndex="3" Template="{StaticResource missionButtonTemplate}" Height="45" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="39" Tag="missionTypeId=2 latitude=40 26 N longitude=003 42 W"/>
-        <Button Panel.ZIndex="3" Template="{StaticResource missionButtonTemplate}" Height="45" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="39" Tag="missionTypeId=3 latitude=35 40 N longitude=139 45 E"/>
+        <Button Panel.ZIndex="3" Template="{StaticResource missionButtonTemplate}" Height="45" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="39" Tag="missionTypeId=0 latitude=45 27 N longitude=009 10 E iconId=0 description=_Lorem ipsum ad his scripta blandit partiendo, eum fastidii accumsan euripidis in, eum liber hendrerit an._"/>
+        <Button Panel.ZIndex="3" Template="{StaticResource missionButtonTemplate}" Height="45" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="39" Tag="missionTypeId=1 latitude=19 26 N longitude=099 07 W iconId=1 description=_description1_"/>
+        <Button Panel.ZIndex="3" Template="{StaticResource missionButtonTemplate}" Height="45" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="39" Tag="missionTypeId=2 latitude=40 26 N longitude=003 42 W iconId=2 description=_description2_"/>
+        <Button Panel.ZIndex="3" Template="{StaticResource missionButtonTemplate}" Height="45" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="39" Tag="missionTypeId=3 latitude=35 40 N longitude=139 45 E iconId=3 description=_description3_"/>
 
         <!-- Aviones individuales en el glogo terráqueo /////////////////////////////////////////////////////////////////////////////-->
         <!-- Los parámetros especiales van en el tag, como un string-->
@@ -393,9 +393,9 @@
         <TextBlock Panel.ZIndex="4" HorizontalAlignment="Right" Margin="0,0,242.774,8.04" TextWrapping="Wrap" Text="CN-235" VerticalAlignment="Bottom"/>
         <TextBlock Panel.ZIndex="4" HorizontalAlignment="Right" Margin="0,0,173.979,8.04" TextWrapping="Wrap" Text="C-295" VerticalAlignment="Bottom"/>
         <TextBlock Panel.ZIndex="4" HorizontalAlignment="Right" Margin="0,0,94.568,8.04" TextWrapping="Wrap" Text="A400M" VerticalAlignment="Bottom"/>
-        <TextBlock Panel.ZIndex="4" Margin="0,0,4.093,8.04" TextWrapping="Wrap" Text="A330 MRTT" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
-        <local:PlanePopOutUserControl x:Name="planePopOutUserControl" Panel.ZIndex="4" Margin="0,0,0,0" HorizontalAlignment="Left" Width="185" Height="240" VerticalAlignment="Bottom"/>
-
+        <TextBlock Panel.ZIndex="4" Margin="0,0,4.093,8.04" TextWrapping="Wrap" Text="A330 MRTT" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>        
+        <local:PlanePopOutUserControl x:Name="planePopOutUserControl" Panel.ZIndex="4" Margin="8,0,0,8" HorizontalAlignment="Left" Width="185" Height="240" VerticalAlignment="Bottom"/>
+        <local:ViewMissionUserControl x:Name="viewMissionUserControl" Panel.ZIndex="4" Margin="0,120,0,0" VerticalAlignment="Top" Height="124" HorizontalAlignment="Left" Width="99" />
         <Grid Panel.ZIndex="3" >
 
             <!-- Mission types -->
@@ -409,9 +409,8 @@
             <TextBlock HorizontalAlignment="Left" Margin="88.666,0,0,8.04" TextWrapping="Wrap" Text="Tactical" VerticalAlignment="Bottom"/>
             <TextBlock HorizontalAlignment="Left" Margin="166.438,0,0,8.04" TextWrapping="Wrap" Text="Transport" VerticalAlignment="Bottom"/>
             <TextBlock HorizontalAlignment="Left" Margin="250.665,0,0,8.04" TextWrapping="Wrap" Text="Civil" VerticalAlignment="Bottom"/>
-            <TextBlock Margin="317,0,0,8" TextWrapping="Wrap" Text="Factories" VerticalAlignment="Bottom" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment"/>
-
-        </Grid>
+            <TextBlock Margin="317,0,0,8" TextWrapping="Wrap" Text="Factories" VerticalAlignment="Bottom" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment"/>            
+        </Grid>        
 
     </Grid>
 </UserControl>

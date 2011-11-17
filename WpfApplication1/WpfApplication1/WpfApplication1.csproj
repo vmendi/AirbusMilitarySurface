@@ -77,6 +77,9 @@
     <Compile Include="PlanePopOutUserControl.xaml.cs">
       <DependentUpon>PlanePopOutUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewMissionUserControl.xaml.cs">
+      <DependentUpon>ViewMissionUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WorldUserControl.xaml.cs">
       <DependentUpon>WorldUserControl.xaml</DependentUpon>
     </Compile>
@@ -97,6 +100,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="PlanePopOutUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewMissionUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -129,6 +136,16 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="textures\world_background.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\missionIconId0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\missionIconId1.png" />
+    <Resource Include="icons\missionIconId2.png" />
+    <Resource Include="icons\missionIconId3.png" />
+    <Resource Include="icons\missionIconId4.png" />
+    <Resource Include="icons\missionIconId5.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath32)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

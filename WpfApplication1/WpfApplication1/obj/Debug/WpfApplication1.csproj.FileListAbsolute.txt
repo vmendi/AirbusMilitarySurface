@@ -53,3 +53,5 @@ C:\Users\sensaa\Documents\AirbusMilitarySurface\AirbusMilitarySurface\WpfApplica
 C:\Users\sensaa\Documents\AirbusMilitarySurface\AirbusMilitarySurface\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1_MarkupCompile.lref
 C:\Users\sensaa\Documents\AirbusMilitarySurface\AirbusMilitarySurface\WpfApplication1\WpfApplication1\obj\Debug\WorldUserControl.g.cs
 C:\Users\sensaa\Documents\AirbusMilitarySurface\AirbusMilitarySurface\WpfApplication1\WpfApplication1\obj\Debug\WorldUserControl.baml
+C:\Users\sensaa\Documents\AirbusMilitarySurface\AirbusMilitarySurface\WpfApplication1\WpfApplication1\obj\Debug\ViewMissionUserControl.baml
+C:\Users\sensaa\Documents\AirbusMilitarySurface\AirbusMilitarySurface\WpfApplication1\WpfApplication1\obj\Debug\ViewMissionUserControl.g.cs
