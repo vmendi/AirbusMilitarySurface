@@ -68,6 +68,24 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="3DTools\MathUtils.cs" />
+    <Compile Include="Mission0UserControl.xaml.cs">
+      <DependentUpon>Mission0UserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mission1UserControl.xaml.cs">
+      <DependentUpon>Mission1UserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mission2UserControl.xaml.cs">
+      <DependentUpon>Mission2UserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mission3UserControl.xaml.cs">
+      <DependentUpon>Mission3UserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MissionTimelineUserControl.xaml.cs">
+      <DependentUpon>MissionTimelineUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MissionUserControl.xaml.cs">
+      <DependentUpon>MissionUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -83,6 +101,34 @@
     <Compile Include="WorldUserControl.xaml.cs">
       <DependentUpon>WorldUserControl.xaml</DependentUpon>
     </Compile>
+    <Page Include="Mission0UserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Mission1UserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Mission2UserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Mission3UserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MissionStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MissionTimelineUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MissionUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="models\world.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

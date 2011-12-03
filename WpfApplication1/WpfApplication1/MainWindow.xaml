@@ -14,9 +14,14 @@
 	Title="MainWindow"
 	Width="794" Height="580">
     
-    <Grid>
-    	<local:WorldUserControl/>
+    <Grid x:Name="mainGrid">
+        <!-- all missions go here, they get automatically loaded from Mission0UserControl, Mission1UserControl, etc. according to missionId -->
+        <local:MissionUserControl Tag="missionId=0" Visibility="Hidden"/>
+        <local:MissionUserControl Tag="missionId=1" Visibility="Hidden"/>
+        <local:MissionUserControl Tag="missionId=2" Visibility="Hidden"/>
+        <local:MissionUserControl Tag="missionId=3" Visibility="Hidden"/>
+        
+        <local:WorldUserControl x:Name="worldUserControl"/>
     </Grid>
-
 
 </Window>

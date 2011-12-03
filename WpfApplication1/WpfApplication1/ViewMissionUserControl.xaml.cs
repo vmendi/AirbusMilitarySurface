@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
@@ -26,12 +27,32 @@ namespace WpfApplication1
 
         public class ViewMissionEventArgs
         {
-            public ViewMissionEventArgs()
+
+            #region Data
+
+            private int missionId;
+
+            #endregion
+
+            #region Properties
+
+            public int MissionId
+            { get { return missionId; } }
+
+            #endregion
+
+            #region Construction
+
+            public ViewMissionEventArgs(int missionId)
             {
+                this.missionId = missionId;
             }
+
+            #endregion
+
         }
 
-        private enum States
+        public enum States
         {
             Showing,
             Hiding,
@@ -46,13 +67,16 @@ namespace WpfApplication1
         private Storyboard showStoryboard;
         private Storyboard hideStoryboard;
 
-        private Point newPosition;
+        private Point3D position;
+
+        private Point3D newPosition = new Point3D(0.0f, 0.0f, 0.0f);
         private int newMissionIconId;
         private string newDescription;
         private bool triggerShowAfterHidden = false;
         private Button sourceButton; //this is the button of the mission on the world map that was clicked on to display us
+        private int missionId; //id of the mission that we´re displaying
 
-        private States state = States.Invisible;
+        private States state = States.Visible;
 
         #endregion
 
@@ -60,6 +84,12 @@ namespace WpfApplication1
 
         public Button SourceButton
         { get { return sourceButton; } }
+
+        public States State
+        { get { return state; } }
+
+        public Point3D Position
+        { get { return position; } }
 
         #endregion
 
@@ -90,9 +120,13 @@ namespace WpfApplication1
 
         #region Methods
 
-        private void UpdateData(Point newPosition, int newMissionIconId, string newDescription)
+        public void Update()
         {
-            Margin = new Thickness(newPosition.X, newPosition.Y - ActualHeight / 2, 0.0, 0.0);
+        }
+
+        private void UpdateData(Point3D newPosition, int newMissionIconId, string newDescription)
+        {
+            position = newPosition;
 
             //replace the mission icon
             string strUri = Directory.GetCurrentDirectory() + @"\..\..\icons\missionIconId" + newMissionIconId + ".png";
@@ -102,12 +136,13 @@ namespace WpfApplication1
             description.Text = newDescription;
         }
 
-        public void ViewMissionInfo(int missionIconId, string description, Point position, Button button)
+        public void ViewMissionInfo(int missionIconId, string description, Point3D position, Button button, int missionId)
         {
             newPosition = position;
             newMissionIconId = missionIconId;
             newDescription = description;
             sourceButton = button;
+            this.missionId = missionId;
 
             if (state == States.Showing || state == States.Visible)
             {
@@ -130,6 +165,8 @@ namespace WpfApplication1
         {
             if (state == States.Invisible || state == States.Hiding) return;
 
+            sourceButton = null;
+
             state = States.Hiding;
             triggerShowAfterHidden = false;
             hideStoryboard.Begin();
@@ -143,7 +180,7 @@ namespace WpfApplication1
         {
             if (ViewMissionEvent != null)
             {
-                ViewMissionEvent(this, new ViewMissionEventArgs());
+                ViewMissionEvent(this, new ViewMissionEventArgs(missionId));
             }
 
             HideAnimated();

@@ -31,7 +31,6 @@ namespace WpfApplication1
             {
                 this.planeTypeId = planeTypeId;
             }
-
         }
 
         private enum States

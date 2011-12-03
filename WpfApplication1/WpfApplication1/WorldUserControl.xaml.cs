@@ -37,19 +37,20 @@ namespace WpfApplication1
             private int missionTypeId;
             private int missionIconId;//this is the id of the icon that gets displayed on the panel that appears when we click on a mission button
             private string description;//for the mission panel
+            private int missionId; //this identifies individual missions, and allows us to relate each one to the missionId in MainWindow.xaml
 
             #endregion
 
             #region Properties
 
             public Button Button
-            {get { return button; }}
+            { get { return button; } }
 
             public Point3D Position
-            {get { return position; }}
+            { get { return position; } }
 
             public int MissionTypeId
-            {get { return missionTypeId; }}
+            { get { return missionTypeId; } }
 
             public int MissionIconId
             { get { return missionIconId; } }
@@ -57,17 +58,21 @@ namespace WpfApplication1
             public string Description
             { get { return description; } }
 
+            public int MissionId
+            { get { return missionId; } }
+
             #endregion
 
             #region Construction
 
-            public MissionInfo(Button button, Point3D position, int missionTypeId, int missionIconId, string description)
+            public MissionInfo(Button button, Point3D position, int missionTypeId, int missionIconId, string description, int missionId)
             {
                 this.button = button;
                 this.position = position;
                 this.missionTypeId = missionTypeId;
                 this.missionIconId = missionIconId;
                 this.description = description;
+                this.missionId = missionId;
 
                 //hide all mission icons except the one corresponding to the assigned mission
                 HideAllChildrenExcept(FindChildWithName(button, "iconGrid"), "missionIcon" + missionTypeId);
@@ -172,6 +177,33 @@ namespace WpfApplication1
 
         }
 
+        public class ViewMissionEventArgs
+        {
+
+            #region Data
+
+            private int missionId;
+
+            #endregion
+
+            #region Properties
+
+            public int MissionId
+            { get { return missionId; } }
+
+            #endregion
+
+            #region Construction
+
+            public ViewMissionEventArgs(int missionId)
+            {
+                this.missionId = missionId;
+            }
+
+            #endregion
+
+        }
+
         private enum PlaneTypeButtonStates
         {
             Normal,
@@ -184,6 +216,14 @@ namespace WpfApplication1
         {
             Missions,
             Planes,
+            Zoom,
+        }
+
+        private enum ProjectionAlign
+        {
+            Center,
+            Top,
+            Right,
         }
 
         #endregion
@@ -234,6 +274,25 @@ namespace WpfApplication1
 
         private DisplayMode displayMode = DisplayMode.Missions;
 
+        //used for zoom-into-mission effect
+        private Quaternion zoomStartCameraQuat;
+        private Quaternion zoomEndCameraQuat;
+        private float zoomStartCameraDistance;
+
+        //used to reset camera position and orientation
+        private Quaternion cameraInitialOrientation;
+        private float cameraInitialZoom;
+        
+        #endregion
+
+        #region Events
+
+        // delegate declaration 
+        public delegate void ViewMissionEventHandler(object sender, ViewMissionEventArgs e);
+
+        // event declaration 
+        public event ViewMissionEventHandler ViewMissionEvent;
+
         #endregion
 
         #region Constructor
@@ -278,12 +337,90 @@ namespace WpfApplication1
             //attach ourselves to rendering event
             System.Windows.Media.CompositionTarget.Rendering += new EventHandler(CompositionTarget_Rendering);
 
+            //attach ourselves to the event that tells us when the user wants to view the mission screen
+            viewMissionUserControl.ViewMissionEvent += new ViewMissionUserControl.ViewMissionEventHandler(viewMissionUserControl_ViewMissionEvent);
+
+            //make sure we reset ourselves every time the out animation completes
+            Storyboard outStoryboard = (Storyboard)grid.FindResource("out");
+            outStoryboard.Completed += new EventHandler(outStoryboard_Completed);
+
+            //store camera initial parameters
+            RotateTransform3D rt = (RotateTransform3D)myPerspectiveCamera.Transform;
+            AxisAngleRotation3D r = (AxisAngleRotation3D)rt.Rotation;
+            cameraInitialOrientation = new Quaternion(r.Axis, r.Angle);
+            cameraInitialZoom = (float)((Vector3D)myPerspectiveCamera.Position).Length;
+
             Loaded += new RoutedEventHandler(MainWindow_Loaded);
 		}
 
         #endregion
 
         #region Methods
+
+        //this resets us to the initial state (camera position, control states, etc)
+        private void Reset()
+        {
+            //reset camera orientation
+            RotateTransform3D rt = (RotateTransform3D)myPerspectiveCamera.Transform;
+            AxisAngleRotation3D r = (AxisAngleRotation3D)rt.Rotation;
+            r.Axis = cameraInitialOrientation.Axis;
+            r.Angle = cameraInitialOrientation.Angle;
+
+            //reset camera zoom
+            Vector3D cameraPosition = (Vector3D)myPerspectiveCamera.Position;
+            cameraPosition.Normalize();
+            cameraPosition *= cameraInitialZoom;
+            myPerspectiveCamera.Position = (Point3D)cameraPosition;
+
+            //make sure we´re viewing all mission types
+            for (int iMissionType = 0; iMissionType < missionTypeToggleButtons.Length; iMissionType++)
+            {
+                missionTypeToggleButtons[iMissionType].IsChecked = true;
+            }
+
+            //show all mission buttons in the world
+            for (int iMissionInfo = 0; iMissionInfo < missionInfos.Count; iMissionInfo++)
+            {
+                SetVisibilityMissionInfoButtonsWithId(missionInfos[iMissionInfo].MissionTypeId, true);
+            }
+
+            displayMode = DisplayMode.Missions;
+        }
+
+        public void StartZoom()
+        {
+            StartZoom(MissionInfoByButton(viewMissionUserControl.SourceButton));
+        }
+
+        private void StartZoom(MissionInfo missionInfo)
+        {
+            //get the current orientantion from the RotateTransform3D
+            RotateTransform3D rt = (RotateTransform3D)myPerspectiveCamera.Transform;
+            AxisAngleRotation3D r = (AxisAngleRotation3D)rt.Rotation;
+            zoomStartCameraQuat = new Quaternion(r.Axis, r.Angle);
+
+            //find rotation transform that takes the camera from our current position to the final one in the animation
+            Vector3D axis = Vector3D.CrossProduct((Vector3D)myPerspectiveCamera.Position, (Vector3D)missionInfo.Position);
+            double theta = Vector3D.AngleBetween((Vector3D)myPerspectiveCamera.Position, (Vector3D)missionInfo.Position);
+            zoomEndCameraQuat = new Quaternion(axis, theta);
+
+            zoomStartCameraDistance = (float)((Vector3D)myPerspectiveCamera.Position).Length;
+
+            //start "out" animation
+            Storyboard storyboard = (Storyboard)grid.FindResource("out");
+            storyboard.Begin();
+
+            displayMode = DisplayMode.Zoom;
+        }
+
+        public void StartShow()
+        {
+            Reset();
+
+            //start "in" animation
+            Storyboard storyboard = (Storyboard)grid.FindResource("in");
+            storyboard.Begin();
+        }
 
         //this hides or shows the mission buttons which represent mission types with a particular id
         private void SetVisibilityMissionInfoButtonsWithId(int missionTypeId, bool visible)
@@ -527,7 +664,7 @@ namespace WpfApplication1
                 readOk = false;
             }
 
-            //read mission id from the tag
+            //read mission type id from the tag
             typeId = -1;
             Regex missionTypeIdRegex = new Regex(@"\b" + typeName + @"TypeId=(?<typeId>\d{0,})\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
             try
@@ -552,12 +689,13 @@ namespace WpfApplication1
             return readOk;
         }
 
-        bool ExtractMissionData(Button button, out int iconId, out string description)
+        bool ExtractMissionData(Button button, out int iconId, out string description, out int id)
         {
             bool readOk = true;
 
             iconId = -1;
             description = null;
+            id = -1;
 
             //ignore buttons with no string
             if (button.Tag == null || button.Tag.GetType() != typeof(string))
@@ -578,7 +716,7 @@ namespace WpfApplication1
                 readOk = false;
             }
 
-            Regex descriptionRegex = new Regex(@"\bdescription=_(?<description>.*)_\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+            Regex descriptionRegex = new Regex(@"\bdescription=_(?<description>[^_]*)_\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
             try
             {
                 //read iconId
@@ -590,32 +728,46 @@ namespace WpfApplication1
                 readOk = false;
             }
 
+            Regex idRegex = new Regex(@"\bid=(?<id>\d+)\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+            try
+            {
+                //read id
+                Match match = idRegex.Match((string)button.Tag);
+                string res = match.Result("${id}");
+                id = int.Parse(res);
+            }
+            catch (Exception)
+            {
+                readOk = false;
+            }
+
             return readOk;
         }
 
         //this projects a point3d to its 2d position on-screen and sets the z-index
-        private void ProjectPoint(Button button, Point3D point, Matrix3D m, RotateTransform3D rt, bool planeType, bool adjustTop)
+        private void ProjectPoint(FrameworkElement frameworkElement, Point3D point, Matrix3D m, RotateTransform3D rt, bool planeType, ProjectionAlign projectionAlign)
         {
             // Transform the 3D point to 2D
             Point3D transformedPoint = m.Transform(point);
             if (!planeType)
             {
-                double x = transformedPoint.X - button.Width / 2;
-                double y = adjustTop ? transformedPoint.Y - button.Height : transformedPoint.Y - button.Height / 2;
-                button.Margin = new Thickness(x, y, 0.0, 0.0);
+                double x = projectionAlign == ProjectionAlign.Right ?   transformedPoint.X :                            transformedPoint.X - frameworkElement.Width / 2;
+                double y = projectionAlign == ProjectionAlign.Top ?     transformedPoint.Y - frameworkElement.Height :  transformedPoint.Y - frameworkElement.Height / 2;
+                frameworkElement.Margin = new Thickness(x, y, 0.0, 0.0);
             }
             else
             {
-                double x = transformedPoint.X + button.Width / 2;
-                double y = transformedPoint.Y + button.Height / 2;
-                button.Margin = new Thickness(0, 0, ((Grid)button.Parent).ActualWidth - x, ((Grid)button.Parent).ActualHeight - y);
+                //note we don´t support alignment for plane types
+                double x = transformedPoint.X + frameworkElement.Width / 2;
+                double y = transformedPoint.Y + frameworkElement.Height / 2;
+                frameworkElement.Margin = new Thickness(0, 0, ((Grid)frameworkElement.Parent).ActualWidth - x, ((Grid)frameworkElement.Parent).ActualHeight - y);
             }
 
             //set z-index of the mission button according to the side of the sphere that it's on
             Vector3D lookAt = new Vector3D(rt.Value.M31, rt.Value.M32, rt.Value.M33);
             Vector3D p1 = (Vector3D)point;
             double dot = Vector3D.DotProduct(lookAt, p1);
-            Grid.SetZIndex(button, dot > 0.0 ? 3 : 1);
+            Grid.SetZIndex(frameworkElement, dot > 0.0 ? 3 : 1);
         }
 
         //---------------------------------------------------------
@@ -661,6 +813,19 @@ namespace WpfApplication1
             //clamp camera zoom velocity
             float cameraZoomVelocityMaxScale = 0.8f;
             cameraZoomVelocity = Clamp(cameraZoomVelocity, -cameraZoomVelocityMax * cameraZoomVelocityMaxScale, cameraZoomVelocityMax * cameraZoomVelocityMaxScale);
+
+            if (viewMissionUserControl.State == ViewMissionUserControl.States.Showing
+                || viewMissionUserControl.State == ViewMissionUserControl.States.Visible)
+            {
+                if (viewMissionUserControl.SourceButton != null)
+                {
+                    //show mission button again (it was hidden when the view mission panel appeared)
+                    Storyboard storyboard = (Storyboard)viewMissionUserControl.SourceButton.Template.Resources["in"];
+                    storyboard.Begin((Grid)viewMissionUserControl.SourceButton.Template.FindName("layoutGrid", viewMissionUserControl.SourceButton));
+                }
+
+                viewMissionUserControl.HideAnimated();
+            }
         }
 
         protected override void OnMouseDown(MouseButtonEventArgs e)
@@ -727,15 +892,15 @@ namespace WpfApplication1
 
                     if (viewMissionUserControl.Opacity == 1.0)
                     {
-                        //hide view mission panel
-                        viewMissionUserControl.HideAnimated();
-
                         if (viewMissionUserControl.SourceButton != null)
                         {
                             //show mission button again (it was hidden when the view mission panel appeared)
                             Storyboard storyboard = (Storyboard)viewMissionUserControl.SourceButton.Template.Resources["in"];
                             storyboard.Begin((Grid)viewMissionUserControl.SourceButton.Template.FindName("layoutGrid", viewMissionUserControl.SourceButton));
                         }
+
+                        //hide view mission panel
+                        viewMissionUserControl.HideAnimated();
                     }
                 }
 
@@ -904,6 +1069,22 @@ namespace WpfApplication1
 
         #region Event handlers
 
+        //this gets called whenever the out animation (used for zoom + fadeout) completes
+        void outStoryboard_Completed(object sender, EventArgs e)
+        {
+            //reset ourselves so we go back to initial state
+            Reset();
+        }
+
+        //this gets called when the user clicks on the "view mission" button in the ViewMissionUserControl
+        void viewMissionUserControl_ViewMissionEvent(object sender, ViewMissionUserControl.ViewMissionEventArgs e)
+        {
+            if (ViewMissionEvent != null)
+            {
+                ViewMissionEvent(this, new ViewMissionEventArgs(e.MissionId));
+            }
+        }
+
         //this gets called when the user clicks on one of the buttons which represents an actual mission
         //on the world map
         void missionButton_Click(object sender, RoutedEventArgs e)
@@ -911,13 +1092,22 @@ namespace WpfApplication1
             Button button = (Button)sender;
             MissionInfo missionInfo = MissionInfoByButton(button);
 
-            //display panel with mission information
-            Point p = new Point(button.Margin.Left + button.ActualWidth / 2, button.Margin.Top + button.ActualWidth);
-            viewMissionUserControl.ViewMissionInfo(missionInfo.MissionIconId, missionInfo.Description, p, button);
+            //show mission icon of the mission that was last clicked on again
+            //(it was hidden when the view mission panel appeared)
+            if (viewMissionUserControl.SourceButton != null)
+            {
+                Storyboard storyboard = (Storyboard)viewMissionUserControl.SourceButton.Template.Resources["in"];
+                storyboard.Begin((Grid)viewMissionUserControl.SourceButton.Template.FindName("layoutGrid", viewMissionUserControl.SourceButton));
+            }
 
-            //hide mission icon
-            Storyboard storyboard = (Storyboard)button.Template.Resources["out"];
-            storyboard.Begin((Grid)button.Template.FindName("layoutGrid", button));
+            //display panel with mission information
+            viewMissionUserControl.ViewMissionInfo(missionInfo.MissionIconId, missionInfo.Description, missionInfo.Position, button, missionInfo.MissionId);
+
+            //hide mission icon of the mission that has just been clicked on
+            {
+                Storyboard storyboard = (Storyboard)button.Template.Resources["out"];
+                storyboard.Begin((Grid)button.Template.FindName("layoutGrid", button));
+            }
         }
 
         //this gets called when the user wants to show the locations of a plane
@@ -955,6 +1145,18 @@ namespace WpfApplication1
                 SwitchToDisplayMode(DisplayMode.Missions);
                 e.Handled = true;
             }
+
+            if (viewMissionUserControl.State == ViewMissionUserControl.States.Showing
+                || viewMissionUserControl.State == ViewMissionUserControl.States.Visible)
+            {
+                //show mission button again (it was hidden when the view mission panel appeared)
+                Storyboard storyboard = (Storyboard)viewMissionUserControl.SourceButton.Template.Resources["in"];
+                storyboard.Begin((Grid)viewMissionUserControl.SourceButton.Template.FindName("layoutGrid", viewMissionUserControl.SourceButton));
+
+                viewMissionUserControl.HideAnimated();
+
+                e.Handled = true;
+            }
         }
 
         //this gets called when one of the mission type toggle buttons is unchecked
@@ -984,14 +1186,15 @@ namespace WpfApplication1
 
                     //see if this represents a mission or a plane on the world map
                     Point3D spherical;
-                    int typeId;
+                    int typeId;                    
                     if (ExtractTypeData(button, "mission", out spherical, out typeId))
                     {
                         int iconId;
                         string description;
-                        if (ExtractMissionData(button, out iconId, out description))
+                        int id;
+                        if (ExtractMissionData(button, out iconId, out description, out id))
                         {
-                            missionInfos.Add(new MissionInfo(button, spherical, typeId, iconId, description));
+                            missionInfos.Add(new MissionInfo(button, spherical, typeId, iconId, description, id));
                             button.Click += new RoutedEventHandler(missionButton_Click);
                         }
                     }
@@ -1029,12 +1232,11 @@ namespace WpfApplication1
             //hide plane type pop up
             planePopOutUserControl.Visibility = System.Windows.Visibility.Hidden;
 
-            //TODO
-            //hide view mission user control
-            //viewMissionUserControl.Visibility = System.Windows.Visibility.Hidden;
-
             //hide all planes on the world map
             ShowPlaneInfoButtonsWithId(-1);
+
+            //hide the "view mission" panel which pops up when you click on an individual mission
+            viewMissionUserControl.HideAnimated();
         }
 
         //this gets called once per frame
@@ -1044,75 +1246,97 @@ namespace WpfApplication1
             TimeSpan elapsed = now - lastTick;
             lastTick = now;
 
-            //see if we have to start dragging a plane type button or if it´s time to show the popup for a plane type button
-            if (planeTypeButtonState == PlaneTypeButtonStates.MouseDown)
-            {
-                TimeSpan elapsedSinceMouseDown = now - planeTypeInfoButtonMouseDownTime;
-                Vector d = (planeTypeInfoButtonMouseDownPosition - lastMousePos);
-
-                //see if the mouse moved far enough to start dragging the plane type button
-                if (Math.Abs(d.X) > SystemParameters.MinimumHorizontalDragDistance
-                    || Math.Abs(d.Y) > SystemParameters.MinimumVerticalDragDistance)
-                {
-                    //start dragging
-                    planeTypeButtonState = PlaneTypeButtonStates.Dragging;
-                    planePopOutUserControl.PopOut();
-
-                    //reset Z index so it goes back to being on top of the plane type rectangle
-                    Grid.SetZIndex(planeTypeInfoButtonMouseDown.Button, planeTypeInfoButtonMouseDown.OriginalZIndex);
-                    planeTypeInfoButtonMouseDown.IsOnWorld = false;
-
-                    //move plane type buttons to their original positions (except for the one which we started dragging)
-                    for (int iPlaneTypeInfo = 0; iPlaneTypeInfo < planeTypeInfos.Length; iPlaneTypeInfo++)
-                    {
-                       if (planeTypeInfos[iPlaneTypeInfo] != planeTypeInfoButtonMouseDown)
-                           planeTypeInfos[iPlaneTypeInfo].ResetPosition();
-                    }
-                }
-                else if (elapsedSinceMouseDown.TotalMilliseconds > WpfApplication1.Properties.Settings.Default.PlaneTypePanelShowSeconds * 1000)
-                {
-                    //if the mouse went down on a plane type button but the drag didn´t take place in time, we show the panel
-                    if (!planeTypeInfoButtonMouseDown.IsOnWorld)
-                    {
-                        planeTypeButtonState = PlaneTypeButtonStates.Popup;
-                        planePopOutUserControl.PopIn(new Point(((Grid)planeTypeInfoButtonMouseDown.Button.Parent).ActualWidth - planeTypeInfoButtonMouseDown.Button.Margin.Right - planeTypeInfoButtonMouseDown.Button.ActualWidth / 2 - planePopOutUserControl.ActualWidth / 2, planeTypeInfoButtonMouseDown.Button.Margin.Bottom + planeTypeInfoButtonMouseDown.Button.ActualHeight), planeTypeInfoButtonMouseDown.PlaneTypeId);
-                        ResetPlaneTypeInfoButtonPositions();
-                    }
-                }
-            }
-
-            // Apply angular velocity to camera
-
             //get the current orientantion from the RotateTransform3D
             RotateTransform3D rt = (RotateTransform3D)myPerspectiveCamera.Transform;
             AxisAngleRotation3D r = (AxisAngleRotation3D)rt.Rotation;
-            Quaternion q = new Quaternion(r.Axis, r.Angle);
 
-            //calculate velocity quaternion given passed time
-            Quaternion v = new Quaternion(cameraAngularVelocity.Axis, cameraAngularVelocity.Angle * elapsed.Milliseconds * 0.125f * cameraRotationInputMultiplier);
+            if (displayMode == DisplayMode.Zoom)
+            {
+                Storyboard storyboard = (Storyboard)grid.FindResource("out");
+                float t = (float)storyboard.GetCurrentProgress();
+                t = t * t;
 
-            //apply velocity quaternion
-            q *= v;
-            r.Axis = q.Axis;
-            r.Angle = q.Angle;
+                //rotate
+                Quaternion q = Quaternion.Slerp(zoomStartCameraQuat, zoomEndCameraQuat, t);
+                r.Axis = q.Axis;
+                r.Angle = q.Angle;
 
-            //damp camera angular velocity
-            Quaternion zeroVelocity = new Quaternion(cameraAngularVelocity.Axis, 0.0f);
-            cameraAngularVelocity = Quaternion.Slerp(cameraAngularVelocity, zeroVelocity, elapsed.Milliseconds * 0.01f * cameraAngularVelocityDamp);
+                //zoom
+                float endZoomValue = cameraZoomMax * cameraZoomMinRelative * WpfApplication1.Properties.Settings.Default.WorldCameraZoomMultiplier;
+                float currentZoom = (1.0f - t) * zoomStartCameraDistance + endZoomValue * t;
+                Vector3D cameraPosition = (Vector3D)myPerspectiveCamera.Position;
+                cameraPosition.Normalize();
+                cameraPosition *= currentZoom;
+                myPerspectiveCamera.Position = (Point3D)cameraPosition;
+            }
+            else
+            {
+                //see if we have to start dragging a plane type button or if it´s time to show the popup for a plane type button
+                if (planeTypeButtonState == PlaneTypeButtonStates.MouseDown)
+                {
+                    TimeSpan elapsedSinceMouseDown = now - planeTypeInfoButtonMouseDownTime;
+                    Vector d = (planeTypeInfoButtonMouseDownPosition - lastMousePos);
 
-            //apply zoom velocity to camera
-            Vector3D cameraPosition = new Vector3D(myPerspectiveCamera.Position.X, myPerspectiveCamera.Position.Y, myPerspectiveCamera.Position.Z);
-            double distance = cameraPosition.Length;
-            distance += cameraZoomVelocity * elapsed.Milliseconds * 0.2f;
-            float distanceScale = 80.0f;
-            if (distance > cameraZoomMax * distanceScale) distance = cameraZoomMax * distanceScale;
-            else if (distance < cameraZoomMinRelative * distanceScale) distance = cameraZoomMinRelative * distanceScale;
-            cameraPosition.Normalize();
-            cameraPosition *= distance;
-            myPerspectiveCamera.Position = new Point3D(cameraPosition.X, cameraPosition.Y, cameraPosition.Z);
+                    //see if the mouse moved far enough to start dragging the plane type button
+                    if (Math.Abs(d.X) > SystemParameters.MinimumHorizontalDragDistance
+                        || Math.Abs(d.Y) > SystemParameters.MinimumVerticalDragDistance)
+                    {
+                        //start dragging
+                        planeTypeButtonState = PlaneTypeButtonStates.Dragging;
+                        planePopOutUserControl.PopOut();
 
-            //damp camera zoom velocity
-            cameraZoomVelocity *= elapsed.Milliseconds * 0.05f * cameraZoomVelocityDamp;
+                        //reset Z index so it goes back to being on top of the plane type rectangle
+                        Grid.SetZIndex(planeTypeInfoButtonMouseDown.Button, planeTypeInfoButtonMouseDown.OriginalZIndex);
+                        planeTypeInfoButtonMouseDown.IsOnWorld = false;
+
+                        //move plane type buttons to their original positions (except for the one which we started dragging)
+                        for (int iPlaneTypeInfo = 0; iPlaneTypeInfo < planeTypeInfos.Length; iPlaneTypeInfo++)
+                        {
+                            if (planeTypeInfos[iPlaneTypeInfo] != planeTypeInfoButtonMouseDown)
+                                planeTypeInfos[iPlaneTypeInfo].ResetPosition();
+                        }
+                    }
+                    else if (elapsedSinceMouseDown.TotalMilliseconds > WpfApplication1.Properties.Settings.Default.WorldPlaneTypePanelShowSeconds * 1000)
+                    {
+                        //if the mouse went down on a plane type button but the drag didn´t take place in time, we show the panel
+                        if (!planeTypeInfoButtonMouseDown.IsOnWorld)
+                        {
+                            planeTypeButtonState = PlaneTypeButtonStates.Popup;
+                            planePopOutUserControl.PopIn(new Point(((Grid)planeTypeInfoButtonMouseDown.Button.Parent).ActualWidth - planeTypeInfoButtonMouseDown.Button.Margin.Right - planeTypeInfoButtonMouseDown.Button.ActualWidth / 2 - planePopOutUserControl.ActualWidth / 2, planeTypeInfoButtonMouseDown.Button.Margin.Bottom + planeTypeInfoButtonMouseDown.Button.ActualHeight), planeTypeInfoButtonMouseDown.PlaneTypeId);
+                            ResetPlaneTypeInfoButtonPositions();
+                        }
+                    }
+                }
+
+                // Apply angular velocity to camera
+                Quaternion q = new Quaternion(r.Axis, r.Angle);
+
+                //calculate velocity quaternion given passed time
+                Quaternion v = new Quaternion(cameraAngularVelocity.Axis, cameraAngularVelocity.Angle * elapsed.Milliseconds * 0.125f * cameraRotationInputMultiplier);
+
+                //apply velocity quaternion
+                q *= v;
+                r.Axis = q.Axis;
+                r.Angle = q.Angle;
+
+                //damp camera angular velocity
+                Quaternion zeroVelocity = new Quaternion(cameraAngularVelocity.Axis, 0.0f);
+                cameraAngularVelocity = Quaternion.Slerp(cameraAngularVelocity, zeroVelocity, elapsed.Milliseconds * 0.01f * cameraAngularVelocityDamp);
+
+                //apply zoom velocity to camera
+                Vector3D cameraPosition = new Vector3D(myPerspectiveCamera.Position.X, myPerspectiveCamera.Position.Y, myPerspectiveCamera.Position.Z);
+                double distance = cameraPosition.Length;
+                distance += cameraZoomVelocity * elapsed.Milliseconds * 0.2f;
+                float distanceScale = WpfApplication1.Properties.Settings.Default.WorldCameraZoomMultiplier;
+                if (distance > cameraZoomMax * distanceScale) distance = cameraZoomMax * distanceScale;
+                else if (distance < cameraZoomMax * cameraZoomMinRelative * distanceScale) distance = cameraZoomMax * cameraZoomMinRelative * distanceScale;
+                cameraPosition.Normalize();
+                cameraPosition *= distance;
+                myPerspectiveCamera.Position = new Point3D(cameraPosition.X, cameraPosition.Y, cameraPosition.Z);
+
+                //damp camera zoom velocity
+                cameraZoomVelocity *= elapsed.Milliseconds * 0.05f * cameraZoomVelocityDamp;
+            }
 
             //project 3d positions
             bool matrixOk;
@@ -1123,13 +1347,13 @@ namespace WpfApplication1
                 //MissionInfos
                 for (int iMissionInfo = 0; iMissionInfo < missionInfos.Count; iMissionInfo++)
                 {
-                    ProjectPoint(missionInfos[iMissionInfo].Button, missionInfos[iMissionInfo].Position, m, rt, false, true);
+                    ProjectPoint(missionInfos[iMissionInfo].Button, missionInfos[iMissionInfo].Position, m, rt, false, ProjectionAlign.Top);
                 }
 
                 //PlaneInfos
                 for (int iPlaneInfo = 0; iPlaneInfo < planeInfos.Count; iPlaneInfo++)
                 {
-                    ProjectPoint(planeInfos[iPlaneInfo].Button, planeInfos[iPlaneInfo].Position, m, rt, false, false);
+                    ProjectPoint(planeInfos[iPlaneInfo].Button, planeInfos[iPlaneInfo].Position, m, rt, false, ProjectionAlign.Center);
                 }
 
                 //PlaneTypeInfos
@@ -1137,8 +1361,14 @@ namespace WpfApplication1
                 {
                     if (planeTypeInfos[iPlaneTypeInfo].IsOnWorld)
                     {
-                        ProjectPoint(planeTypeInfos[iPlaneTypeInfo].Button, planeTypeInfos[iPlaneTypeInfo].Position, m, rt, true, true);
+                        ProjectPoint(planeTypeInfos[iPlaneTypeInfo].Button, planeTypeInfos[iPlaneTypeInfo].Position, m, rt, true, ProjectionAlign.Center);
                     }
+                }
+
+                //planePopOutUserControl
+                if (viewMissionUserControl.State != ViewMissionUserControl.States.Invisible)
+                {
+                    ProjectPoint(viewMissionUserControl, viewMissionUserControl.Position, m, rt, false, ProjectionAlign.Right);
                 }
             }
         }

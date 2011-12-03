@@ -1,0 +1,28 @@
+﻿<!-- control templates common to all individual mission maps-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" mc:Ignorable="d">
+    
+    <!-- represents a milestone inside a mission map -->
+	<ControlTemplate x:Key="MilestoneControlTemplate" TargetType="{x:Type ToggleButton}">
+		<ControlTemplate.Resources>
+			<Storyboard x:Key="select">
+				<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="path">
+					<EasingColorKeyFrame KeyTime="0" Value="White"/>
+					<EasingColorKeyFrame KeyTime="0:0:0.5" Value="Blue"/>
+				</ColorAnimationUsingKeyFrames>
+			</Storyboard>
+			<Storyboard x:Key="unselect">
+				<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="path">
+					<EasingColorKeyFrame KeyTime="0" Value="Blue"/>
+					<EasingColorKeyFrame KeyTime="0:0:0.2" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+			</Storyboard>
+		</ControlTemplate.Resources>
+		<Grid x:Name="mainGrid" d:DesignWidth="33.75" d:DesignHeight="34.75">
+			<Path x:Name="path" Data="M1.125,1.125 L32.125,0.375 31.875,25.375 20.375,25.125 18.125,31.375 13.375,24.875 0.625,24.125 z" Fill="#FFF4F4F5" Height="Auto" Margin="0.625,0.375,0.625,2.375" Stretch="Fill" Stroke="Black" VerticalAlignment="Stretch"/>
+			<ContentPresenter Margin="12.5,5.375,12.75,13.125" />
+		</Grid>
+	</ControlTemplate>
+
+
+</ResourceDictionary>

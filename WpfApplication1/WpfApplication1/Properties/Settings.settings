@@ -18,7 +18,7 @@
       <Value Profile="(Default)">1.7</Value>
     </Setting>
     <Setting Name="WorldCameraZoomMinRelative" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.9</Value>
+      <Value Profile="(Default)">0.4</Value>
     </Setting>
     <Setting Name="WorldCameraAngularVelocityMax" Type="System.Single" Scope="User">
       <Value Profile="(Default)">1</Value>
@@ -29,7 +29,13 @@
     <Setting Name="WorldRadius" Type="System.Single" Scope="User">
       <Value Profile="(Default)">25</Value>
     </Setting>
-    <Setting Name="PlaneTypePanelShowSeconds" Type="System.Single" Scope="User">
+    <Setting Name="WorldPlaneTypePanelShowSeconds" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">0.3</Value>
+    </Setting>
+    <Setting Name="WorldCameraZoomMultiplier" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">80</Value>
+    </Setting>
+    <Setting Name="MissionTimelineMarkerAnimateSeconds" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.3</Value>
     </Setting>
   </Settings>
