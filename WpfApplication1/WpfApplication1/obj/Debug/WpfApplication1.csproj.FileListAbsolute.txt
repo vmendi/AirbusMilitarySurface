@@ -112,3 +112,17 @@ C:\Users\Sensaa\Documents\Projects\WPF\AirbusMilitarySurface\AirbusMilitarySurfa
 C:\Users\Sensaa\Documents\Projects\WPF\AirbusMilitarySurface\AirbusMilitarySurface\WpfApplication1\WpfApplication1\obj\Debug\Mission3UserControl.baml
 C:\Users\Sensaa\Documents\Projects\WPF\AirbusMilitarySurface\AirbusMilitarySurface\WpfApplication1\WpfApplication1\obj\Debug\Mission2UserControl.g.cs
 C:\Users\Sensaa\Documents\Projects\WPF\AirbusMilitarySurface\AirbusMilitarySurface\WpfApplication1\WpfApplication1\obj\Debug\Mission3UserControl.g.cs
+C:\Users\sensaa\Documents\AirbusMilitarySurface\AirbusMilitarySurface\WpfApplication1\WpfApplication1\obj\Debug\Mission0UserControl.baml
+C:\Users\sensaa\Documents\AirbusMilitarySurface\AirbusMilitarySurface\WpfApplication1\WpfApplication1\obj\Debug\Mission1UserControl.baml
+C:\Users\sensaa\Documents\AirbusMilitarySurface\AirbusMilitarySurface\WpfApplication1\WpfApplication1\obj\Debug\Mission2UserControl.baml
+C:\Users\sensaa\Documents\AirbusMilitarySurface\AirbusMilitarySurface\WpfApplication1\WpfApplication1\obj\Debug\Mission3UserControl.baml
+C:\Users\sensaa\Documents\AirbusMilitarySurface\AirbusMilitarySurface\WpfApplication1\WpfApplication1\obj\Debug\MissionStyles.baml
+C:\Users\sensaa\Documents\AirbusMilitarySurface\AirbusMilitarySurface\WpfApplication1\WpfApplication1\obj\Debug\MissionTimelineUserControl.baml
+C:\Users\sensaa\Documents\AirbusMilitarySurface\AirbusMilitarySurface\WpfApplication1\WpfApplication1\obj\Debug\Mission0UserControl.g.cs
+C:\Users\sensaa\Documents\AirbusMilitarySurface\AirbusMilitarySurface\WpfApplication1\WpfApplication1\obj\Debug\Mission1UserControl.g.cs
+C:\Users\sensaa\Documents\AirbusMilitarySurface\AirbusMilitarySurface\WpfApplication1\WpfApplication1\obj\Debug\Mission2UserControl.g.cs
+C:\Users\sensaa\Documents\AirbusMilitarySurface\AirbusMilitarySurface\WpfApplication1\WpfApplication1\obj\Debug\Mission3UserControl.g.cs
+C:\Users\sensaa\Documents\AirbusMilitarySurface\AirbusMilitarySurface\WpfApplication1\WpfApplication1\obj\Debug\MissionTimelineUserControl.g.cs
+C:\Users\sensaa\Documents\AirbusMilitarySurface\AirbusMilitarySurface\WpfApplication1\WpfApplication1\obj\Debug\MissionUserControl.g.cs
+C:\Users\sensaa\Documents\AirbusMilitarySurface\AirbusMilitarySurface\WpfApplication1\WpfApplication1\obj\Debug\MissionUserControl.baml
+C:\Users\sensaa\Documents\AirbusMilitarySurface\AirbusMilitarySurface\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1_Content.g.cs

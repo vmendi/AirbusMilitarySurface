@@ -193,6 +193,13 @@
     <Resource Include="icons\missionIconId4.png" />
     <Resource Include="icons\missionIconId5.png" />
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="missionIntroVideos\mission0.wmv" />
+    <Content Include="missionIntroVideos\mission1.wmv" />
+    <Content Include="missionIntroVideos\mission2.wmv" />
+    <Content Include="missionIntroVideos\mission3.wmv" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath32)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
 	     Other similar extension points exist, see Microsoft.Common.targets.

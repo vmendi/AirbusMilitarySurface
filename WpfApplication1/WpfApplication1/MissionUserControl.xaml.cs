@@ -95,6 +95,7 @@ namespace WpfApplication1
         #region Data
 
         int missionId = -1;
+        string introVideo = string.Empty;
 
         private List<MilestoneInfo> milestoneInfos = new List<MilestoneInfo>();
         private Control lastClickedControl = null;
@@ -129,6 +130,12 @@ namespace WpfApplication1
 
             //to complete initialisation
             Loaded += new RoutedEventHandler(MissionUserControl_Loaded);
+
+            //so we get called when the intro video skip animation ends
+            Storyboard storyboard = (Storyboard)videoGrid.FindResource("skipIntroVideo");
+            storyboard.Completed += new EventHandler(storyboard_Completed);
+
+            introMediaElement.MediaEnded += new RoutedEventHandler(introMediaElement_MediaEnded);
         }
 
         #endregion
@@ -137,7 +144,9 @@ namespace WpfApplication1
 
         private void Reset()
         {
-            //TODO
+            introMediaElement.LoadedBehavior = MediaState.Manual;
+            introMediaElement.Position = new TimeSpan(0, 0, 0, 0);
+            introMediaElement.Play();
         }
 
         public void StartShowStoryboard()
@@ -157,23 +166,25 @@ namespace WpfApplication1
         }
 
         //extract mission id from tag and load the UserControl representing the mission
-        private UserControl ReadTag()
+        private bool ReadTag(out UserControl missionUserControl, out string introVideo)
         {
             //see if this represents a mission
             
-            if (ExtractTagData(out missionId))
+            if (ExtractTagData(out missionId, out introVideo))
             {
                 string typeName = "WpfApplication1.Mission" + missionId + "UserControl";
                 Type type = System.Type.GetType(typeName);
-                UserControl userControl = (UserControl)Activator.CreateInstance(type);
-                mainGrid.Children.Add(userControl);
-                return userControl;
+                missionUserControl = (UserControl)Activator.CreateInstance(type);
+                mainGrid.Children.Add(missionUserControl);
+                return true;
             }
 
-            return null;
+            missionUserControl = null;
+            introVideo = string.Empty;
+            return false;
         }
 
-        bool ExtractTagData(out int missionId)
+        bool ExtractTagData(out int missionId, out string introVideo)
         {
             bool readOk = true;
 
@@ -181,6 +192,7 @@ namespace WpfApplication1
             if (Tag == null || Tag.GetType() != typeof(string))
             {
                 missionId = -1;
+                introVideo = string.Empty;
                 return false;
             }
 
@@ -198,6 +210,27 @@ namespace WpfApplication1
                 else
                 {
                     missionId = -1;
+                    readOk = false;
+                }
+            }
+            catch (Exception)
+            {
+                readOk = false;
+            }
+
+            //read intro video from the tag
+            introVideo = string.Empty;
+            Regex introVideoRegex = new Regex(@"\bintroVideo=_(?<introVideo>[^_]*)_\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+            try
+            {
+                Match match = introVideoRegex.Match((string)Tag);
+                if (match != Match.Empty)
+                {
+                    introVideo = match.Result("${introVideo}");
+                }
+                else
+                {
+                    introVideo = string.Empty;
                     readOk = false;
                 }
             }
@@ -377,10 +410,15 @@ namespace WpfApplication1
         void MissionUserControl_Loaded(object sender, RoutedEventArgs e)
         {
             //this will add the MissionUserControl referenced in our tag, and return it
-            UserControl missionUserControl = ReadTag();
+            UserControl missionUserControl;
+            string introVideo;
+            bool readTagOk = ReadTag(out missionUserControl, out introVideo);
 
-            if (missionUserControl != null)
+            if (readTagOk)
             {
+                //load intro video
+                introMediaElement.Source = new Uri(System.Reflection.Assembly.GetExecutingAssembly().Location + "/../../../" + introVideo);
+
                 //create MilestoneInfos
                 ExtractMilestoneInfos(missionUserControl, milestoneInfos);
                 
@@ -427,6 +465,7 @@ namespace WpfApplication1
             ClickedMapMilestoneControl(milestoneInfo);
         }
 
+        //this gets called when the user clicks the back button
         private void backButton_Click(object sender, RoutedEventArgs e)
         {
             StartHideStoryboard();
@@ -435,6 +474,29 @@ namespace WpfApplication1
             {
                 BackEvent(this, new BackEventArgs());
             }
+        }
+
+        //this gets called when the user clicks the skip button in the video intro
+        private void introSkipButton_Click(object sender, RoutedEventArgs e)
+        {
+            //start intro video skip animation
+            Storyboard storyboard = (Storyboard)videoGrid.FindResource("skipIntroVideo");
+            storyboard.Begin();
+        }
+
+        //this gets called when the video intro "skip" animation completes
+        void storyboard_Completed(object sender, EventArgs e)
+        {
+            introMediaElement.LoadedBehavior = MediaState.Manual;
+            introMediaElement.Stop();
+        }
+
+        //this gets called when the video intro is finished playing
+        void introMediaElement_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            //start intro video skip animation
+            Storyboard storyboard = (Storyboard)videoGrid.FindResource("skipIntroVideo");
+            storyboard.Begin();
         }
 
         #endregion
