@@ -35,11 +35,12 @@
 		</Storyboard>
 	</UserControl.Resources>
     <Grid x:Name="mainGrid">
-        <Button Panel.ZIndex ="1" Content="Back" Height="21" HorizontalAlignment="Left" Margin="543,12,0,0" x:Name="backButton" VerticalAlignment="Top" Width="95" Click="backButton_Click" />
+        <Button Panel.ZIndex ="1" Content="Back" Height="21" HorizontalAlignment="Left" Margin="543,12,0,0" x:Name="backButton" VerticalAlignment="Top" Width="95" Click="backButton_Click"/>
         <my:MissionTimelineUserControl x:Name="missionTimeline" Panel.ZIndex ="1" Height="77" VerticalAlignment="Bottom" />
+        <my:MissionMilestoneUserControl Panel.ZIndex ="1" x:Name="missionMilestoneUserControl" Width="Auto" Height="Auto" />
         <Grid x:Name="videoGrid" Margin="0" Panel.ZIndex ="2">
         	<MediaElement x:Name="introMediaElement" Stretch="UniformToFill" />
-        	<Button x:Name="introSkipButton" Content="Skip" Margin="0,0,8,8" Height="23" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Click="introSkipButton_Click" />
+        	<Button x:Name="introSkipButton" Content="Skip" Margin="0,0,8,8" Height="23" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Click="introSkipButton_Click" />            
         </Grid>
     </Grid>
 </UserControl>

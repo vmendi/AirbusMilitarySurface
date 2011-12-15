@@ -94,8 +94,8 @@ namespace WpfApplication1
 
         #region Data
 
-        int missionId = -1;
-        string introVideo = string.Empty;
+        private int missionId = -1;
+        private string introVideo = string.Empty;
 
         private List<MilestoneInfo> milestoneInfos = new List<MilestoneInfo>();
         private Control lastClickedControl = null;
@@ -147,6 +147,8 @@ namespace WpfApplication1
             introMediaElement.LoadedBehavior = MediaState.Manual;
             introMediaElement.Position = new TimeSpan(0, 0, 0, 0);
             introMediaElement.Play();
+
+            missionMilestoneUserControl.StartOutStoryboard();
         }
 
         public void StartShowStoryboard()
@@ -401,6 +403,9 @@ namespace WpfApplication1
 
                 lastClickedControl = control;
             }
+
+            //make the mission milestone user control appear
+            missionMilestoneUserControl.StartInStoryboard(milestoneInfo.Title, milestoneInfo.LongDesctiption, milestoneInfo.Mediafiles);
         }
 
         #endregion
@@ -453,8 +458,10 @@ namespace WpfApplication1
                 //if the user clicks on an element representing a milestone we need to select it in the timeline
                 MilestoneInfo milestoneInfo = MilestoneInfoByControl((Control)sender);
                 missionTimeline.SelectMilestone(milestoneInfo.Id);
-
                 ClickedMapMilestoneControl(milestoneInfo);
+
+                //make the mission milestone user control appear
+                missionMilestoneUserControl.StartInStoryboard(milestoneInfo.Title, milestoneInfo.LongDesctiption, milestoneInfo.Mediafiles);
             }
         }
 

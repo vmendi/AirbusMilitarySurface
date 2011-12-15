@@ -80,6 +80,9 @@
     <Compile Include="Mission3UserControl.xaml.cs">
       <DependentUpon>Mission3UserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MissionMilestoneUserControl.xaml.cs">
+      <DependentUpon>MissionMilestoneUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MissionTimelineUserControl.xaml.cs">
       <DependentUpon>MissionTimelineUserControl.xaml</DependentUpon>
     </Compile>
@@ -114,6 +117,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Mission3UserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MissionMilestoneUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -195,6 +202,15 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="missionMilestoneMedia\mission0.wmv" />
+    <Resource Include="missionMilestoneMedia\plane0.jpg" />
+    <Resource Include="missionMilestoneMedia\plane1.jpg" />
+    <Resource Include="missionMilestoneMedia\plane2.jpg" />
+    <Resource Include="missionMilestoneMedia\plane3.jpg" />
+    <Resource Include="missionMilestoneMedia\plane4.jpg" />
+    <Resource Include="missionMilestoneMedia\plane5.jpg" />
+    <Resource Include="missionMilestoneMedia\plane6.jpg" />
+    <Resource Include="missionMilestoneMedia\plane7.jpg" />
     <Content Include="missionIntroVideos\mission0.wmv" />
     <Content Include="missionIntroVideos\mission1.wmv" />
     <Content Include="missionIntroVideos\mission2.wmv" />

@@ -8,6 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("missionmilestonemedia/mission0.wmv")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("missionintrovideos/mission0.wmv")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("missionintrovideos/mission1.wmv")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("missionintrovideos/mission2.wmv")]

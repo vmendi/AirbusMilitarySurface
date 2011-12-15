@@ -194,10 +194,16 @@ namespace WpfApplication1
         {
             for (int iMilestoneButton = 0; iMilestoneButton < milestoneButtons.Length; iMilestoneButton++)
             {
-                if (milestoneButtons[iMilestoneButton] == sender && milestoneButtons[iMilestoneButton].IsChecked == false)
+                if (milestoneButtons[iMilestoneButton] == sender)
                 {
-                    SelectMilestone(iMilestoneButton);
+                    if (milestoneButtons[iMilestoneButton].IsChecked == false)
+                    {
+                        SelectMilestone(iMilestoneButton);
+                    }
 
+                    //note we raise the event even if the user clicks two times on the same control in a row
+                    //to allow for the MissionMilestoneUserControl to be displayed even if the user keeps clicking
+                    //on the same button
                     if (ClickedMilestoneEvent != null)
                     {
                         ClickedMilestoneEvent(this, new ClickedMilestoneEventArgs(iMilestoneButton));
