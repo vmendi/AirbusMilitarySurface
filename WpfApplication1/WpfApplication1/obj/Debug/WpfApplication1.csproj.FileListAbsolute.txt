@@ -128,3 +128,5 @@ C:\Users\sensaa\Documents\AirbusMilitarySurface\AirbusMilitarySurface\WpfApplica
 C:\Users\sensaa\Documents\AirbusMilitarySurface\AirbusMilitarySurface\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1_Content.g.cs
 C:\Users\sensaa\Documents\AirbusMilitarySurface\AirbusMilitarySurface\WpfApplication1\WpfApplication1\obj\Debug\MissionMilestoneUserControl.baml
 C:\Users\sensaa\Documents\AirbusMilitarySurface\AirbusMilitarySurface\WpfApplication1\WpfApplication1\obj\Debug\MissionMilestoneUserControl.g.cs
+C:\Users\sensaa\Documents\AirbusMilitarySurface\AirbusMilitarySurface\WpfApplication1\WpfApplication1\obj\Debug\MissionMilestoneThumbnailUserControl.baml
+C:\Users\sensaa\Documents\AirbusMilitarySurface\AirbusMilitarySurface\WpfApplication1\WpfApplication1\obj\Debug\MissionMilestoneThumbnailUserControl.g.cs

@@ -25,58 +25,6 @@ namespace WpfApplication1
 
         #region Classes
 
-        private class MilestoneInfo
-        {
-
-            #region Data
-
-            int id;
-            string shortDescription;
-            string title;
-            string longDescription;
-            string[] mediaFiles;
-            Control control;
-
-            #endregion
-
-            #region Properties
-
-            public int Id
-            { get { return id; } }
-
-            public string ShortDesctiption
-            { get { return shortDescription; } }
-
-            public string Title
-            { get { return title; } }
-
-            public string LongDesctiption
-            { get { return longDescription; } }
-
-            public string[] Mediafiles
-            { get { return mediaFiles; } }
-
-            public Control Control
-            { get { return control; } }
-
-            #endregion
-
-            #region Construction
-
-            public MilestoneInfo(int id, string shortDescription, string title, string longDescription, string[] mediaFiles, Control control)
-            {
-                this.id = id;
-                this.shortDescription = shortDescription;
-                this.title = title;
-                this.longDescription = longDescription;
-                this.mediaFiles = mediaFiles;
-                this.control = control;
-            }
-
-            #endregion
-
-        }
-
         public class BackEventArgs
         {
 
@@ -97,8 +45,8 @@ namespace WpfApplication1
         private int missionId = -1;
         private string introVideo = string.Empty;
 
-        private List<MilestoneInfo> milestoneInfos = new List<MilestoneInfo>();
-        private Control lastClickedControl = null;
+        private List<MissionMilestoneThumbnailUserControl> milestoneControls = new List<MissionMilestoneThumbnailUserControl>();
+        private MissionMilestoneThumbnailUserControl lastClickedControl = null;
 
         #endregion
 
@@ -149,6 +97,14 @@ namespace WpfApplication1
             introMediaElement.Play();
 
             missionMilestoneUserControl.StartOutStoryboard();
+
+            missionTimeline.SelectMilestone(-1);
+
+            if (lastClickedControl != null)
+            {
+                Storyboard storyboard = (Storyboard)lastClickedControl.Template.Resources["unselect"];
+                storyboard.Begin((Grid)lastClickedControl.Template.FindName("mainGrid", lastClickedControl));
+            }
         }
 
         public void StartShowStoryboard()
@@ -244,17 +200,13 @@ namespace WpfApplication1
             return readOk;
         }
 
-        private void ExtractMilestoneInfos(FrameworkElement frameworkElement, List<MilestoneInfo> milestoneInfos)
+        private void ExtractMilestoneControls(FrameworkElement frameworkElement, List<MissionMilestoneThumbnailUserControl> milestoneControls)
         {
-            //if the current Control is a milestone, create MilestoneInfo
-            //and store it
-            if (frameworkElement.GetType().IsSubclassOf(typeof(Control)))
+            //if the current Control is a milestone store it
+            if (frameworkElement.GetType() == typeof(MissionMilestoneThumbnailUserControl))
             {
-                MilestoneInfo milestoneInfo = ExtractMilestoneInfo((Control)frameworkElement);
-                if (milestoneInfo != null)
-                {
-                    milestoneInfos.Add(milestoneInfo);
-                }
+                MissionMilestoneThumbnailUserControl c = (MissionMilestoneThumbnailUserControl)frameworkElement;
+                milestoneControls.Add(c);
             }
 
             //go through children
@@ -262,132 +214,13 @@ namespace WpfApplication1
             {
                 if (logicalChild.GetType().IsSubclassOf(typeof(FrameworkElement)))
                 {
-                    ExtractMilestoneInfos((FrameworkElement)logicalChild, milestoneInfos);
+                    ExtractMilestoneControls((FrameworkElement)logicalChild, milestoneControls);
                 }
             }            
         }
 
-        private MilestoneInfo ExtractMilestoneInfo(Control control)
+        private void ClickedMapMilestoneControl(MissionMilestoneThumbnailUserControl control)
         {
-            //ignore elements with no string
-            if (control.Tag == null || control.Tag.GetType() != typeof(string))
-            {
-                return null;
-            }
-
-            bool readOk = true;
-
-            //read milestone id
-            int milestoneId = -1;
-            Regex milestoneIdRegex = new Regex(@"\bmilestoneId=(?<milestoneId>\d{0,})\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
-            try
-            {
-                Match match = milestoneIdRegex.Match((string)control.Tag);
-                if (match != Match.Empty)
-                {
-                    string res = match.Result("${milestoneId}");
-                    milestoneId = int.Parse(res);
-                }
-                else
-                {
-                    milestoneId = -1;
-                    readOk = false;
-                }
-            }
-            catch (Exception)
-            {
-                readOk = false;
-            }
-
-            //read short description
-            string shortDescription = string.Empty;
-            Regex shortDescriptionRegex = new Regex(@"\bshortDescription=_(?<shortDescription>[^_]*)_\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
-            try
-            {
-                Match match = shortDescriptionRegex.Match((string)control.Tag);
-                shortDescription = match.Result("${shortDescription}");
-            }
-            catch (Exception)
-            {
-                readOk = false;
-            }
-
-            //read title
-            string title = string.Empty;
-            Regex titleRegex = new Regex(@"\btitle=_(?<title>[^_]*)_\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
-            try
-            {
-                Match match = titleRegex.Match((string)control.Tag);
-                title = match.Result("${title}");
-            }
-            catch (Exception)
-            {
-                readOk = false;
-            }
-
-            //read long description
-            string longDescription = string.Empty;
-            Regex longDescriptionRegex = new Regex(@"\blongDescription=_(?<longDescription>[^_]*)_\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
-            try
-            {
-                Match match = longDescriptionRegex.Match((string)control.Tag);
-                longDescription = match.Result("${longDescription}");
-            }
-            catch (Exception)
-            {
-                readOk = false;
-            }
-
-            //read media files
-            Regex mediaFileRegex = new Regex(@"\bmediaFile=_(?<mediaFile>[^_]*)_\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
-            int iStart = 0;
-            bool keepGoing = true;
-            List<string> mediaFiles = new List<string>();
-            do
-            {
-                try
-                {
-                    Match match = mediaFileRegex.Match((string)control.Tag, iStart);
-                    iStart = match.Index + match.Length;
-                    string mediaFile = match.Result("${mediaFile}");
-                    mediaFiles.Add(mediaFile);
-                    if (iStart >= ((string)control.Tag).Length - 1)
-                    {
-                        keepGoing = false;
-                    }
-                }
-                catch (Exception)
-                {
-                    keepGoing = false;
-                    readOk = false;
-                }
-            } while (keepGoing);
-
-            if (readOk)
-            {
-                return new MilestoneInfo(milestoneId, shortDescription, title, longDescription, mediaFiles.ToArray(), control);
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        private MilestoneInfo MilestoneInfoByControl(Control control)
-        {
-            for (int iMilestoneInfo = 0; iMilestoneInfo < milestoneInfos.Count; iMilestoneInfo++)
-            {
-                if (milestoneInfos[iMilestoneInfo].Control == control)
-                {
-                    return milestoneInfos[iMilestoneInfo];
-                }
-            }
-            return null;
-        }
-
-        private void ClickedMapMilestoneControl(MilestoneInfo milestoneInfo)
-        {
-            Control control = milestoneInfo.Control;
             if (lastClickedControl != control)
             {
                 if (lastClickedControl != null)
@@ -404,8 +237,9 @@ namespace WpfApplication1
                 lastClickedControl = control;
             }
 
+            //TODO
             //make the mission milestone user control appear
-            missionMilestoneUserControl.StartInStoryboard(milestoneInfo.Title, milestoneInfo.LongDesctiption, milestoneInfo.Mediafiles);
+            //missionMilestoneUserControl.StartInStoryboard(milestoneInfo.Title, milestoneInfo.LongDesctiption, milestoneInfo.Mediafiles);
         }
 
         #endregion
@@ -424,52 +258,48 @@ namespace WpfApplication1
                 //load intro video
                 introMediaElement.Source = new Uri(System.Reflection.Assembly.GetExecutingAssembly().Location + "/../../../" + introVideo);
 
-                //create MilestoneInfos
-                ExtractMilestoneInfos(missionUserControl, milestoneInfos);
+                //store milestone controls                
+                ExtractMilestoneControls(missionUserControl, milestoneControls);
+                milestoneControls.Sort(delegate(MissionMilestoneThumbnailUserControl c1, MissionMilestoneThumbnailUserControl c2) { return c1.Id.CompareTo(c2.Id); });
                 
                 //make sure we get called when the user clicks on a milestone in the map
-                for (int iMilestoneInfo = 0; iMilestoneInfo < milestoneInfos.Count; iMilestoneInfo++)
+                for (int iMilestoneControl = 0; iMilestoneControl < milestoneControls.Count; iMilestoneControl++)
                 {
-                    milestoneInfos[iMilestoneInfo].Control.PreviewMouseDown += new MouseButtonEventHandler(milestoneInfoControl_PreviewMouseDown);
+                    milestoneControls[iMilestoneControl].PreviewMouseDown += new MouseButtonEventHandler(milestoneInfoControl_PreviewMouseDown);
                 }
 
                 //add mission timeline
-                string[] timelineStrings = new string[milestoneInfos.Count];
-                for (int iMilestoneInfo = 0; iMilestoneInfo < milestoneInfos.Count; iMilestoneInfo++)
+                string[] timelineStrings = new string[milestoneControls.Count];
+                for (int iMilestoneControl = 0; iMilestoneControl < milestoneControls.Count; iMilestoneControl++)
                 {
-                    timelineStrings[iMilestoneInfo] = milestoneInfos[iMilestoneInfo].ShortDesctiption;
+                    timelineStrings[iMilestoneControl] = milestoneControls[iMilestoneControl].ThumbType;
                 }
                 missionTimeline.Initialise(timelineStrings);
-            }
-
-            if (milestoneInfos.Count > 0)
-            {
-                //select the first milestone initially
-                milestoneInfos[0].Control.ApplyTemplate();
-                ClickedMapMilestoneControl(milestoneInfos[0]);
             }
         }
 
         //this gets called when the user clicks on an element representing a milestone
         void milestoneInfoControl_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (sender.GetType() == typeof(Control) || sender.GetType().IsSubclassOf(typeof(Control)))
+            if (sender.GetType() == typeof(Control) || sender.GetType().IsSubclassOf(typeof(MissionMilestoneThumbnailUserControl)))
             {
-                //if the user clicks on an element representing a milestone we need to select it in the timeline
-                MilestoneInfo milestoneInfo = MilestoneInfoByControl((Control)sender);
-                missionTimeline.SelectMilestone(milestoneInfo.Id);
-                ClickedMapMilestoneControl(milestoneInfo);
+                MissionMilestoneThumbnailUserControl milestoneControl = (MissionMilestoneThumbnailUserControl)sender;
 
+                //if the user clicks on an element representing a milestone we need to select it in the timeline
+                missionTimeline.SelectMilestone(milestoneControl.Id);
+                ClickedMapMilestoneControl(milestoneControl);
+
+                //TODO
                 //make the mission milestone user control appear
-                missionMilestoneUserControl.StartInStoryboard(milestoneInfo.Title, milestoneInfo.LongDesctiption, milestoneInfo.Mediafiles);
+                //missionMilestoneUserControl.StartInStoryboard(milestoneInfo.Title, milestoneInfo.LongDesctiption, milestoneInfo.Mediafiles);
             }
         }
 
         //this gets called when the user selects a milestone in the timeline
         void missionTimeline_ClickedMilestoneEvent(object sender, MissionTimelineUserControl.ClickedMilestoneEventArgs e)
         {
-            MilestoneInfo milestoneInfo = milestoneInfos[e.milestoneId];
-            ClickedMapMilestoneControl(milestoneInfo);
+            MissionMilestoneThumbnailUserControl milestoneControl = (MissionMilestoneThumbnailUserControl)sender;
+            ClickedMapMilestoneControl(milestoneControl);
         }
 
         //this gets called when the user clicks the back button

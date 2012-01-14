@@ -90,7 +90,16 @@ namespace WpfApplication1
 
         public void SelectMilestone(int iMilestone)
         {
-            StartMarkerAnimation(milestoneButtons[iMilestone]);
+            if (iMilestone == -1)
+            {
+                marker.Visibility = Visibility.Hidden;
+                marker.Margin = new Thickness(line.Margin.Left, marker.Margin.Top, marker.Margin.Right, marker.Margin.Bottom);
+            }
+            else
+            {
+                StartMarkerAnimation(milestoneButtons[iMilestone]);
+            }
+
             for (int iMilestoneButton = 0; iMilestoneButton < milestoneButtons.Length; iMilestoneButton++)
             {
                 if (iMilestoneButton != iMilestone)
@@ -102,7 +111,6 @@ namespace WpfApplication1
                     milestoneButtons[iMilestoneButton].IsChecked = true;
                 }
             }
-
         }
 
         private void StartMarkerAnimation(ToggleButton milestoneButton)
@@ -113,6 +121,8 @@ namespace WpfApplication1
 
             Rect milestoneButtonRect = GetBoundingBox(milestoneButton, uniformGrid);
             markerAnimationEndX = milestoneButtonRect.Left + milestoneButtonRect.Width * 0.5 + uniformGrid.Margin.Left;
+
+            marker.Visibility = Visibility.Visible;
         }
 
         public void Initialise(string[] milestoneTexts)
@@ -141,12 +151,6 @@ namespace WpfApplication1
                 milestoneButton.PreviewMouseDown += new MouseButtonEventHandler(milestoneButton_PreviewMouseDown);
 
                 milestoneButtons[iMilestone] = milestoneButton;
-            }
-
-            //select the first
-            if (milestoneButtons.Length > 0)
-            {
-                milestoneButtons[0].IsChecked = true;
             }
         }
 

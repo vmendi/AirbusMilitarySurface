@@ -80,6 +80,9 @@
     <Compile Include="Mission3UserControl.xaml.cs">
       <DependentUpon>Mission3UserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MissionMilestoneThumbnailUserControl.xaml.cs">
+      <DependentUpon>MissionMilestoneThumbnailUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MissionMilestoneUserControl.xaml.cs">
       <DependentUpon>MissionMilestoneUserControl.xaml</DependentUpon>
     </Compile>
@@ -117,6 +120,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Mission3UserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MissionMilestoneThumbnailUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -202,15 +209,13 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="missionMilestoneMedia\mission0.wmv" />
-    <Resource Include="missionMilestoneMedia\plane0.jpg" />
-    <Resource Include="missionMilestoneMedia\plane1.jpg" />
-    <Resource Include="missionMilestoneMedia\plane2.jpg" />
-    <Resource Include="missionMilestoneMedia\plane3.jpg" />
-    <Resource Include="missionMilestoneMedia\plane4.jpg" />
-    <Resource Include="missionMilestoneMedia\plane5.jpg" />
-    <Resource Include="missionMilestoneMedia\plane6.jpg" />
-    <Resource Include="missionMilestoneMedia\plane7.jpg" />
+    <Content Include="missionMilestoneMedia\mission0\milestone0popup.wmv" />
+    <Resource Include="missionMilestoneMedia\mission0\milestone0Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission0\milestone1Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission0\milestone2Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission0\milestone3Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission0\milestone4Thumbnail.png" />
+    <Resource Include="missionBackgrounds\mission0\background0.png" />
     <Content Include="missionIntroVideos\mission0.wmv" />
     <Content Include="missionIntroVideos\mission1.wmv" />
     <Content Include="missionIntroVideos\mission2.wmv" />
