@@ -225,21 +225,33 @@ namespace WpfApplication1
             {
                 if (lastClickedControl != null)
                 {
-                    Storyboard storyboard = (Storyboard)lastClickedControl.Template.Resources["unselect"];
-                    storyboard.Begin((Grid)lastClickedControl.Template.FindName("mainGrid", lastClickedControl));
+                    Storyboard storyboard = (Storyboard)lastClickedControl.Resources["unselect"];
+                    storyboard.Begin();
                 }
 
                 {
-                    Storyboard storyboard = (Storyboard)control.Template.Resources["select"];
-                    storyboard.Begin((Grid)control.Template.FindName("mainGrid", control));
+                    Storyboard storyboard = (Storyboard)control.Resources["select"];
+                    storyboard.Begin();
                 }
 
                 lastClickedControl = control;
             }
 
-            //TODO
             //make the mission milestone user control appear
-            //missionMilestoneUserControl.StartInStoryboard(milestoneInfo.Title, milestoneInfo.LongDesctiption, milestoneInfo.Mediafiles);
+            missionMilestoneUserControl.StartInStoryboard(control.PopupTitle, control.PopupSubtitle, control.PopupMediaFile.ToString(), control.PopupDescriptionHeading, control.PopupDescriptionBody);
+        }
+
+        MissionMilestoneThumbnailUserControl MilestoneControlById(int id)
+        {
+            for (int iMilestoneControl = 0; iMilestoneControl < milestoneControls.Count; iMilestoneControl++)
+            {
+                if (milestoneControls[iMilestoneControl].Id == id)
+                {
+                    return milestoneControls[iMilestoneControl];
+                }
+            }
+
+            return null;
         }
 
         #endregion
@@ -269,36 +281,39 @@ namespace WpfApplication1
                 }
 
                 //add mission timeline
-                string[] timelineStrings = new string[milestoneControls.Count];
+                string[] timelineTexts = new string[milestoneControls.Count];
+                string[] timelineNumbers = new string[milestoneControls.Count];
                 for (int iMilestoneControl = 0; iMilestoneControl < milestoneControls.Count; iMilestoneControl++)
                 {
-                    timelineStrings[iMilestoneControl] = milestoneControls[iMilestoneControl].ThumbType;
+                    timelineTexts[iMilestoneControl] = milestoneControls[iMilestoneControl].ThumbType;
+                    timelineNumbers[iMilestoneControl] = milestoneControls[iMilestoneControl].Id.ToString();
                 }
-                missionTimeline.Initialise(timelineStrings);
+
+                missionTimeline.Initialise(timelineTexts, timelineNumbers);
             }
         }
 
         //this gets called when the user clicks on an element representing a milestone
         void milestoneInfoControl_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (sender.GetType() == typeof(Control) || sender.GetType().IsSubclassOf(typeof(MissionMilestoneThumbnailUserControl)))
+            if (sender.GetType() == typeof(Control) || sender.GetType()== typeof(MissionMilestoneThumbnailUserControl))
             {
                 MissionMilestoneThumbnailUserControl milestoneControl = (MissionMilestoneThumbnailUserControl)sender;
 
                 //if the user clicks on an element representing a milestone we need to select it in the timeline
-                missionTimeline.SelectMilestone(milestoneControl.Id);
+                missionTimeline.SelectMilestone(milestoneControls.IndexOf(milestoneControl));
                 ClickedMapMilestoneControl(milestoneControl);
 
-                //TODO
                 //make the mission milestone user control appear
-                //missionMilestoneUserControl.StartInStoryboard(milestoneInfo.Title, milestoneInfo.LongDesctiption, milestoneInfo.Mediafiles);
+                missionMilestoneUserControl.StartInStoryboard(milestoneControl.PopupTitle, milestoneControl.PopupSubtitle, milestoneControl.PopupMediaFile.ToString(), milestoneControl.PopupDescriptionHeading, milestoneControl.PopupDescriptionBody);
             }
         }
 
         //this gets called when the user selects a milestone in the timeline
         void missionTimeline_ClickedMilestoneEvent(object sender, MissionTimelineUserControl.ClickedMilestoneEventArgs e)
         {
-            MissionMilestoneThumbnailUserControl milestoneControl = (MissionMilestoneThumbnailUserControl)sender;
+            //note we're given in the eventargs the index of the milestone that was clicked
+            MissionMilestoneThumbnailUserControl milestoneControl = milestoneControls[e.milestoneId];
             ClickedMapMilestoneControl(milestoneControl);
         }
 

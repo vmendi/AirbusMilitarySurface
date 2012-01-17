@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:Custom="http://schemas.microsoft.com/surface/2008" x:Name="userControl" x:Class="WpfApplication1.MissionMilestoneUserControl" 
-             mc:Ignorable="d" Height="467" Width="681">
+             mc:Ignorable="d" Height="720" Width="1280">
 	<UserControl.Resources>
 		<Storyboard x:Key="in">
 			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="userControl">
@@ -29,11 +29,25 @@
     <Grid x:Name="backgroundGrid" Margin="0">
     	<Rectangle x:Name="background" Margin="0" Opacity="0.255" Fill="#FFD86300"/>
             
-    	<Grid x:Name="infoGrid" Margin="0" Background="#FF8B8B8B" HorizontalAlignment="Center" Width="513" Height="259" VerticalAlignment="Center">
-    		<Custom:ScatterView x:Name="scatterView" Margin="8,8,168,8"/>
-    		<TextBlock x:Name="titleText" HorizontalAlignment="Right" Height="25" Margin="0,8,8,0" TextWrapping="Wrap" Text="Title" VerticalAlignment="Top" Width="156"/>
-    		<TextBlock x:Name="descriptionText" HorizontalAlignment="Right" Margin="0,37,8,8" TextWrapping="Wrap" Text="Description" Width="156"/>
-    		<Button x:Name="closeButton" Content="X" HorizontalAlignment="Right" Height="22" Margin="0,0,8,0" VerticalAlignment="Top" Width="28" Click="closeButton_Click" />
+    	<Grid x:Name="infoGrid" Margin="0" Background="#FF8B8B8B" HorizontalAlignment="Center" VerticalAlignment="Center">
+    		<Image Margin="1,0,-1,0" Source="missionMilestoneMedia/popupBackground.png" Width="640" Height="613" Stretch="UniformToFill"/>
+    		<TextBlock x:Name="titleText" Height="25" TextWrapping="Wrap" Text="TITLE" Margin="17.5,1.998,106.5,0" VerticalAlignment="Top" Foreground="White" FontFamily="/WpfApplication1;component/fonts/#HelveticaNeue LT 77 BdCn" FontSize="24"/>
+    		<TextBlock x:Name="subtitleText" Height="67.083" TextWrapping="Wrap" FontSize="33.333" FontWeight="Bold" HorizontalAlignment="Left" Width="516" Text="0. SUBTITLE" Margin="17.5,37.498,0,0" VerticalAlignment="Top" FontFamily="/WpfApplication1;component/fonts/#HelveticaNeue LT 77 BdCn" d:LayoutOverrides="VerticalAlignment">
+    			<TextBlock.Effect>
+    				<DropShadowEffect ShadowDepth="0" BlurRadius="9" Opacity="0.715"/>
+    			</TextBlock.Effect><TextBlock.Foreground>
+    				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+    					<GradientStop Color="White"/>
+    					<GradientStop Color="#FF428993" Offset="1"/>
+    					<GradientStop Color="#FE35646C" Offset="0.444"/>
+    					<GradientStop Color="#FE57848B" Offset="0.395"/>
+    					<GradientStop Color="#FE8BACB2" Offset="0.179"/>
+    				</LinearGradientBrush>
+    			</TextBlock.Foreground></TextBlock>
+    		<TextBlock x:Name="descriptionHeadingText" Margin="29.5,0,25.532,101" TextWrapping="Wrap" Text="DESCRIPTION HEADING" Height="19.5" VerticalAlignment="Bottom" Foreground="White" FontFamily="/WpfApplication1;component/fonts/#HelveticaNeue LT 77 BdCn" FontSize="13.333"/>
+    		<Button x:Name="closeButton" HorizontalAlignment="Right" Height="81.333" Margin="0,1.998,4.001,0" VerticalAlignment="Top" Width="80.833" Click="closeButton_Click" Opacity="0" />
+    		<TextBlock x:Name="descriptionBodyText" Margin="29.668,0,25.531,8" TextWrapping="Wrap" Text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." Height="79" VerticalAlignment="Bottom" Foreground="White" FontFamily="/WpfApplication1;component/fonts/#HelveticaNeue LT 77 BdCn" FontSize="16" Width="584.8"/>
+    		<Image Margin="283.02,256.958,281.979,281.041" Source="missionMilestoneMedia/popupPlayVideo.png" Width="75" Height="75" d:LayoutOverrides="HorizontalMargin"/>
     	</Grid>
             
     </Grid>

@@ -181,6 +181,7 @@
     <None Include="Application.ico">
       <Visible>false</Visible>
     </None>
+    <Resource Include="fonts\LTe50874.ttf" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -209,6 +210,8 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Resource Include="missionMilestoneMedia\popupPlayVideo.png" />
+    <Resource Include="missionMilestoneMedia\popupBackground.png" />
     <Content Include="missionMilestoneMedia\mission0\milestone0popup.wmv" />
     <Resource Include="missionMilestoneMedia\mission0\milestone0Thumbnail.png" />
     <Resource Include="missionMilestoneMedia\mission0\milestone1Thumbnail.png" />

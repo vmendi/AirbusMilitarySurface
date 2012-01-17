@@ -47,14 +47,18 @@ namespace WpfApplication1
                 || filename.EndsWith(".wmv");
         }
 
-        public void StartInStoryboard(string title, string longDescription, string[] mediaFiles)
+        public void StartInStoryboard(string title, string subtitle, string mediaFile, string descriptionHeading, string descriptionBody)
         {
             Storyboard storyboard = (Storyboard)FindResource("in");
             storyboard.Begin();
 
             titleText.Text = title;
-            descriptionText.Text = longDescription;
+            subtitleText.Text = subtitle;
+            descriptionHeadingText.Text = descriptionHeading;
+            descriptionBodyText.Text = descriptionBody;
 
+            //TODO
+            /*
             scatterView.Items.Clear();
             for (int iMediaFile = 0; iMediaFile < mediaFiles.Length; iMediaFile++)
             {
@@ -73,6 +77,7 @@ namespace WpfApplication1
                     scatterView.Items.Add(mediaElement);
                 }
             }
+            */
         }
 
         public void StartOutStoryboard()

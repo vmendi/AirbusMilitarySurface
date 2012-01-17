@@ -44,6 +44,6 @@
     	<Rectangle Fill="#5AFFFFFF" RadiusX="20" RadiusY="20" Margin="0,0,-0.5,0"/>
     	<Path x:Name="line" Data="M26,98 L422.50473,98" Fill="#7E000000" Height="4" Margin="30,0,29.5,25.5" Stretch="Fill" Stroke="White" VerticalAlignment="Bottom"/>
     	<UniformGrid x:Name="uniformGrid" Margin="30,0" Rows="1" d:LayoutOverrides="VerticalAlignment, GridBox"/>
-    	<Rectangle x:Name="marker" Fill="#7E000000" HorizontalAlignment="Left" Margin="30,0,0,21" RadiusY="20" RadiusX="20" Stroke="White" Width="8.5" Height="8.5" VerticalAlignment="Bottom"/>
+    	<Rectangle x:Name="marker" Fill="Black" HorizontalAlignment="Left" Margin="30,0,0,21" RadiusY="20" RadiusX="20" Stroke="White" Width="8.5" Height="8.5" VerticalAlignment="Bottom"/>
     </Grid>
 </UserControl>

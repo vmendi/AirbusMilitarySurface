@@ -125,7 +125,7 @@ namespace WpfApplication1
             marker.Visibility = Visibility.Visible;
         }
 
-        public void Initialise(string[] milestoneTexts)
+        public void Initialise(string[] milestoneTexts, string[] milestoneNumbers)
         {
             //add milestone buttons
             milestoneButtons = new ToggleButton[milestoneTexts.Length];
@@ -142,7 +142,7 @@ namespace WpfApplication1
 
                 //set milestone number
                 TextBlock numberTextBlock = (TextBlock)grid.FindName("number");
-                numberTextBlock.Text = iMilestone.ToString();
+                numberTextBlock.Text = milestoneNumbers[iMilestone];
 
                 //set milestone description
                 TextBlock descriptionTextBlock = (TextBlock)grid.FindName("description");
