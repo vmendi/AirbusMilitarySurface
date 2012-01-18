@@ -16,6 +16,15 @@
     <Grid x:Name="mainGrid" Margin="0">
         <!-- all missions go here, they get automatically loaded from Mission0UserControl, Mission1UserControl, etc. according to missionId -->
         <local:MissionUserControl Tag="missionId=0 introVideo=_missionIntroVideos/mission0.wmv_" Visibility="Hidden"/>
+        <local:MissionUserControl Tag="missionId=1 introVideo=_missionIntroVideos/mission1.wmv_" Visibility="Hidden"/>
+        <local:MissionUserControl Tag="missionId=2 introVideo=_missionIntroVideos/mission2.wmv_" Visibility="Hidden"/>
+        <local:MissionUserControl Tag="missionId=3 introVideo=_missionIntroVideos/mission3.wmv_" Visibility="Hidden"/>
+        <local:MissionUserControl Tag="missionId=4 introVideo=_missionIntroVideos/mission4.wmv_" Visibility="Hidden"/>
+        <local:MissionUserControl Tag="missionId=5 introVideo=_missionIntroVideos/mission5.wmv_" Visibility="Hidden"/>
+        <local:MissionUserControl Tag="missionId=6 introVideo=_missionIntroVideos/mission6.wmv_" Visibility="Hidden"/>
+        <local:MissionUserControl Tag="missionId=7 introVideo=_missionIntroVideos/mission7.wmv_" Visibility="Hidden"/>
+        <local:MissionUserControl Tag="missionId=8 introVideo=_missionIntroVideos/mission8.wmv_" Visibility="Hidden"/>
+        <local:MissionUserControl Tag="missionId=9 introVideo=_missionIntroVideos/mission9.wmv_" Visibility="Hidden"/>
         
         <local:WorldUserControl x:Name="worldUserControl"/>
     </Grid>

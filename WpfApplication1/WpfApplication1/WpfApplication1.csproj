@@ -80,6 +80,24 @@
     <Compile Include="Mission3UserControl.xaml.cs">
       <DependentUpon>Mission3UserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Mission4UserControl.xaml.cs">
+      <DependentUpon>Mission4UserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mission5UserControl.xaml.cs">
+      <DependentUpon>Mission5UserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mission6UserControl.xaml.cs">
+      <DependentUpon>Mission6UserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mission7UserControl.xaml.cs">
+      <DependentUpon>Mission7UserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mission8UserControl.xaml.cs">
+      <DependentUpon>Mission8UserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mission9UserControl.xaml.cs">
+      <DependentUpon>Mission9UserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MissionMilestoneThumbnailUserControl.xaml.cs">
       <DependentUpon>MissionMilestoneThumbnailUserControl.xaml</DependentUpon>
     </Compile>
@@ -120,6 +138,30 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Mission3UserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Mission4UserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Mission5UserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Mission6UserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Mission7UserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Mission8UserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Mission9UserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
