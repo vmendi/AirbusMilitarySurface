@@ -84,6 +84,8 @@ namespace WpfApplication1
             storyboard.Completed += new EventHandler(storyboard_Completed);
 
             introMediaElement.MediaEnded += new RoutedEventHandler(introMediaElement_MediaEnded);
+
+            missionMilestoneUserControl.BackEvent += new MissionMilestoneUserControl.BackEventHandler(missionMilestoneUserControl_BackEvent);
         }
 
         #endregion
@@ -102,8 +104,8 @@ namespace WpfApplication1
 
             if (lastClickedControl != null)
             {
-                Storyboard storyboard = (Storyboard)lastClickedControl.Template.Resources["unselect"];
-                storyboard.Begin((Grid)lastClickedControl.Template.FindName("mainGrid", lastClickedControl));
+                Storyboard storyboard = (Storyboard)lastClickedControl.Resources["unselect"];
+                storyboard.Begin();
             }
         }
 
@@ -133,7 +135,7 @@ namespace WpfApplication1
                 string typeName = "WpfApplication1.Mission" + missionId + "UserControl";
                 Type type = System.Type.GetType(typeName);
                 missionUserControl = (UserControl)Activator.CreateInstance(type);
-                mainGrid.Children.Add(missionUserControl);
+                blurGrid.Children.Add(missionUserControl);
                 return true;
             }
 
@@ -239,6 +241,10 @@ namespace WpfApplication1
 
             //make the mission milestone user control appear
             missionMilestoneUserControl.StartInStoryboard(control.PopupTitle, control.PopupSubtitle, control.PopupMediaFile.ToString(), control.PopupDescriptionHeading, control.PopupDescriptionBody);
+
+            //blur
+            Storyboard blurStoryboard = (Storyboard)Resources["blur"];
+            blurStoryboard.Begin();
         }
 
         MissionMilestoneThumbnailUserControl MilestoneControlById(int id)
@@ -302,10 +308,8 @@ namespace WpfApplication1
 
                 //if the user clicks on an element representing a milestone we need to select it in the timeline
                 missionTimeline.SelectMilestone(milestoneControls.IndexOf(milestoneControl));
-                ClickedMapMilestoneControl(milestoneControl);
 
-                //make the mission milestone user control appear
-                missionMilestoneUserControl.StartInStoryboard(milestoneControl.PopupTitle, milestoneControl.PopupSubtitle, milestoneControl.PopupMediaFile.ToString(), milestoneControl.PopupDescriptionHeading, milestoneControl.PopupDescriptionBody);
+                ClickedMapMilestoneControl(milestoneControl);
             }
         }
 
@@ -348,6 +352,14 @@ namespace WpfApplication1
         {
             //start intro video skip animation
             Storyboard storyboard = (Storyboard)videoGrid.FindResource("skipIntroVideo");
+            storyboard.Begin();
+        }
+
+        //this gets called when the user clicks on the back button of the popup that appears after clicking on a milestone control
+        void missionMilestoneUserControl_BackEvent(object sender, MissionMilestoneUserControl.BackEventArgs e)
+        {
+            //unblur
+            Storyboard storyboard = (Storyboard)Resources["unblur"];
             storyboard.Begin();
         }
 

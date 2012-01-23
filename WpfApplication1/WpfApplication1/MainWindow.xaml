@@ -11,7 +11,7 @@
     mc:Ignorable="d"
 	x:Class="WpfApplication1.MainWindow"
 	x:Name="Window"
-	Title="MainWindow" d:DesignWidth="1291.5" d:DesignHeight="758.5" Width="1296" Height="758">
+	Title="MainWindow" d:DesignWidth="1291.5" d:DesignHeight="758.5" Width="1296" Height="758" Background="Black">
     
     <Grid x:Name="mainGrid" Margin="0">
         <!-- all missions go here, they get automatically loaded from Mission0UserControl, Mission1UserControl, etc. according to missionId -->

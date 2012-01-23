@@ -252,9 +252,13 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Resource Include="missionMilestoneMedia\mission0\milestone1popup.wmv" />
+    <Resource Include="missionMilestoneMedia\mission0\milestone2popup.wmv" />
+    <Resource Include="missionMilestoneMedia\mission0\milestone3popup.wmv" />
+    <Resource Include="missionMilestoneMedia\mission0\milestone4popup.wmv" />
     <Resource Include="missionMilestoneMedia\popupPlayVideo.png" />
     <Resource Include="missionMilestoneMedia\popupBackground.png" />
-    <Content Include="missionMilestoneMedia\mission0\milestone0popup.wmv" />
+    <Resource Include="missionMilestoneMedia\mission0\milestone0popup.wmv" />
     <Resource Include="missionMilestoneMedia\mission0\milestone0Thumbnail.png" />
     <Resource Include="missionMilestoneMedia\mission0\milestone1Thumbnail.png" />
     <Resource Include="missionMilestoneMedia\mission0\milestone2Thumbnail.png" />
