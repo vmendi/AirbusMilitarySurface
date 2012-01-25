@@ -1,11 +1,64 @@
-﻿<UserControl x:Class="WpfApplication1.Mission8UserControl"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfApplication1" x:Class="WpfApplication1.Mission8UserControl" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="332" d:DesignWidth="825"
+             Width="1280" Height="720">
+
+    <!--this should go in all mission UserControls so we can use the same template for all milestone controls-->
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="MissionStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
     <Grid>
-            
+        <Image Source="missionBackgrounds/background8.png" Stretch="Fill"/>
+
+        <local:MissionMilestoneThumbnailUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="346,454,0,0"  Id="1"  ReverseId="True"
+                                                    ThumbDescription="OUTSIZE VEHICLES ARE LOADED ON TWO A400Ms AT ERKILET AB"
+                                                    ThumbType="???"
+                                                    ThumbImage="missionMilestoneMedia/mission8/milestone0Thumbnail.png"
+                                                    PopupTitle="EARTHQUAKE IN ASIA"
+                                                    PopupSubtitle="1. OUTSIZE VEHICLES ARE LOADED ON TWO A400Ms AT ERKILET AB"
+                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupDescriptionHeading="BETTER CAPABILITIES THAN CURRENT TACTICAL AIRLIFTERS"
+                                                    PopupDescriptionBody="The A400M can carry outsize humanitarian loads such as helicopters or cranes which are too large or too heavy for current tactical airlifters. Therefore, the A400M satisfies the fundamental requirement of ongoing military operations and humanitarian missions to airlift heavy and large equipment to where it is most urgently needed, and thus enabling cost-effective and rapid response to the affected country." />
+
+        <local:MissionMilestoneThumbnailUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="557,454,0,0"  Id="2"  ReverseId="True"
+                                                    ThumbDescription="THE A400Ms FLY AT HIGH SPEED AND HIGH ALTITUDE OVER A LONG RANGE"
+                                                    ThumbType="???"
+                                                    ThumbImage="missionMilestoneMedia/mission8/milestone1Thumbnail.png"
+                                                    PopupTitle="EARTHQUAKE IN ASIA"
+                                                    PopupSubtitle="2. THE A400Ms FLY AT HIGH SPEED AND HIGH ALTITUDE OVER A LONG RANGE"
+                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupDescriptionHeading="HIGH SPEED AND HIGH ALTITUDE TO RESPOND MORE RAPIDLY TO CRISES"
+                                                    PopupDescriptionBody="The A400M is a turboprop aircraft with turbofan performance while retaining its tactical capabilities. Flying faster (Mach 0.68-0.72) and higher (40000 ft/12200 m), it can respond more rapidly to crises, because greater distances can be flown. It is hence much more efficient than its predecessors. Also, as it can fly higher, it can cruise above turbulence, resulting in less fatigue for the crews and passengers or troops alike." />
+
+        <local:MissionMilestoneThumbnailUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="738,321,0,0"  Id="3"  ReverseId="True"
+                                                    ThumbDescription="THE A400Ms LAND ON SHORT AND UNPAVED AIRSTRIPS"
+                                                    ThumbType="???"
+                                                    ThumbImage="missionMilestoneMedia/mission8/milestone2Thumbnail.png"
+                                                    PopupTitle="EARTHQUAKE IN ASIA"
+                                                    PopupSubtitle="3. THE A400Ms LAND ON SHORT AND UNPAVED AIRSTRIPS"
+                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupDescriptionHeading="GAPFILLER: GOOD TACTICAL PERFORMANCE COMBINED WITH THE ABILITY TO CARRY OUTSIZE AND HEAVY LOADS"
+                                                    PopupDescriptionBody="The A400M can deliver a heavy crane (25 tonnes/55100lb) over a range corresponding to the distance between Europe and Middle East (2450nm/4500km) into a 2500ft (750m) grass/sand soft airstrip. The ability of the A400M to use austere airfields close to the final destination saves precious time in the delivery of personnel and outsize loads and allows bypassing of intermediate airports that may be congested during times of crises." />
+
+        <local:MissionMilestoneThumbnailUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="929,339,0,0"  Id="4"  ReverseId="True"
+                                                    ThumbDescription="THE A400Ms DELIVER THE LOADS QUICKLY AND FULLY AUTONOMOUSLY"
+                                                    ThumbType="???"
+                                                    ThumbImage="missionMilestoneMedia/mission8/milestone3Thumbnail.png"
+                                                    PopupTitle="EARTHQUAKE IN ASIA"
+                                                    PopupSubtitle="2. THE A400Ms DELIVER THE LOADS QUICKLY AND FULLY AUTONOMOUSLY"
+                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupDescriptionHeading="A CARGO HOLD DESIGN OPTIMISED FOR RAPID LOAD/UNLOAD OF EQUIPMENT"
+                                                    PopupDescriptionBody="The autonomous capability of the A400M enables operations from remote austere airstrips. The Load Master Work Station (LMWS) enables full management of the cargo handling system. The Cargo Handling system allows a single loadmaster to unload pallets and containers without assistance from ground staff." />
+
     </Grid>
 </UserControl>
