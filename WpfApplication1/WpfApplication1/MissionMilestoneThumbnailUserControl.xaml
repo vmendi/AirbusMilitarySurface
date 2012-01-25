@@ -37,7 +37,7 @@
             
 			<Rectangle Height="90.749" Stroke="White" VerticalAlignment="Top" RadiusX="5" StrokeThickness="2" HorizontalAlignment="Left" Width="90.573" RadiusY="5"/>
 			<Rectangle Stroke="White" RadiusX="5" RadiusY="5" StrokeThickness="2" HorizontalAlignment="Left" Width="90.573" Fill="#C9000000" Margin="0,91.46,0,0"/>
-			<TextBlock x:Name="description" Margin="8,96.749,0,5.25" TextWrapping="Wrap" Foreground="#FF8FACC8" Text="DESCRIPTION TEXT" HorizontalAlignment="Left" Width="74.573" TextAlignment="Center" FontFamily="/WpfApplication1;component/fonts/#HelveticaNeue LT 77 BdCn" LineHeight="13.333">
+			<TextBlock x:Name="description" Margin="4.167,96.749,0,5.25" TextWrapping="Wrap" Foreground="#FF8FACC8" Text="DESCRIPTION TEXT" HorizontalAlignment="Left" Width="82.073" TextAlignment="Center" FontFamily="/WpfApplication1;component/fonts/#HelveticaNeue LT 77 BdCn" LineHeight="13.333">
 				<TextBlock.Effect>
 					<BlurEffect Radius="1"/>
 				</TextBlock.Effect>
