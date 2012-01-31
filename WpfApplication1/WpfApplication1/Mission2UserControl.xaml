@@ -1,10 +1,12 @@
-﻿<UserControl x:Class="WpfApplication1.Mission2UserControl"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfApplication1" x:Class="WpfApplication1.Mission2UserControl" 
              mc:Ignorable="d" 
-             d:DesignHeight="317" d:DesignWidth="879">
+             d:DesignHeight="332" d:DesignWidth="825"
+             Width="1280" Height="720">
 
     <!--this should go in all mission UserControls so we can use the same template for all milestone controls-->
     <UserControl.Resources>
@@ -16,16 +18,47 @@
     </UserControl.Resources>
 
     <Grid>
-        <Image Source="missionMilestoneMedia/plane2.jpg" Stretch="Fill"/>
+        <Image Source="missionBackgrounds/background2.png" Stretch="Fill"/>
         
-        <!--these are all the ToggleButtons representing the milestones in the mission-->
-        <ToggleButton Content="0" Template="{StaticResource MilestoneControlTemplate}" Height="35" HorizontalAlignment="Left" Margin="36,156,0,0" x:Name="button1" VerticalAlignment="Top" Width="35" Tag="milestoneId=0 shortDescription=_Detection_ title=_Lorem Ipsium0_ longDescription=_Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris_ mediaFile=_missionMilestoneMedia/mission0.wmv_ mediaFile=_missionMilestoneMedia/plane0.jpg_ mediaFile=_missionMilestoneMedia/plane1.jpg_ mediaFile=_missionMilestoneMedia/plane2.jpg_ "/>
-        <ToggleButton Content="1" Template="{StaticResource MilestoneControlTemplate}" Height="35" HorizontalAlignment="Left" Margin="111,96,0,0" x:Name="button2" VerticalAlignment="Top" Width="35" Tag="milestoneId=1 shortDescription=_Humanitary_ title=_Lorem Ipsium1_ longDescription=_Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris_ mediaFile=_missionMilestoneMedia/mission0.wmv_ mediaFile=_missionMilestoneMedia/plane0.jpg_ mediaFile=_missionMilestoneMedia/plane1.jpg_ mediaFile=_missionMilestoneMedia/plane2.jpg_ "/>
-        <ToggleButton Content="2" Template="{StaticResource MilestoneControlTemplate}" Height="35" HorizontalAlignment="Left" Margin="227,134,0,0" x:Name="button3" VerticalAlignment="Top" Width="35" Tag="milestoneId=2 shortDescription=_Intelligence_ title=_Lorem Ipsium2_ longDescription=_Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris_ mediaFile=_missionMilestoneMedia/mission0.wmv_ mediaFile=_missionMilestoneMedia/plane0.jpg_ mediaFile=_missionMilestoneMedia/plane1.jpg_ mediaFile=_missionMilestoneMedia/plane2.jpg_ "/>
-        <ToggleButton Content="3" Template="{StaticResource MilestoneControlTemplate}" Height="35" HorizontalAlignment="Left" Margin="350,194,0,0" x:Name="button4" VerticalAlignment="Top" Width="35" Tag="milestoneId=3 shortDescription=_Target_ title=_Lorem Ipsium3_ longDescription=_Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris_ mediaFile=_missionMilestoneMedia/mission0.wmv_ mediaFile=_missionMilestoneMedia/plane0.jpg_ mediaFile=_missionMilestoneMedia/plane1.jpg_ mediaFile=_missionMilestoneMedia/plane2.jpg_ "/>
-        <ToggleButton Content="4" Template="{StaticResource MilestoneControlTemplate}" Height="35" HorizontalAlignment="Left" Margin="468,156,0,0" x:Name="button5" VerticalAlignment="Top" Width="35" Tag="milestoneId=4 shortDescription=_Humanitary_ title=_Lorem Ipsium4_ longDescription=_Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris_ mediaFile=_missionMilestoneMedia/mission0.wmv_ mediaFile=_missionMilestoneMedia/plane0.jpg_ mediaFile=_missionMilestoneMedia/plane1.jpg_ mediaFile=_missionMilestoneMedia/plane2.jpg_ "/>
-        <ToggleButton Content="5" Template="{StaticResource MilestoneControlTemplate}" Height="35" HorizontalAlignment="Left" Margin="588,120,0,0" x:Name="button6" VerticalAlignment="Top" Width="35" Tag="milestoneId=5 shortDescription=_Intelligence_ title=_Lorem Ipsium5_ longDescription=_Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris_ mediaFile=_missionMilestoneMedia/mission0.wmv_ mediaFile=_missionMilestoneMedia/plane0.jpg_ mediaFile=_missionMilestoneMedia/plane1.jpg_ mediaFile=_missionMilestoneMedia/plane2.jpg_ "/>
-        <ToggleButton Content="6" Template="{StaticResource MilestoneControlTemplate}" Height="35" HorizontalAlignment="Left" Margin="679,134,0,0" x:Name="button7" VerticalAlignment="Top" Width="35" Tag="milestoneId=6 shortDescription=_Intelligence_ title=_Lorem Ipsium6_ longDescription=_Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris_ mediaFile=_missionMilestoneMedia/mission0.wmv_ mediaFile=_missionMilestoneMedia/plane0.jpg_ mediaFile=_missionMilestoneMedia/plane1.jpg_ mediaFile=_missionMilestoneMedia/plane2.jpg_ "/>
-        <ToggleButton Content="7" Template="{StaticResource MilestoneControlTemplate}" Height="35" HorizontalAlignment="Left" Margin="723,194,0,0" x:Name="button8" VerticalAlignment="Top" Width="35" Tag="milestoneId=7 shortDescription=_Humanitary_ title=_Lorem Ipsium7_ longDescription=_Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris_ mediaFile=_missionMilestoneMedia/mission0.wmv_ mediaFile=_missionMilestoneMedia/plane0.jpg_ mediaFile=_missionMilestoneMedia/plane1.jpg_ mediaFile=_missionMilestoneMedia/plane2.jpg_ "/>
+        <local:MissionMilestoneThumbnailUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="575,180,0,0"  Id="1"  ReverseId="True"
+                                                    ThumbDescription="CN235 GUARDIA CIVIL TAKING OFF FROM GANDO"
+                                                    ThumbType="???"
+                                                    ThumbImage="missionMilestoneMedia/mission2/milestone0Thumbnail.png"
+                                                    PopupTitle="IMMIGRATION CONTROL"
+                                                    PopupSubtitle="1. CN235 GUARDIA CIVIL TAKING OFF FROM GANDO"
+                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupDescriptionHeading="CN235 MPA: AVAILABLE WHEN NEEDED"
+                                                    PopupDescriptionBody="Guardia Civil CN235s MPA high availability rates facilitates a short time reaction to an emergency call." />
+        
+        <local:MissionMilestoneThumbnailUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="875,223,0,0"  Id="2"  ReverseId="True"
+                                                    ThumbDescription="LONG PATROL ENDURANCE"
+                                                    ThumbType="???"
+                                                    ThumbImage="missionMilestoneMedia/mission2/milestone1Thumbnail.png"
+                                                    PopupTitle="IMMIGRATION CONTROL"
+                                                    PopupSubtitle="2. LONG PATROL ENDURANCE"
+                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupDescriptionHeading="CN235 MPA: THE PERSISTENT SURVEILLANCE"
+                                                    PopupDescriptionBody="Mafias organize illegal transportation of immigrants from Africa to Spain all year through; the only way to stop this traffic and safe human lives is a constant surveillance of the critical areas.\nThe Spanish Guardia Civil has chosen the CN235 MPA as best maritime platform especially for its long patrol endurance." />
+
+        <local:MissionMilestoneThumbnailUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="606,507,0,0"  Id="3"  ReverseId="True"
+                                                    ThumbDescription="DISCOVERY OF A BOAT FULL OF INMIGRANTS"
+                                                    ThumbType="???"
+                                                    ThumbImage="missionMilestoneMedia/mission2/milestone2Thumbnail.png"
+                                                    PopupTitle="IMMIGRATION CONTROL"
+                                                    PopupSubtitle="3. DISCOVERY OF A BOAT FULL OF INMIGRANTS"
+                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupDescriptionHeading="CN235 MPA: SAVING LIVES EVERYDAY"
+                                                    PopupDescriptionBody="Unfortunately mafias don't refrain from launching to the ocean people of any age and condition, most of the time using aged insecure boats. Many of these boats will never reach the Spanish coasts. An early identification of the boats, with the use of radars or EO/IR cameras, will definitely contribute to safe many lives." />
+
+        <local:MissionMilestoneThumbnailUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="413,372,0,0"  Id="4"  ReverseId="True"
+                                                    ThumbDescription="DATA LINK TRANSMISSION AND INTERVENTION OF A NAVY PATROL BOAT"
+                                                    ThumbType="???"
+                                                    ThumbImage="missionMilestoneMedia/mission2/milestone3Thumbnail.png"
+                                                    PopupTitle="IMMIGRATION CONTROL"
+                                                    PopupSubtitle="4. DATA LINK TRANSMISSION AND INTERVENTION OF A NAVY PATROL BOAT"
+                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupDescriptionHeading="CN235 MPA: COMMAND AND CONTROL PLATFORM"
+                                                    PopupDescriptionBody="The CN235 MPA guarantees an early warning operation that helps identifying emergencies and planning further urgent interventions. The aircraft is connected through data link to other airborne platforms, as well as navy patrol boats or helicopters that will intervene afterwards, contributing to accomplish safely the operation." />
+
     </Grid>
 </UserControl>

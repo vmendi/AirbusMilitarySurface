@@ -1,11 +1,53 @@
-﻿<UserControl x:Class="WpfApplication1.Mission6UserControl"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfApplication1" x:Class="WpfApplication1.Mission6UserControl" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="332" d:DesignWidth="825"
+             Width="1280" Height="720">
+
+    <!--this should go in all mission UserControls so we can use the same template for all milestone controls-->
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="MissionStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
     <Grid>
-            
+        <Image Source="missionBackgrounds/background6.png" Stretch="Fill"/>
+
+        <local:MissionMilestoneThumbnailUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="971,218,0,0"  Id="1"  ReverseId="False"
+                                                    ThumbDescription="RAPID RESPONSE"
+                                                    ThumbType="???"
+                                                    ThumbImage="missionMilestoneMedia/mission6/milestone0Thumbnail.png"
+                                                    PopupTitle="PEACE ENFORCEMENT MISSION"
+                                                    PopupSubtitle="1. RAPID RESPONSE"
+                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupDescriptionHeading="HIGH AVAILABILITY TO PARTICIPATE IN EVERYDAY MILITARY MISSIONS"
+                                                    PopupDescriptionBody="The seriousness of the situation demands the immediate intervention of allied forces who, rapidly respond to the call for help by sending over an evacuation aircraft and associated air, and ground support.\nThe Airbus Military A330 MRTT New Generation Tanker can carry more passengers and freight whilst simultaneously performing air-to-air refuelling of supporting fighter aircraft who will patrol the sky overhead the evacuation area." />
+
+        <local:MissionMilestoneThumbnailUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="500,545,0,0"  Id="2"  ReverseId="True"
+                                                    ThumbDescription="MULTI ROLE"
+                                                    ThumbType="???"
+                                                    ThumbImage="missionMilestoneMedia/mission6/milestone1Thumbnail.png"
+                                                    PopupTitle="PEACE ENFORCEMENT MISSION"
+                                                    PopupSubtitle="2. MULTI ROLE"
+                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupDescriptionHeading="THREE AIRCRAFT IN ONE"
+                                                    PopupDescriptionBody="Allied Forces profit from the A330 MRTT to transport troops, medical staff or cargo loads to the conflict area.\nIn addition, the aircraft in-flight refuelling systems allow the refuelling of supporting fighter aircrafts which will control the airspace during the evacuation of the civilian and injured personnel.\nThe A330 MRTT maintains its full transport quality in upper and lower decks whilst offering the most modern and tested air-to-air refueling system." />
+
+        <local:MissionMilestoneThumbnailUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="240,385,0,0"  Id="3"  ReverseId="True"
+                                                    ThumbDescription="TRANSPORTING CIVILIANS AND INJURED"
+                                                    ThumbType="???"
+                                                    ThumbImage="missionMilestoneMedia/mission6/milestone2Thumbnail.png"
+                                                    PopupTitle="PEACE ENFORCEMENT MISSION"
+                                                    PopupSubtitle="3. TRANSPORTING CIVILIANS AND INJURED"
+                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupDescriptionHeading="MISSION FLEXIBILITY: CARGO TRANSPORT, PERSONNEL TRANSPORT, AND MEDICAL EVACUATION"
+                                                    PopupDescriptionBody="While deploying Allied Forces troops to protect the Airhead, the A330 MRTT is loaded with initial evacuees and injured personnel from the sporadic fighting.\nAirbus Military A330 MRTT can operate independently by the use of integrated systems (such as Airstars), landing in any civil and military airport." />
     </Grid>
 </UserControl>

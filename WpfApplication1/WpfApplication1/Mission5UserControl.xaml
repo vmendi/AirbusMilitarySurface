@@ -1,11 +1,84 @@
-﻿<UserControl x:Class="WpfApplication1.Mission5UserControl"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfApplication1" x:Class="WpfApplication1.Mission5UserControl" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="332" d:DesignWidth="825"
+             Width="1280" Height="720">
+
+    <!--this should go in all mission UserControls so we can use the same template for all milestone controls-->
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="MissionStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
     <Grid>
-            
+        <Image Source="missionBackgrounds/background5.png" Stretch="Fill"/>
+
+        <local:MissionMilestoneThumbnailUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="886,66,0,0"  Id="1"  ReverseId="False"
+                                                    ThumbDescription="RAPID RESPONSE"
+                                                    ThumbType="???"
+                                                    ThumbImage="missionMilestoneMedia/mission5/milestone0Thumbnail.png"
+                                                    PopupTitle="DEEP STRIKE MISSION"
+                                                    PopupSubtitle="2. RAPID RESPONSE"
+                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupDescriptionHeading="HIGH AVAILABILITY TO PARTICIPATE IN EVERYDAY MILITARY MISSIONS"
+                                                    PopupDescriptionBody="A political crisis of such magnitude demands the immediate intervention of allied forces who, rapidly respond to the call for help sending over air support.\nThe Airbus Military A330 MRTT New Generation Tanker is capable of reaching its target faster than current tanker fleets around the world." />
+
+        <local:MissionMilestoneThumbnailUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1047,311,0,0"  Id="2"  ReverseId="False"
+                                                    ThumbDescription="DEEP STRIKE DEPLOYMENT"
+                                                    ThumbType="???"
+                                                    ThumbImage="missionMilestoneMedia/mission5/milestone1Thumbnail.png"
+                                                    PopupTitle="DEEP STRIKE MISSION"
+                                                    PopupSubtitle="2. DEEP STRIKE DEPLOYMENT"
+                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupDescriptionHeading="REACHING DISTANT CONFLICT AREAS IN RAPID TIME"
+                                                    PopupDescriptionBody="The A330 MRTT fuel capacity and transit speed make unimaginable Deep Strike deployments possible in a faster, safer manner." />
+
+        <local:MissionMilestoneThumbnailUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="929,474,0,0"  Id="3"  ReverseId="False"
+                                                    ThumbDescription="REACTION CAPABILITY"
+                                                    ThumbType="???"
+                                                    ThumbImage="missionMilestoneMedia/mission5/milestone2Thumbnail.png"
+                                                    PopupTitle="DEEP STRIKE MISSION"
+                                                    PopupSubtitle="3. REACTION CAPABILITY"
+                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupDescriptionHeading="ADVANCED ON-BOARD AVIONICS SYSTEM"
+                                                    PopupDescriptionBody="The A330 MRTT has the ability to monitor the situation and react if necessary through the latest JTIDS and SATCOM equipment." />
+
+        <local:MissionMilestoneThumbnailUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="617,332,0,0"  Id="4"  ReverseId="False"
+                                                    ThumbDescription="SITUATIONAL AWARENESS"
+                                                    ThumbType="???"
+                                                    ThumbImage="missionMilestoneMedia/mission5/milestone3Thumbnail.png"
+                                                    PopupTitle="DEEP STRIKE MISSION"
+                                                    PopupSubtitle="4. 9)	SITUATIONAL AWARENESS"
+                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupDescriptionHeading="COMPLETE VIEW OF SIMULTANEOUS ALLIED FORCES MISSIONS AND ENEMY THREATS"
+                                                    PopupDescriptionBody="The A330 MRTT Vision system enables precise airborne rendez-vous, even at night or in poor weather conditions.\nThe Airbus Military advanced avionics system onboard facilitates mid mid-air for A330 MRTT and any fixed-wing receivers in service." />
+
+        <local:MissionMilestoneThumbnailUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="249,540,0,0"  Id="5"  ReverseId="True"
+                                                    ThumbDescription="FAST TRANSFER"
+                                                    ThumbType="???"
+                                                    ThumbImage="missionMilestoneMedia/mission5/milestone4Thumbnail.png"
+                                                    PopupTitle="DEEP STRIKE MISSION"
+                                                    PopupSubtitle="2. FAST TRANSFER"
+                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupDescriptionHeading="THE MOST MODERN AND CERTIFIED AIR-TO-AIR REFUELLING SYSTEMS NOWADAYS"
+                                                    PopupDescriptionBody="The A330 MRTT inherits a 111 Tonnes (245 000 Lb) fuel capacity from the commercial A330-200 platform, allowing the Airbus Military aircraft to perform its refuelling mission without additional fuel tanks.\nThe State-of-the-art refuelling system minimizes the AAR time, thus reducing fatigue level for receivers' pilots." />
+
+        <local:MissionMilestoneThumbnailUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="74,398,0,0"  Id="6"  ReverseId="True"
+                                                    ThumbDescription="MISSION COORDINATOR"
+                                                    ThumbType="???"
+                                                    ThumbImage="missionMilestoneMedia/mission5/milestone5Thumbnail.png"
+                                                    PopupTitle="DEEP STRIKE MISSION"
+                                                    PopupSubtitle="6. MISSION COORDINATOR"
+                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupDescriptionHeading="BONUS ROLE: AIRBORNE COMMUNICATION STATION"
+                                                    PopupDescriptionBody="A comprehensive range of civilian and military communication suite allows Airborne coordination with all Ground and Air assets from the A330 MRTT." />
+
     </Grid>
 </UserControl>

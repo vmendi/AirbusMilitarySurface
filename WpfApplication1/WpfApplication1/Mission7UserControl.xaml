@@ -1,11 +1,54 @@
-﻿<UserControl x:Class="WpfApplication1.Mission7UserControl"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfApplication1" x:Class="WpfApplication1.Mission7UserControl" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="332" d:DesignWidth="825"
+             Width="1280" Height="720">
+
+    <!--this should go in all mission UserControls so we can use the same template for all milestone controls-->
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="MissionStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
     <Grid>
-            
+        <Image Source="missionBackgrounds/background7.png" Stretch="Fill"/>
+
+        <local:MissionMilestoneThumbnailUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="79,461,0,0"  Id="1"  ReverseId="True"
+                                                    ThumbDescription="C295 ASW PATROLLING THE STRAIT OF HORMUZ"
+                                                    ThumbType="???"
+                                                    ThumbImage="missionMilestoneMedia/mission7/milestone0Thumbnail.png"
+                                                    PopupTitle="SUBMARINE THREAT"
+                                                    PopupSubtitle="1. C295 ASW PATROLLING THE STRAIT OF HORMUZ"
+                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupDescriptionHeading="C295 ASW: THE NEW SUBMARINE HUNTER"
+                                                    PopupDescriptionBody="The C295 ASW can patrol for up to 9h at 200 nm from its base, controlling the Straight of Hormuz from hostile submarines that would block the trade in that area. The low fuel consumption and endurance of the aircraft plays a clear advantage for the mission." />
+
+        <local:MissionMilestoneThumbnailUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="399,527,0,0"  Id="2"  ReverseId="True"
+                                                    ThumbDescription="ANTI SUBMARINE WARFARE SENSORS"
+                                                    ThumbType="???"
+                                                    ThumbImage="missionMilestoneMedia/mission7/milestone1Thumbnail.png"
+                                                    PopupTitle="SUBMARINE THREAT"
+                                                    PopupSubtitle="2. ANTI SUBMARINE WARFARE SENSORS"
+                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupDescriptionHeading="C295 ASW: A COST EFFICIENT AND ZERO-RISK SOLUTION FOR REPLACEMENT OF AGEING MPA FLEETS"
+                                                    PopupDescriptionBody="The C295 ASW prepared for Maritime Patrol and Anti Submarine Warfare can be equipped with all available systems and armament to perform the most demanding missions: Magnetic Anomaly Detector (MAD), Acoustic System for sonobuoys, Radar, Torpedoes…\nThis can be achieved at a third part of the operational cost of the legacy heavy maritime patrol that will replace" />
+
+        <local:MissionMilestoneThumbnailUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="886,198,0,0"  Id="3"  ReverseId="True"
+                                                    ThumbDescription="DISSUADING THE SUBMARINE"
+                                                    ThumbType="???"
+                                                    ThumbImage="missionMilestoneMedia/mission7/milestone2Thumbnail.png"
+                                                    PopupTitle="SUBMARINE THREAT"
+                                                    PopupSubtitle="3. DISSUADING THE SUBMARINE"
+                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupDescriptionHeading="C295 ASW CAN INFORM TO OTHER UNITS OR EVEN TAKE ACTION TO DISSUADE THE SUBMARINE"
+                                                    PopupDescriptionBody="Its first step is to inform the vessel and the operational control centre of the suspicious submarine position, necessary to coordinate any further action.\nIf the submarine hasn't got any friendly intention, the C295 ASW can decide to take action and try to dissuade it, in the worst case by launching a torpedo." />
+
     </Grid>
 </UserControl>

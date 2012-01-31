@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ExpressionBlendVersion>4.0.20901.0</ExpressionBlendVersion>
+    <ExpressionBlendVersion>4.0.20525.0</ExpressionBlendVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{F0D47875-47B1-4E61-AFBB-2F00FE8AB8A1}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -235,6 +235,12 @@
     <Resource Include="icons\planeIconId2.png" />
     <Resource Include="icons\planeIconId3.png" />
     <Resource Include="icons\planeIconId4.png" />
+    <Resource Include="missionMilestoneMedia\mission1\milestone0Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission1\milestone1Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission1\milestone2Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission1\milestone3Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission1\milestone4Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission1\milestone5Thumbnail.png" />
     <Resource Include="textures\world.png" />
   </ItemGroup>
   <ItemGroup>
@@ -250,8 +256,38 @@
     <Resource Include="icons\missionIconId4.png" />
     <Resource Include="icons\missionIconId5.png" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <Resource Include="missionMilestoneMedia\mission9\milestone0Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission9\milestone1Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission9\milestone2Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission8\milestone0Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission8\milestone1Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission8\milestone2Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission8\milestone3Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission7\milestone0Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission7\milestone1Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission7\milestone2Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission6\milestone0Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission6\milestone1Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission6\milestone2Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission6\milestone3Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission5\milestone0Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission5\milestone1Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission5\milestone2Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission5\milestone3Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission5\milestone4Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission5\milestone5Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission4\milestone0Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission4\milestone1Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission4\milestone2Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission4\milestone3Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission3\milestone0Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission3\milestone1Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission3\milestone2Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission2\milestone0Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission2\milestone1Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission2\milestone2Thumbnail.png" />
+    <Resource Include="missionMilestoneMedia\mission2\milestone3Thumbnail.png" />
     <Resource Include="missionMilestoneMedia\mission0\milestone1popup.wmv" />
     <Resource Include="missionMilestoneMedia\mission0\milestone2popup.wmv" />
     <Resource Include="missionMilestoneMedia\mission0\milestone3popup.wmv" />
@@ -264,12 +300,22 @@
     <Resource Include="missionMilestoneMedia\mission0\milestone2Thumbnail.png" />
     <Resource Include="missionMilestoneMedia\mission0\milestone3Thumbnail.png" />
     <Resource Include="missionMilestoneMedia\mission0\milestone4Thumbnail.png" />
-    <Resource Include="missionBackgrounds\mission0\background0.png" />
+    <Resource Include="missionBackgrounds\background1.png" />
+    <Resource Include="missionBackgrounds\background2.png" />
+    <Resource Include="missionBackgrounds\background0.png" />
+    <Resource Include="missionBackgrounds\background3.png" />
+    <Resource Include="missionBackgrounds\background4.png" />
+    <Resource Include="missionBackgrounds\background5.png" />
+    <Resource Include="missionBackgrounds\background6.png" />
+    <Resource Include="missionBackgrounds\background7.png" />
+    <Resource Include="missionBackgrounds\background8.png" />
+    <Resource Include="missionBackgrounds\background9.png" />
     <Content Include="missionIntroVideos\mission0.wmv" />
     <Content Include="missionIntroVideos\mission1.wmv" />
     <Content Include="missionIntroVideos\mission2.wmv" />
     <Content Include="missionIntroVideos\mission3.wmv" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath32)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
 	     Other similar extension points exist, see Microsoft.Common.targets.

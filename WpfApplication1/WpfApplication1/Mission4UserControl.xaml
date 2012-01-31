@@ -1,11 +1,64 @@
-﻿<UserControl x:Class="WpfApplication1.Mission4UserControl"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfApplication1" x:Class="WpfApplication1.Mission4UserControl" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="332" d:DesignWidth="825"
+             Width="1280" Height="720">
+
+    <!--this should go in all mission UserControls so we can use the same template for all milestone controls-->
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="MissionStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
     <Grid>
-            
+        <Image Source="missionBackgrounds/background4.png" Stretch="Fill"/>
+
+        <local:MissionMilestoneThumbnailUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="481,249,0,0"  Id="1"  ReverseId="True"
+                                                    ThumbDescription="DRUG DEALERS ON GROUND"
+                                                    ThumbType="???"
+                                                    ThumbImage="missionMilestoneMedia/mission4/milestone0Thumbnail.png"
+                                                    PopupTitle="DRUG INTERDICTION"
+                                                    PopupSubtitle="1. DRUG DEALERS ON GROUND"
+                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupDescriptionHeading="RADAR WITH GROUND MTI MODE"
+                                                    PopupDescriptionBody="The C295 MPA and CN235 MPA multi-mode capable radar detects any moving target on ground, such a car moving." />
+
+        <local:MissionMilestoneThumbnailUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="628,249,0,0"  Id="2"  ReverseId="True"
+                                                    ThumbDescription="DRUG DEALERS ON BOAT"
+                                                    ThumbType="???"
+                                                    ThumbImage="missionMilestoneMedia/mission4/milestone1Thumbnail.png"
+                                                    PopupTitle="DRUG INTERDICTION"
+                                                    PopupSubtitle="2. DRUG DEALERS ON BOAT"
+                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupDescriptionHeading="RADAR WITH MARITIME MTI MODE"
+                                                    PopupDescriptionBody="The C295 MPA and CN235 MPA multi-mode capable radar also identifies any moving target on the sea, such a boat or a vessel." />
+
+        <local:MissionMilestoneThumbnailUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="775,249,0,0"  Id="3"  ReverseId="True"
+                                                    ThumbDescription="DRUG DEALERS ON FLIGHT"
+                                                    ThumbType="???"
+                                                    ThumbImage="missionMilestoneMedia/mission4/milestone2Thumbnail.png"
+                                                    PopupTitle="DRUG INTERDICTION"
+                                                    PopupSubtitle="3. DRUG DEALERS ON FLIGHT"
+                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupDescriptionHeading="RADAR WITH AIR-TO-AIR MODE"
+                                                    PopupDescriptionBody="The C295 MPA and CN235 MPA multi-mode capable radar recognises any moving target on air, such a plane flying at low altitude." />
+
+        <local:MissionMilestoneThumbnailUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="920,249,0,0"  Id="4"  ReverseId="True"
+                                                    ThumbDescription="COMMAND AND CONTROL"
+                                                    ThumbType="???"
+                                                    ThumbImage="missionMilestoneMedia/mission4/milestone3Thumbnail.png"
+                                                    PopupTitle="DRUG INTERDICTION"
+                                                    PopupSubtitle="4. COMMAND AND CONTROL"
+                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupDescriptionHeading="FULLY INTEGRATED TACTICAL SYSTEM (FITS)"
+                                                    PopupDescriptionBody="To effectively fight against drug trafficking it is essential to integrate all information provided by the mission sensors.\nBoth CN235 and C295 MPA are provided with a Fully Integrated Tactical System (FITS) that integrates, displays and controls all the information coming from the mission sensors: Electro-Optic/Infra Red cameras, radar, communications and electronic support measures.\nThis information will be disseminated to ground stations via data link." />
+
     </Grid>
 </UserControl>

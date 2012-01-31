@@ -1,11 +1,54 @@
-﻿<UserControl x:Class="WpfApplication1.Mission9UserControl"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfApplication1" x:Class="WpfApplication1.Mission9UserControl" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="332" d:DesignWidth="825"
+             Width="1280" Height="720">
+
+    <!--this should go in all mission UserControls so we can use the same template for all milestone controls-->
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="MissionStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
     <Grid>
-            
+        <Image Source="missionBackgrounds/background9.png" Stretch="Fill"/>
+
+        <local:MissionMilestoneThumbnailUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="630,387,0,0"  Id="1"  ReverseId="True"
+                                                    ThumbDescription="THE A400Ms LAND ON SHORT AND UNPAVED AIRSTRIPS"
+                                                    ThumbType="???"
+                                                    ThumbImage="missionMilestoneMedia/mission9/milestone0Thumbnail.png"
+                                                    PopupTitle="MILITARY WITHDRAWAL"
+                                                    PopupSubtitle="1. THE A400Ms LAND ON SHORT AND UNPAVED AIRSTRIPS"
+                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupDescriptionHeading="GOOD TACTICAL PERFORMANCE COMBINED WITH THE ABILITY TO CARRY OUTSIZE AND HEAVY LOADS"
+                                                    PopupDescriptionBody="Two VAB armoured personnel carriers are quickly loaded on board the A400M through the rear ramp. The A400M with 25 tonnes/55100 lb on board needs a distance of only 2500ft (750m) to take-off. Operating on a sand soft surface, the A400M can deliver up to a cumulative payload of 1000 tonnes (over 2.2 million pounds) before the sand surface deteriorates." />
+
+        <local:MissionMilestoneThumbnailUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="780,308,0,0"  Id="2"  ReverseId="True"
+                                                    ThumbDescription="THE A400Ms FLY AT HIGH SPEED AND HIGH ALTITUDE"
+                                                    ThumbType="???"
+                                                    ThumbImage="missionMilestoneMedia/mission9/milestone1Thumbnail.png"
+                                                    PopupTitle="MILITARY WITHDRAWAL"
+                                                    PopupSubtitle="2. THE A400Ms FLY AT HIGH SPEED AND HIGH ALTITUDE"
+                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupDescriptionHeading="HIGH SPEED ALLOWS MORE ROTATIONS PER DAY"
+                                                    PopupDescriptionBody="The A400M is a turboprop aircraft with turbofan performance while retaining its tactical capabilities. Flying faster (Mach 0.68-0.72) and higher (40000ft/12200m), it can respond more rapidly to crises and more rotations per day can be flown over greater distances." />
+
+        <local:MissionMilestoneThumbnailUserControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="945,205,0,0"  Id="3"  ReverseId="False"
+                                                    ThumbDescription="THE A400Ms ACHIEVE THE MISSION MORE EFFECTIVELY AND AT A LOWER COST"
+                                                    ThumbType="???"
+                                                    ThumbImage="missionMilestoneMedia/mission9/milestone2Thumbnail.png"
+                                                    PopupTitle="MILITARY WITHDRAWAL"
+                                                    PopupSubtitle="3. THE A400Ms ACHIEVE THE MISSION MORE EFFECTIVELY AND AT A LOWER COST"
+                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupDescriptionHeading="LOWER LIFE CYCLE COSTS AND HIGHER PRODUCTIVITY"
+                                                    PopupDescriptionBody="Thanks to its superior performance and capabilities, a fleet of 8 A400Ms offers the same productivity as a fleet of 18 previous generation tactical airlifters. The life cycle cost of these 18 previous generation tactical airlifters is 55% higher than the one of the 8 A400Ms." />
+
     </Grid>
 </UserControl>
