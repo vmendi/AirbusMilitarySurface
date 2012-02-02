@@ -110,6 +110,21 @@
     <Compile Include="MissionUserControl.xaml.cs">
       <DependentUpon>MissionUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PlaneCardUserControl.xaml.cs">
+      <DependentUpon>PlaneCardUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PlaneInfoUserControl.xaml.cs">
+      <DependentUpon>PlaneInfoUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PlanePanoramaUserControl.xaml.cs">
+      <DependentUpon>PlanePanoramaUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PlanePopupUserControl.xaml.cs">
+      <DependentUpon>PlanePopupUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PlaneVideoUserControl.xaml.cs">
+      <DependentUpon>PlaneVideoUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -201,7 +216,27 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="PlaneCardUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PlaneInfoUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PlanePanoramaUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PlanePopOutUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PlanePopupUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PlaneVideoUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -257,6 +292,14 @@
     <Resource Include="icons\missionIconId5.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="textures\panoramas\A330MRTT.jpg" />
+    <Resource Include="textures\panoramas\A400M.jpg" />
+    <Resource Include="textures\panoramas\C295-Chile-consola.jpg" />
+    <Resource Include="textures\panoramas\C295-Chile-Delantera.jpg" />
+    <Resource Include="textures\panoramas\C295-Chile-trasera.jpg" />
+    <Resource Include="textures\panoramas\C295-Chile.jpg" />
+    <Resource Include="textures\panoramas\C295-Portugal.jpg" />
+    <Resource Include="planePopup\mainBackground.png" />
     <Resource Include="missionMilestoneMedia\mission9\milestone0Thumbnail.png" />
     <Resource Include="missionMilestoneMedia\mission9\milestone1Thumbnail.png" />
     <Resource Include="missionMilestoneMedia\mission9\milestone2Thumbnail.png" />

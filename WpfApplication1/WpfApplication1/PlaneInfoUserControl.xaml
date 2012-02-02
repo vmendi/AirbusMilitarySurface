@@ -1,0 +1,14 @@
+﻿<UserControl x:Class="WpfApplication1.PlaneInfoUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" Height="462" Width="792">
+    <Grid>
+    	<TextBlock x:Name="titleText" Height="45.498" TextWrapping="Wrap" Text="TITLE" Margin="0" VerticalAlignment="Top" Foreground="Black" FontFamily="/WpfApplication1;component/fonts/#HelveticaNeue LT 77 BdCn" FontSize="42.667" TextAlignment="Center"/>
+    	<MediaElement x:Name="mediaElement" Margin="150,57.498,150,119.998" LoadedBehavior="Pause" Stretch="UniformToFill" ScrubbingEnabled="True"/>
+    	<TextBlock x:Name="descriptionText" TextWrapping="Wrap" Text="description - Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." Foreground="Black" FontFamily="/WpfApplication1;component/fonts/#HelveticaNeue LT 77 BdCn" FontSize="18.667" Height="115.998" VerticalAlignment="Bottom" Margin="150,0"/>
+    	<Image x:Name="playVideoButton" Margin="360.02,165.959,356.98,221.041" Source="missionMilestoneMedia/popupPlayVideo.png"/>
+            
+    </Grid>
+</UserControl>
