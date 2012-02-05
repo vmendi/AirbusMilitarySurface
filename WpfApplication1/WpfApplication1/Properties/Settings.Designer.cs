@@ -166,5 +166,41 @@ namespace WpfApplication1.Properties {
                 this["MissionTimelineMarkerAnimateSeconds"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public float PanoramaCameraRotationInputMultiplier {
+            get {
+                return ((float)(this["PanoramaCameraRotationInputMultiplier"]));
+            }
+            set {
+                this["PanoramaCameraRotationInputMultiplier"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public float PanoramaCameraAngularVelocityMax {
+            get {
+                return ((float)(this["PanoramaCameraAngularVelocityMax"]));
+            }
+            set {
+                this["PanoramaCameraAngularVelocityMax"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public float PlaneVideoScrubbingSpeed {
+            get {
+                return ((float)(this["PlaneVideoScrubbingSpeed"]));
+            }
+            set {
+                this["PlaneVideoScrubbingSpeed"] = value;
+            }
+        }
     }
 }

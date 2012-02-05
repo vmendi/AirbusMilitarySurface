@@ -102,11 +102,13 @@ namespace WpfApplication1
 
             missionTimeline.SelectMilestone(-1);
 
+            /*
             if (lastClickedControl != null)
             {
                 Storyboard storyboard = (Storyboard)lastClickedControl.Resources["unselect"];
                 storyboard.Begin();
             }
+            */
         }
 
         public void StartShowStoryboard()
@@ -225,6 +227,7 @@ namespace WpfApplication1
         {
             if (lastClickedControl != control)
             {
+                /*
                 if (lastClickedControl != null)
                 {
                     Storyboard storyboard = (Storyboard)lastClickedControl.Resources["unselect"];
@@ -235,6 +238,7 @@ namespace WpfApplication1
                     Storyboard storyboard = (Storyboard)control.Resources["select"];
                     storyboard.Begin();
                 }
+                */
 
                 lastClickedControl = control;
             }

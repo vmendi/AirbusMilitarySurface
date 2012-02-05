@@ -20,21 +20,159 @@ namespace WpfApplication1
     public partial class PlaneVideoUserControl : UserControl
     {
 
+        #region Data
+
+        private bool isMouseDown = false;
+        private double tCurrent = 0.0;
+        private double tTarget = 0.0;
+        private DateTime lastTick;
+        private double videoSeconds = 0.0;
+
+        #endregion
+
+        #region Properties
+
         public static readonly DependencyProperty MediaFileProperty = DependencyProperty.Register("MediaFileProperty", typeof(Uri), typeof(PlaneVideoUserControl));
 
         public Uri MediaFile
         {
             get { return (Uri)GetValue(MediaFileProperty); }
-            set
-            {
-                SetValue(MediaFileProperty, value);
-                mediaElement.Source = value;
-            }
+            set { SetValue(MediaFileProperty, value); }
         }
+
+        #endregion
+
+        #region Construction
 
         public PlaneVideoUserControl()
         {
             InitializeComponent();
+
+            mediaElement.MouseUp += new MouseButtonEventHandler(mediaElement_MouseUp);
+            mediaElement.MouseDown += new MouseButtonEventHandler(mediaElement_MouseDown);
+            mediaElement.MouseMove += new MouseEventHandler(mediaElement_MouseMove);
+            mediaElement.MediaOpened += new RoutedEventHandler(mediaElement_MediaOpened);
+
+            //mediaElement.Pause();
+            //mediaElement.Position = new TimeSpan(0, 0, 0, 0);
+
+            //attach ourselves to rendering event
+            System.Windows.Media.CompositionTarget.Rendering += new EventHandler(CompositionTarget_Rendering);
+
         }
+
+        #endregion
+
+        #region Methods
+
+        public void StartVideo()
+        {
+            tCurrent = 0.0;
+            tTarget = 0.0;
+
+            //for some reason if we set the relative uri it works in the designer but doesn't work when we run the app normally.
+            //if we set the full path then it raises an exception when inside the designer
+            if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
+            {
+                mediaElement.Source = MediaFile;
+            }
+            else
+            {
+                if (MediaFile != null)
+                {
+                    Uri n = new Uri(System.Reflection.Assembly.GetExecutingAssembly().Location + @"/../../../" + MediaFile.ToString(), UriKind.Absolute);
+                    mediaElement.Source = n;
+                }
+            }
+
+            //because the length of the video gets loaded when we're told that the media has opened
+            videoSeconds = -1.0f;
+
+            mediaElement.LoadedBehavior = MediaState.Manual;
+            mediaElement.Pause();
+        }
+
+        public void CloseVideo()
+        {
+            mediaElement.LoadedBehavior = MediaState.Manual;
+            mediaElement.Close();
+        }
+
+        #endregion
+
+        #region Event handlers
+
+        //this gets called once per frame
+        void CompositionTarget_Rendering(object sender, EventArgs e)
+        {
+            if (videoSeconds != -1.0 && Math.Abs(tTarget - tCurrent) > 0.005)
+            {
+                DateTime now = DateTime.Now;
+                TimeSpan elapsed = now - lastTick;
+                lastTick = now;
+
+                if (Math.Abs(tTarget - tCurrent) < 0.01)
+                {
+                    tCurrent = tTarget;
+                }
+                else
+                {
+                    double delta = (tTarget - tCurrent) * elapsed.TotalMilliseconds * 0.005 * WpfApplication1.Properties.Settings.Default.PanoramaCameraRotationInputMultiplier;
+                    if (delta > 0.01f) delta = 0.01f;
+                    if (delta < -0.01f) delta = -0.01f;
+                    tCurrent += delta;
+                    if (tCurrent < 0.1) tCurrent = 0.1;
+                    if (tCurrent > 0.9) tCurrent = 0.9;
+                }
+
+                TimeSpan time = TimeSpan.FromSeconds(tCurrent * videoSeconds);
+                mediaElement.Position = time;
+            }
+        }
+
+        //this gets called when the user clicks on the video
+        void mediaElement_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            isMouseDown = true;
+
+            Point p = e.GetPosition(mediaElement);
+            double t = p.X / mediaElement.ActualWidth;
+            if (t < 0.1) t = 0.1;
+            if (t > 0.9) t = 0.9;
+            tTarget = t;
+        }
+
+        //this gets called when the user clicks on the video
+        void mediaElement_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            isMouseDown = false;
+        }
+
+        void  mediaElement_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isMouseDown)
+            {
+                Point p = e.GetPosition(mediaElement);
+                double t = p.X / mediaElement.ActualWidth;
+                if (t < 0.1) t = 0.1;
+                if (t > 0.9) t = 0.9;
+                tTarget = t;
+            }
+        }
+
+        void mediaElement_MediaOpened(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                videoSeconds = mediaElement.NaturalDuration.TimeSpan.TotalSeconds;
+                System.Diagnostics.Debug.WriteLine("loaded video");
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        #endregion
+
     }
 }

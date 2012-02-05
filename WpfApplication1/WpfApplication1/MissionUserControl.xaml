@@ -38,10 +38,6 @@
 				<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
 				<EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="100"/>
 			</DoubleAnimationUsingKeyFrames>
-			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(BlurEffect.KernelType)" Storyboard.TargetName="blurGrid">
-				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static KernelType.Gaussian}"/>
-				<DiscreteObjectKeyFrame KeyTime="0:0:0.4" Value="{x:Static KernelType.Gaussian}"/>
-			</ObjectAnimationUsingKeyFrames>
 		</Storyboard>
 		<Storyboard x:Key="unblur">
 			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(BlurEffect.Radius)" Storyboard.TargetName="blurGrid">
@@ -58,16 +54,16 @@
 	</UserControl.Triggers>
     <Grid x:Name="mainGrid">
         <Button Panel.ZIndex ="1" Content="Back" Height="21" HorizontalAlignment="Left" Margin="162,31,0,0" x:Name="backButton" VerticalAlignment="Top" Width="177" Click="backButton_Click" d:LayoutOverrides="HorizontalAlignment" Opacity="0"/>
-        <Grid x:Name="videoGrid" Margin="0" Panel.ZIndex ="2" d:IsHidden="True">
+        <Grid x:Name="videoGrid" Margin="0" Panel.ZIndex ="2">
         	<MediaElement x:Name="introMediaElement" Stretch="UniformToFill" LoadedBehavior="Pause" />
         	<Button x:Name="introSkipButton" Content="Skip" Margin="0,0,8,8" Height="23" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Click="introSkipButton_Click" />            
         </Grid>
         <Grid x:Name="blurGrid" Margin="0">
         	<Grid.Effect>
-        		<BlurEffect Radius="0"/>
+        		<BlurEffect Radius="0" KernelType="Box"/>
         	</Grid.Effect>
         	<my:MissionTimelineUserControl x:Name="missionTimeline" Panel.ZIndex ="1" Height="71" VerticalAlignment="Bottom" Margin="30,0,304,0" />
         </Grid>
-        <my:MissionMilestoneUserControl Panel.ZIndex ="1" x:Name="missionMilestoneUserControl" Margin="0" />
+        <my:MissionMilestoneUserControl Panel.ZIndex ="1" x:Name="missionMilestoneUserControl" Margin="0" Visibility="Hidden" />
     </Grid>
 </UserControl>

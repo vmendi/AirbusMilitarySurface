@@ -11,8 +11,13 @@
     mc:Ignorable="d"
 	x:Class="WpfApplication1.MainWindow"
 	x:Name="Window"
-	Title="MainWindow" d:DesignWidth="1291.5" d:DesignHeight="758.5" Width="1296" Height="758" Background="Black">
-    
+	Title="MainWindow" d:DesignWidth="1291.5" d:DesignHeight="758.5" Width="1296" Height="758" Background="Black"
+    >
+
+
+    <!-- fullscreen -->
+    <!-- WindowStyle="None" Topmost="True" WindowState="Maximized" ResizeMode="NoResize" -->
+
     <Grid x:Name="mainGrid" Margin="0">
         <!-- all missions go here, they get automatically loaded from Mission0UserControl, Mission1UserControl, etc. according to missionId -->
         <local:MissionUserControl Tag="missionId=0 introVideo=_missionIntroVideos/mission0.wmv_" Visibility="Hidden"/>
@@ -27,6 +32,7 @@
         <local:MissionUserControl Tag="missionId=9 introVideo=_missionIntroVideos/mission9.wmv_" Visibility="Hidden"/>
         
         <local:WorldUserControl x:Name="worldUserControl"/>
+        <local:PlanePopupUserControl x:Name="planePopup" Margin="-3,-4.5,0,0" Panel.ZIndex="6" HorizontalAlignment="Left" VerticalAlignment="Top" d:LayoutOverrides="Width, Height"/>
     </Grid>
 
 </Window>

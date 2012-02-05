@@ -5,29 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ee="http://schemas.microsoft.com/expression/2010/effects" x:Name="userControl" x:Class="WpfApplication1.MissionMilestoneThumbnailUserControl" 
              mc:Ignorable="d">
-	<UserControl.Resources>
-		<Storyboard x:Key="select">
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Opacity)" Storyboard.TargetName="userControl">
-				<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1"/>
-			</DoubleAnimationUsingKeyFrames>
-		</Storyboard>
-		<Storyboard x:Key="unselect">
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Opacity)" Storyboard.TargetName="userControl">
-				<EasingDoubleKeyFrame KeyTime="0" Value="1"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
-			</DoubleAnimationUsingKeyFrames>
-		</Storyboard>
-	</UserControl.Resources>
 	<UserControl.Effect>
 		<DropShadowEffect Color="White" ShadowDepth="0" BlurRadius="62" Opacity="0"/>
 	</UserControl.Effect>
-	<UserControl.Triggers>
-		<EventTrigger RoutedEvent="FrameworkElement.Loaded">
-			<BeginStoryboard Storyboard="{StaticResource select}"/>
-			<BeginStoryboard Storyboard="{StaticResource unselect}"/>
-		</EventTrigger>
-	</UserControl.Triggers>
     <StackPanel x:Name="stackPanel" Orientation="Horizontal" VerticalAlignment="Top">
     	<StackPanel.Effect>
     		<DropShadowEffect ShadowDepth="0" BlurRadius="15"/>

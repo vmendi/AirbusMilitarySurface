@@ -113,6 +113,9 @@
     <Compile Include="PlaneCardUserControl.xaml.cs">
       <DependentUpon>PlaneCardUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PlaneIconUserControl.xaml.cs">
+      <DependentUpon>PlaneIconUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PlaneInfoUserControl.xaml.cs">
       <DependentUpon>PlaneInfoUserControl.xaml</DependentUpon>
     </Compile>
@@ -220,6 +223,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="PlaneIconUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PlaneInfoUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -292,6 +299,8 @@
     <Resource Include="icons\missionIconId5.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="missionIntroVideos\sample_mpeg4.mp4" />
+    <Resource Include="planePopup\menuArrow.png" />
     <Resource Include="textures\panoramas\A330MRTT.jpg" />
     <Resource Include="textures\panoramas\A400M.jpg" />
     <Resource Include="textures\panoramas\C295-Chile-consola.jpg" />

@@ -95,7 +95,7 @@
     	</Grid.RenderTransform>
     	<Rectangle x:Name="rectangle" Fill="#FFF4F4F5" Margin="0,0,0,36" Stroke="Black"/>
     	<Path x:Name="path" Data="M61,217 L93.5,247.5 121.5,217.5" Fill="#FFF4F4F5" Height="40" Margin="73.5,0,73,0.5" Stretch="Fill" Stroke="Black" VerticalAlignment="Bottom"/>
-    	<Button x:Name="exploreButton" Content="Explore" Height="50" Margin="21,17,26.5,0" VerticalAlignment="Top" FontSize="18.667" OpacityMask="Black"/>
+    	<Button x:Name="exploreButton" Content="Explore" Height="50" Margin="21,17,26.5,0" VerticalAlignment="Top" FontSize="18.667" OpacityMask="Black" Click="exploreButton_Click" />
     	<Button x:Name="locationsButton" Content="¿Dónde opera?" Margin="21,80,26.5,0" FontSize="18.667" Height="50" VerticalAlignment="Top" OpacityMask="Black" Click="locationsButton_Click" />
     	<TextBlock x:Name="textBlock" Height="66.5" Margin="21,143.5,26.5,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18.667" OpacityMask="Black"><Run Language="es-es" Text="Drag the aircraft to see range"/></TextBlock>
     </Grid>

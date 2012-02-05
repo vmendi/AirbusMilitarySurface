@@ -23,12 +23,15 @@ namespace WpfApplication1
 
         #region Data
 
+        private DateTime lastTick;
+
         private bool isMouseDown = false;
         private Point lastMousePos;
 
         Quaternion cameraAngularVelocity = new Quaternion(new Vector3D(0.0f, 1.0f, 0.0f), 0.0f);
         private readonly float cameraAngularVelocityDamp = 0.95f;
         private readonly float cameraAngularVelocityMax = 1.0f;
+        private readonly float cameraRotationInputMultiplier = 1.0f;
 
         #endregion
 
@@ -60,21 +63,103 @@ namespace WpfApplication1
         {
             InitializeComponent();
 
+            //read settings
+            cameraRotationInputMultiplier = WpfApplication1.Properties.Settings.Default.PanoramaCameraRotationInputMultiplier;
+            cameraAngularVelocityMax = WpfApplication1.Properties.Settings.Default.PanoramaCameraAngularVelocityMax;
+
             //attach ourselves to rendering event
             System.Windows.Media.CompositionTarget.Rendering += new EventHandler(CompositionTarget_Rendering);
         }
 
         #endregion
 
+        #region Methods
+
+        private Quaternion ClampAngle(Quaternion value, float min, float max)
+        {
+            if (value.Angle > max) return new Quaternion(value.Axis, max);
+            if (value.Angle < min) return new Quaternion(value.Axis, min);
+            return value;
+        }
+
+        #endregion
+
+        #region Method handlers
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+
+            Point p = e.GetPosition(viewport);
+            double mouseDeltaX = p.X - lastMousePos.X;
+            lastMousePos = p;
+
+            if (isMouseDown)
+            {
+                Quaternion delta = new Quaternion(new Vector3D(0.0f, 1.0f, 0.0f), mouseDeltaX);
+
+                //apply delta to camera angular velocity
+                cameraAngularVelocity = Quaternion.Slerp(cameraAngularVelocity, delta, 0.1f);
+
+                //clamp camera angular velocity
+                float cameraAngularVelocityMaxScale = 5.0f;
+                cameraAngularVelocity = ClampAngle(cameraAngularVelocity, -cameraAngularVelocityMax * cameraAngularVelocityMaxScale, cameraAngularVelocityMax * cameraAngularVelocityMaxScale);
+            }
+        }
+
+        protected override void OnMouseDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseDown(e);
+
+            viewport.CaptureMouse();
+
+            isMouseDown = true;
+
+            Point p = e.GetPosition(viewport);
+            lastMousePos = p;
+        }
+
+        protected override void OnMouseUp(MouseButtonEventArgs e)
+        {
+            base.OnMouseUp(e);
+
+            isMouseDown = false;
+
+            viewport.ReleaseMouseCapture();
+        }
+
+        #endregion
+
+        #region Event handlers
+
         //this gets called once per frame
         void CompositionTarget_Rendering(object sender, EventArgs e)
         {
+            DateTime now = DateTime.Now;
+            TimeSpan elapsed = now - lastTick;
+            lastTick = now;
+
             //get the current orientantion from the RotateTransform3D
             RotateTransform3D rt = (RotateTransform3D)myPerspectiveCamera.Transform;
             AxisAngleRotation3D r = (AxisAngleRotation3D)rt.Rotation;
 
-            r.Angle = (DateTime.Now.Second * 1000.0f + DateTime.Now.Millisecond) * 0.01f;
+            // Apply angular velocity to camera
+            Quaternion q = new Quaternion(r.Axis, r.Angle);
 
+            //calculate velocity quaternion given passed time
+            Quaternion v = new Quaternion(cameraAngularVelocity.Axis, cameraAngularVelocity.Angle * elapsed.Milliseconds * 0.05f * cameraRotationInputMultiplier);
+
+            //apply velocity quaternion
+            q *= v;
+            r.Axis = q.Axis;
+            r.Angle = q.Angle;
+
+            //damp camera angular velocity
+            Quaternion zeroVelocity = new Quaternion(cameraAngularVelocity.Axis, 0.0f);
+            cameraAngularVelocity = Quaternion.Slerp(cameraAngularVelocity, zeroVelocity, elapsed.Milliseconds * 0.01f * cameraAngularVelocityDamp);
         }
+
+        #endregion
+
     }
 }

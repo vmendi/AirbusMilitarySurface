@@ -45,6 +45,9 @@ namespace WpfApplication1
             }
 
             worldUserControl.ViewMissionEvent += new WorldUserControl.ViewMissionEventHandler(worldUserControl_ViewMissionEvent);
+            worldUserControl.PlanePopupUserControl = planePopup;
+
+            planePopup.Visibility = System.Windows.Visibility.Hidden;
         }
 
         #endregion

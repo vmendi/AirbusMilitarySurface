@@ -60,7 +60,21 @@ namespace WpfApplication1
             set
             {
                 SetValue(MediaFileProperty, value);
-                mediaElement.Source = value;
+
+                //for some reason if we set the relative uri it works in the designer but doesn't work when we run the app normally.
+                //if we set the full path then it raises an exception when inside the designer
+                if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
+                {
+                    mediaElement.Source = value;
+                }
+                else
+                {
+                    if (value != null)
+                    {
+                        Uri n = new Uri(System.Reflection.Assembly.GetExecutingAssembly().Location + @"/../../../" + value.ToString(), UriKind.Absolute);
+                        mediaElement.Source = n;
+                    }
+                }
             }
         }
 
@@ -76,10 +90,25 @@ namespace WpfApplication1
             mediaElement.MouseDown += new MouseButtonEventHandler(mediaElement_MouseDown);
             playVideoButton.MouseDown += new MouseButtonEventHandler(playVideoButton_MouseDown);
 
+            /*
             mediaElement.LoadedBehavior = MediaState.Manual;
             mediaElement.Position = new TimeSpan(0, 0, 0, 0);
             mediaElement.Stop();
             isMediaElementPlaying = false;
+            */
+        }
+
+        #endregion
+
+        #region Methods
+
+        public void StopVideo()
+        {
+            playVideoButton.Visibility = System.Windows.Visibility.Visible;
+            isMediaElementPlaying = false;
+            mediaElement.LoadedBehavior = MediaState.Manual;
+            mediaElement.Position = new TimeSpan(0, 0, 0, 0);
+            mediaElement.Stop();
         }
 
         #endregion
@@ -89,10 +118,7 @@ namespace WpfApplication1
         //this gets called when the video is finished playing
         void mediaElement_MediaEnded(object sender, RoutedEventArgs e)
         {
-            playVideoButton.Visibility = System.Windows.Visibility.Visible;
-            isMediaElementPlaying = false;
-            mediaElement.Stop();
-            mediaElement.Position = new TimeSpan(0, 0, 0, 0);
+            StopVideo();
         }
 
         //this gets called when the user clicks on the "play video" button

@@ -87,15 +87,14 @@ namespace WpfApplication1
 
             #region Data
 
-            private Button button;//this is the button on the world map which represents this plane
+            private PlaneIconUserControl button;//this is the button on the world map which represents this plane
             private Point3D position;
-            private int planeTypeId;
 
             #endregion
 
             #region Properties
 
-            public Button Button
+            public PlaneIconUserControl Button
             { get { return button; } }
 
             public Point3D Position
@@ -105,22 +104,16 @@ namespace WpfApplication1
             }
 
             public int PlaneTypeId
-            { get { return planeTypeId; } }
+            { get { return button.PlaneTypeId; } }
 
             #endregion
 
             #region Construction
 
-            public PlaneInfo(Button button, Point3D position, int planeTypeId)
+            public PlaneInfo(PlaneIconUserControl button)
             {
                 this.button = button;
-                this.position = position;
-                this.planeTypeId = planeTypeId;
-
-                position = new Point3D();
-
-                //hide all mission icons except the one corresponding to the assigned plane type
-                HideAllChildrenExcept(FindChildWithName(button, "grid"), "planeIcon" + planeTypeId);
+                position = button.GetPosition();
             }
 
             #endregion
@@ -153,7 +146,7 @@ namespace WpfApplication1
 
             #region Construction
 
-            public PlaneTypeInfo(Button button, int planeTypeId) : base(button, new Point3D(0.0f, 0.0f, 0.0f), planeTypeId)
+            public PlaneTypeInfo(PlaneIconUserControl button) : base(button)
             {
                 isOnWorld = false;
 
@@ -282,7 +275,22 @@ namespace WpfApplication1
         //used to reset camera position and orientation
         private Quaternion cameraInitialOrientation;
         private float cameraInitialZoom;
+
+        private PlanePopupUserControl planePopup;
         
+        #endregion
+
+        #region Properties
+
+        public PlanePopupUserControl PlanePopupUserControl
+        {
+            set
+            {
+                planePopup = value;
+                planePopup.HidingEvent += new WpfApplication1.PlanePopupUserControl.HidingEventHandler(planePopup_HidingEvent);
+            }
+        }
+
         #endregion
 
         #region Events
@@ -333,6 +341,9 @@ namespace WpfApplication1
 
             //get called when the user wants to see the locations of a plane type
             planePopOutUserControl.ShowPlaneLocationsEvent += new PlanePopOutUserControl.ShowPlaneLocationsEventHandler(planePopOutUserControl_ShowPlaneLocationsEvent);
+
+            //get called when the user wants to see a plane's information
+            planePopOutUserControl.ViewPlaneInfoEvent += new PlanePopOutUserControl.ViewPlaneInfoEventHandler(planePopOutUserControl_ViewPlaneInfoEvent);
 
             //attach ourselves to rendering event
             System.Windows.Media.CompositionTarget.Rendering += new EventHandler(CompositionTarget_Rendering);
@@ -449,7 +460,7 @@ namespace WpfApplication1
         {
             for (int iPlaneInfo = 0; iPlaneInfo < planeInfos.Count; iPlaneInfo++)
             {
-                Button button = planeInfos[iPlaneInfo].Button;
+                PlaneIconUserControl button = planeInfos[iPlaneInfo].Button;
                 if (planeInfos[iPlaneInfo].PlaneTypeId == planeTypeId)
                 {
                     Storyboard storyboard = (Storyboard)button.Template.Resources["fadeIn"];
@@ -588,7 +599,7 @@ namespace WpfApplication1
         }
 
         //find the PlaneTypeInfo that is associated to a particular plane type Button
-        private PlaneTypeInfo PlaneTypeInfoByButton(Button button)
+        private PlaneTypeInfo PlaneTypeInfoByButton(PlaneIconUserControl button)
         {
             for (int iPlaneTypeInfo = 0; iPlaneTypeInfo < planeTypeInfos.Length; iPlaneTypeInfo++)
             {
@@ -803,6 +814,12 @@ namespace WpfApplication1
 
         #region Method handlers
 
+        //this gets called when the plane popup window closes
+        void planePopup_HidingEvent(object sender, PlanePopupUserControl.HidingEventArgs e)
+        {
+            ((Storyboard)Resources["unblur"]).Begin();
+        }
+
         protected override void OnMouseWheel(MouseWheelEventArgs e)
         {
             base.OnMouseWheel(e);
@@ -832,11 +849,9 @@ namespace WpfApplication1
         {
             base.OnMouseDown(e);
 
-            viewport.CaptureMouse();
+            //viewport.CaptureMouse();
 
             isMouseDown = true;
-
-            Point p = e.GetPosition(viewport);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
@@ -850,7 +865,7 @@ namespace WpfApplication1
             if (planeTypeButtonState == PlaneTypeButtonStates.Dragging)
             {
                 planeTypeInfoButtonMouseDown.IsOnWorld = false;
-                Button planeTypeButton = planeTypeInfoButtonMouseDown.Button;
+                PlaneIconUserControl planeTypeButton = planeTypeInfoButtonMouseDown.Button;
                 planeTypeButton.Margin = new Thickness(0, 0, grid.ActualWidth - p.X - planeTypeButton.ActualWidth / 2, grid.ActualHeight - p.Y - planeTypeButton.ActualHeight / 2);
 
                 //if the plane type button is over the plane types rectangle, it´s always enabled
@@ -1062,7 +1077,7 @@ namespace WpfApplication1
             planeTypeInfoButtonMouseDown = null;
             planeTypeButtonState = PlaneTypeButtonStates.Normal;
 
-            viewport.ReleaseMouseCapture();
+            //viewport.ReleaseMouseCapture();
         }
 
         #endregion
@@ -1116,10 +1131,27 @@ namespace WpfApplication1
             ShowPlaneInfoButtonsWithId(e.planeTypeId);
         }
 
+        //this gets called when the user wants to show a plane's information
+        void planePopOutUserControl_ViewPlaneInfoEvent(object sender, PlanePopOutUserControl.ViewPlaneInfoEventArgs e)
+        {
+            for (int iPlaneTypeInfo = 0; iPlaneTypeInfo < planeTypeInfos.Length; iPlaneTypeInfo++)
+            {
+                if (planeTypeInfos[iPlaneTypeInfo].PlaneTypeId == e.planeTypeId)
+                {
+                    planeTypeInfos[iPlaneTypeInfo].Button.FillData(planePopup);
+
+                    //show plane popup but pass ourselves as tag so we know when it's our turn to unblur
+                    planePopup.Show(this);
+
+                    ((Storyboard)Resources["blur"]).Begin();
+                }
+            }
+        }
+
         //this gets called when the mouse goes down on one of the plane type buttons
         void planeTypeButton_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Button button = (Button)sender;
+            PlaneIconUserControl button = (PlaneIconUserControl)sender;
             
             //record the fact that a plane type button was clicked
             planeTypeInfoButtonMouseDown = PlaneTypeInfoByButton(button);
@@ -1132,7 +1164,16 @@ namespace WpfApplication1
             SwitchToDisplayMode(DisplayMode.Planes);
 
             //when the mouse goes down it captures the mouse, so we need to claim it back
-            viewport.CaptureMouse();
+            button.CaptureMouse();
+        }
+
+        //this gets called when the mouse goes down on one of the plane type buttons
+        void planeTypeButton_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            PlaneIconUserControl button = (PlaneIconUserControl)sender;
+
+            //when the mouse goes down it captures the mouse, so we need to claim it back
+            button.ReleaseMouseCapture();
         }
 
         //this gets called when one of the mission type toggle buttons is clicked
@@ -1176,7 +1217,6 @@ namespace WpfApplication1
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             //extract mission information from the Button controls representing missions and store it for later use
-            int buttonCount = 0;
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(grid); i++)
             {
                 DependencyObject child = VisualTreeHelper.GetChild(grid, i);
@@ -1198,12 +1238,14 @@ namespace WpfApplication1
                             button.Click += new RoutedEventHandler(missionButton_Click);
                         }
                     }
-                    else if (ExtractTypeData(button, "plane", out spherical, out typeId))
+                }
+                else if (child != null && child.GetType() == typeof(PlaneIconUserControl))
+                {
+                    PlaneIconUserControl button = (PlaneIconUserControl)child;
+                    if (!button.IsPlaneTypeControl)
                     {
-                        planeInfos.Add(new PlaneInfo(button, spherical, typeId));
+                        planeInfos.Add(new PlaneInfo(button));
                     }
-
-                    buttonCount++;
                 }
             }
 
@@ -1216,17 +1258,18 @@ namespace WpfApplication1
 
             //create plane type infos
             planeTypeInfos = new PlaneTypeInfo[5];
-            planeTypeInfos[0] = new PlaneTypeInfo(planeType0, 0);
-            planeTypeInfos[1] = new PlaneTypeInfo(planeType1, 1);
-            planeTypeInfos[2] = new PlaneTypeInfo(planeType2, 2);
-            planeTypeInfos[3] = new PlaneTypeInfo(planeType3, 3);
-            planeTypeInfos[4] = new PlaneTypeInfo(planeType4, 4);
+            planeTypeInfos[0] = new PlaneTypeInfo(planeType0);
+            planeTypeInfos[1] = new PlaneTypeInfo(planeType1);
+            planeTypeInfos[2] = new PlaneTypeInfo(planeType2);
+            planeTypeInfos[3] = new PlaneTypeInfo(planeType3);
+            planeTypeInfos[4] = new PlaneTypeInfo(planeType4);
 
             //attach to the mouse down event of the plane type buttons
             //note we use "preview" because of bubbling events
             for (int iPlaneTypeInfo = 0; iPlaneTypeInfo < planeTypeInfos.Length; iPlaneTypeInfo++)
             {
                 planeTypeInfos[iPlaneTypeInfo].Button.PreviewMouseDown += new MouseButtonEventHandler(planeTypeButton_MouseDown);
+                planeTypeInfos[iPlaneTypeInfo].Button.PreviewMouseUp += new MouseButtonEventHandler(planeTypeButton_MouseUp);
             }
 
             //hide plane type pop up

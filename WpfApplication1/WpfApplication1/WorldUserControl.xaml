@@ -145,7 +145,7 @@
             </ControlTemplate>
 
             <!-- Plane type button -->
-            <ControlTemplate x:Key="planeTypeControlTemplate" TargetType="{x:Type Button}">
+            <ControlTemplate x:Key="planeTypeControlTemplate" TargetType="{x:Type local:PlaneIconUserControl}">
                 <ControlTemplate.Resources>
                     <Storyboard x:Key="fadeIn">
                         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="grid">
@@ -236,11 +236,26 @@
             		<EasingDoubleKeyFrame KeyTime="0:0:1.4" Value="0"/>
             	</DoubleAnimationUsingKeyFrames>
             </Storyboard>
+            <Storyboard x:Key="blur">
+            	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(BlurEffect.Radius)" Storyboard.TargetName="grid">
+            		<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+            		<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="30"/>
+            	</DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+            <Storyboard x:Key="unblur">
+            	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(BlurEffect.Radius)" Storyboard.TargetName="grid">
+            		<EasingDoubleKeyFrame KeyTime="0" Value="30"/>
+            		<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
+            	</DoubleAnimationUsingKeyFrames>
+            </Storyboard>
             
         </ResourceDictionary>            
     </UserControl.Resources>
 	<UserControl.Triggers>
-		<EventTrigger RoutedEvent="FrameworkElement.Loaded"/>
+		<EventTrigger RoutedEvent="FrameworkElement.Loaded">
+			<BeginStoryboard x:Name="blur_BeginStoryboard" Storyboard="{StaticResource blur}"/>
+			<BeginStoryboard Storyboard="{StaticResource unblur}"/>
+		</EventTrigger>
 	</UserControl.Triggers>
 
     <Grid x:Name="grid">
@@ -330,6 +345,9 @@
 
 
         </Grid.Resources>
+    	<Grid.Effect>
+    		<BlurEffect KernelType="Box" Radius="0"/>
+    	</Grid.Effect>
 
 
 
@@ -404,11 +422,11 @@
 
         <!-- Aviones individuales en el glogo terráqueo /////////////////////////////////////////////////////////////////////////////-->
         <!-- Los parámetros especiales van en el tag, como un string-->
-        <Button Panel.ZIndex="3" Template="{StaticResource planeTypeControlTemplate}" Height="45" HorizontalAlignment="Left" Margin="50" VerticalAlignment="Top" Width="45" Tag="planeTypeId=0 latitude=57 09 N longitude=002 09 W"/>
-        <Button Panel.ZIndex="3" Template="{StaticResource planeTypeControlTemplate}" Height="45" HorizontalAlignment="Left" Margin="50" VerticalAlignment="Top" Width="45" Tag="planeTypeId=1 latitude=34 55 S longitude=138 36 E"/>
-        <Button Panel.ZIndex="3" Template="{StaticResource planeTypeControlTemplate}" Height="45" HorizontalAlignment="Left" Margin="50" VerticalAlignment="Top" Width="45" Tag="planeTypeId=2 latitude=36 50 N longitude=003 00 E"/>
-        <Button Panel.ZIndex="3" Template="{StaticResource planeTypeControlTemplate}" Height="45" HorizontalAlignment="Left" Margin="50" VerticalAlignment="Top" Width="45" Tag="planeTypeId=3 latitude=52 22 N longitude=004 53 E"/>
-        <Button Panel.ZIndex="3" Template="{StaticResource planeTypeControlTemplate}" Height="45" HorizontalAlignment="Left" Margin="50" VerticalAlignment="Top" Width="45" Tag="planeTypeId=4 latitude=37 58 N longitude=023 43 E"/>
+        <local:PlaneIconUserControl Panel.ZIndex="3" PlaneTypeId="0" IsPlaneTypeControl="false" Latitude="57 09 N" Longitude="002 09 W" Template="{StaticResource planeTypeControlTemplate}" Height="45" HorizontalAlignment="Left" Margin="50" VerticalAlignment="Top" Width="45"/>
+        <local:PlaneIconUserControl Panel.ZIndex="3" PlaneTypeId="1" IsPlaneTypeControl="false" Latitude="34 55 S" Longitude="138 36 E" Template="{StaticResource planeTypeControlTemplate}" Height="45" HorizontalAlignment="Left" Margin="50" VerticalAlignment="Top" Width="45"/>
+        <local:PlaneIconUserControl Panel.ZIndex="3" PlaneTypeId="2" IsPlaneTypeControl="false" Latitude="36 50 N" Longitude="003 00 E" Template="{StaticResource planeTypeControlTemplate}" Height="45" HorizontalAlignment="Left" Margin="50" VerticalAlignment="Top" Width="45"/>
+        <local:PlaneIconUserControl Panel.ZIndex="3" PlaneTypeId="3" IsPlaneTypeControl="false" Latitude="52 22 N" Longitude="004 53 E" Template="{StaticResource planeTypeControlTemplate}" Height="45" HorizontalAlignment="Left" Margin="50" VerticalAlignment="Top" Width="45"/>
+        <local:PlaneIconUserControl Panel.ZIndex="3" PlaneTypeId="4" IsPlaneTypeControl="false" Latitude="37 58 N" Longitude="023 43 E" Template="{StaticResource planeTypeControlTemplate}" Height="45" HorizontalAlignment="Left" Margin="50" VerticalAlignment="Top" Width="45"/>
 
         <local:ViewMissionUserControl x:Name="viewMissionUserControl" Panel.ZIndex="3" Margin="0,120,0,0" VerticalAlignment="Top" Height="124" HorizontalAlignment="Left" Width="99" />
         
@@ -419,11 +437,11 @@
         <Rectangle Panel.ZIndex="4" HorizontalAlignment="Right" Margin="0,0,160.619,24" Width="45" Height="45" VerticalAlignment="Bottom" StrokeDashArray="1 0 1" Stroke="#FF007FC2" StrokeThickness="2" />
         <Rectangle Panel.ZIndex="4" HorizontalAlignment="Right" Margin="0,0,87.495,24" Width="45" Height="45" VerticalAlignment="Bottom" StrokeDashArray="1 0 1" Stroke="#FF007FC2" StrokeThickness="2" />
         <Rectangle Panel.ZIndex="4" HorizontalAlignment="Right" Margin="0,0,9.723,24" Width="45" Height="45" VerticalAlignment="Bottom" StrokeDashArray="1 0 1" Stroke="#FF007FC2" StrokeThickness="2" />
-        <Button Panel.ZIndex="5" x:Name ="planeType0" Template ="{StaticResource planeTypeControlTemplate}" HorizontalAlignment="Right" Margin="0,0,315.724,24" Width="45" Height="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height" />
-        <Button Panel.ZIndex="5" x:Name ="planeType1" Template ="{StaticResource planeTypeControlTemplate}" HorizontalAlignment="Right" Margin="0,0,238.391,24" Width="45" Height="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height" />
-        <Button Panel.ZIndex="5" x:Name ="planeType2" Template ="{StaticResource planeTypeControlTemplate}" HorizontalAlignment="Right" Margin="0,0,160.619,24" Width="45" Height="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height" />
-        <Button Panel.ZIndex="5" x:Name ="planeType3" Template ="{StaticResource planeTypeControlTemplate}" Margin="0,0,87.495,24" Height="45" HorizontalAlignment="Right" Width="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height" />
-        <Button Panel.ZIndex="5" x:Name ="planeType4" Template ="{StaticResource planeTypeControlTemplate}" Margin="0,0,9.723,24" Height="45" HorizontalAlignment="Right" Width="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height" />
+        <local:PlaneIconUserControl Panel.ZIndex="5" x:Name ="planeType0" PlaneTypeId="0" IsPlaneTypeControl="true" Template ="{StaticResource planeTypeControlTemplate}" HorizontalAlignment="Right" Margin="0,0,315.724,24" Width="45" Height="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height" PopupCardImage="missionBackgrounds/background0.png" PopupInfoDescriptionText="INFO DESC 0" PopupInfoMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv" PopupInfoTitleText="INFO TITLE 0" PopupPanoramaImage="textures/panoramas/C295-Chile-trasera.jpg" PopupVideoMediaFile="missionIntroVideos/sample_mpeg4.mp4" PopupTitleText="CS 100" PopupSubtitleText="THE CLIENT'S NEEDS 100" />
+        <local:PlaneIconUserControl Panel.ZIndex="5" x:Name ="planeType1" PlaneTypeId="1" IsPlaneTypeControl="true" Template ="{StaticResource planeTypeControlTemplate}" HorizontalAlignment="Right" Margin="0,0,238.391,24" Width="45" Height="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height" PopupCardImage="missionBackgrounds/background1.png" PopupInfoDescriptionText="INFO DESC 1" PopupInfoMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv" PopupInfoTitleText="INFO TITLE 1" PopupPanoramaImage="textures/panoramas/C295-Chile-Delantera.jpg" PopupVideoMediaFile="missionIntroVideos/sample_mpeg4.mp4" PopupSubtitleText="THE CLIENT'S NEEDS 101" PopupTitleText="CS 101" />
+        <local:PlaneIconUserControl Panel.ZIndex="5" x:Name ="planeType2" PlaneTypeId="2" IsPlaneTypeControl="true" Template ="{StaticResource planeTypeControlTemplate}" HorizontalAlignment="Right" Margin="0,0,160.619,24" Width="45" Height="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height" PopupCardImage="missionBackgrounds/background2.png" PopupInfoDescriptionText="INFO DESC 2" PopupInfoMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv" PopupInfoTitleText="INFO TITLE 2" PopupPanoramaImage="textures/panoramas/C295-Chile-consola.jpg" PopupVideoMediaFile="missionIntroVideos/sample_mpeg4.mp4" PopupSubtitleText="THE CLIENT'S NEEDS 102" PopupTitleText="CS 102" />
+        <local:PlaneIconUserControl Panel.ZIndex="5" x:Name ="planeType3" PlaneTypeId="3" IsPlaneTypeControl="true" Template ="{StaticResource planeTypeControlTemplate}" Margin="0,0,87.495,24" Height="45" HorizontalAlignment="Right" Width="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height"  PopupCardImage="missionBackgrounds/background3.png" PopupInfoDescriptionText="INFO DESC 3" PopupInfoMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv" PopupInfoTitleText="INFO TITLE 3" PopupPanoramaImage="textures/panoramas/C295-Portugal.jpg" PopupVideoMediaFile="missionIntroVideos/sample_mpeg4.mp4" PopupSubtitleText="THE CLIENT'S NEEDS 103" PopupTitleText="CS 103" />
+        <local:PlaneIconUserControl Panel.ZIndex="5" x:Name ="planeType4" PlaneTypeId="4" IsPlaneTypeControl="true" Template ="{StaticResource planeTypeControlTemplate}" Margin="0,0,9.723,24" Height="45" HorizontalAlignment="Right" Width="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height"   PopupCardImage="missionBackgrounds/background4.png" PopupInfoDescriptionText="INFO DESC 4" PopupInfoMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv" PopupInfoTitleText="INFO TITLE 4" PopupPanoramaImage="textures/panoramas/A400M.jpg" PopupVideoMediaFile="missionIntroVideos/sample_mpeg4.mp4" PopupSubtitleText="THE CLIENT'S NEEDS 104" PopupTitleText="CS 104" />
         <TextBlock Panel.ZIndex="4" HorizontalAlignment="Right" Margin="0,0,315.724,8" TextWrapping="Wrap" Text="C-212" VerticalAlignment="Bottom"/>
         <TextBlock Panel.ZIndex="4" HorizontalAlignment="Right" Margin="0,0,242.774,8.04" TextWrapping="Wrap" Text="CN-235" VerticalAlignment="Bottom"/>
         <TextBlock Panel.ZIndex="4" HorizontalAlignment="Right" Margin="0,0,173.979,8.04" TextWrapping="Wrap" Text="C-295" VerticalAlignment="Bottom"/>
@@ -443,7 +461,7 @@
             <TextBlock HorizontalAlignment="Left" Margin="88.666,0,0,8.04" TextWrapping="Wrap" Text="Tactical" VerticalAlignment="Bottom"/>
             <TextBlock HorizontalAlignment="Left" Margin="166.438,0,0,8.04" TextWrapping="Wrap" Text="Transport" VerticalAlignment="Bottom"/>
             <TextBlock HorizontalAlignment="Left" Margin="250.665,0,0,8.04" TextWrapping="Wrap" Text="Civil" VerticalAlignment="Bottom"/>
-            <TextBlock Margin="317,0,0,8" TextWrapping="Wrap" Text="Factories" VerticalAlignment="Bottom" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment"/>            
+            <TextBlock Margin="317,0,0,8" TextWrapping="Wrap" Text="Factories" VerticalAlignment="Bottom" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment"/>
         </Grid>        
 
     </Grid>

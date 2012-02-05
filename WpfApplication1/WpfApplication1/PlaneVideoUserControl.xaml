@@ -6,7 +6,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" Width="792" Height="462">
     <Grid>
-    	<MediaElement x:Name="mediaElement" Margin="0"/>
+    	<MediaElement x:Name="mediaElement" Margin="0" ScrubbingEnabled="True" LoadedBehavior="Pause" Stretch="Fill"/>
             
     </Grid>
 </UserControl>

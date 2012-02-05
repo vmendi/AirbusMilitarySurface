@@ -33,6 +33,16 @@ namespace WpfApplication1
             }
         }
 
+        public class ViewPlaneInfoEventArgs
+        {
+            public int planeTypeId;
+
+            public ViewPlaneInfoEventArgs(int planeTypeId)
+            {
+                this.planeTypeId = planeTypeId;
+            }
+        }
+
         private enum States
         {
             PoppingIn,
@@ -64,7 +74,13 @@ namespace WpfApplication1
         public delegate void ShowPlaneLocationsEventHandler(object sender, ShowPlaneLocationsEventArgs e);
 
         // event declaration 
-        public event ShowPlaneLocationsEventHandler ShowPlaneLocationsEvent; 
+        public event ShowPlaneLocationsEventHandler ShowPlaneLocationsEvent;
+
+        // delegate declaration 
+        public delegate void ViewPlaneInfoEventHandler(object sender, ViewPlaneInfoEventArgs e);
+
+        // event declaration 
+        public event ViewPlaneInfoEventHandler ViewPlaneInfoEvent; 
 
         #endregion
 
@@ -136,6 +152,16 @@ namespace WpfApplication1
             if (ShowPlaneLocationsEvent != null)
             {
                 ShowPlaneLocationsEvent(this, new ShowPlaneLocationsEventArgs(planeTypeId));
+            }
+
+            PopOut();
+        }
+
+        private void exploreButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ViewPlaneInfoEvent != null)
+            {
+                ViewPlaneInfoEvent(this, new ViewPlaneInfoEventArgs(planeTypeId));
             }
 
             PopOut();
