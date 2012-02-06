@@ -810,8 +810,8 @@ namespace WpfApplication1
                 if (viewMissionUserControl.SourceButton != null)
                 {
                     //show mission button again (it was hidden when the view mission panel appeared)
-                    Storyboard storyboard = (Storyboard)viewMissionUserControl.SourceButton.Resources["in"];
-                    storyboard.Begin();
+                    //Storyboard storyboard = (Storyboard)viewMissionUserControl.SourceButton.Resources["in"];
+                    //storyboard.Begin();
                 }
 
                 viewMissionUserControl.HideAnimated();
@@ -883,8 +883,8 @@ namespace WpfApplication1
                         if (viewMissionUserControl.SourceButton != null)
                         {
                             //show mission button again (it was hidden when the view mission panel appeared)
-                            Storyboard storyboard = (Storyboard)viewMissionUserControl.SourceButton.Resources["in"];
-                            storyboard.Begin();
+                            //Storyboard storyboard = (Storyboard)viewMissionUserControl.SourceButton.Resources["in"];
+                            //storyboard.Begin();                            
                         }
 
                         //hide view mission panel
@@ -917,6 +917,7 @@ namespace WpfApplication1
                 //center coordinates
                 double x = p.X - viewport.ActualWidth * 0.5;
                 double y = 1.0 - (p.Y - viewport.ActualHeight * 0.5);
+                y = 0.5; //only rotate around Y axis
 
                 x /= (viewport.ActualHeight * 0.5);
                 y /= (viewport.ActualHeight * 0.5);
@@ -1096,9 +1097,13 @@ namespace WpfApplication1
 
             //hide mission icon of the mission that has just been clicked on
             {
-                Storyboard storyboard = (Storyboard)button.Resources["out"];
-                storyboard.Begin();
+                //Storyboard storyboard = (Storyboard)button.Resources["out"];
+                //storyboard.Begin();
             }
+
+            //we've processed it so stop propagating message
+            e.Handled = true;
+            isMouseDown = false;
         }
 
         //this gets called when the user wants to show the locations of a plane

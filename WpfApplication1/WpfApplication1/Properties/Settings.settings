@@ -15,10 +15,10 @@
       <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="WorldCameraZoomMax" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">1.7</Value>
+      <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="WorldCameraZoomMinRelative" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.4</Value>
+      <Value Profile="(Default)">0.3</Value>
     </Setting>
     <Setting Name="WorldCameraAngularVelocityMax" Type="System.Single" Scope="User">
       <Value Profile="(Default)">1</Value>

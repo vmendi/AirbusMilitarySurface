@@ -26,9 +26,6 @@
 			</ObjectAnimationUsingKeyFrames>
 		</Storyboard>
 	</UserControl.Resources>
-	<UserControl.Triggers>
-		<EventTrigger RoutedEvent="FrameworkElement.Loaded"/>
-	</UserControl.Triggers>
     <Grid x:Name="grid">
     	<Rectangle Fill="#FFF4F4F5" Stroke="Black" Margin="8,0,0,0"/>
     	<TextBlock x:Name="description" Margin="16,0,8,36" TextWrapping="Wrap" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et magna lorem." FontSize="8" Height="32" VerticalAlignment="Bottom"/>
