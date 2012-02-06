@@ -175,20 +175,36 @@
         </Viewport3D>
 
         <!-- Misiones individuales en el glogo terráqueo /////////////////////////////////////////////////////////////////////////////-->
-        <!-- Los parámetros especiales van en el tag, como un string-->
         <!-- -->
-        <!-- Id de misión: -->
-        <!-- id=0 o id=1 etc-->
-        <!-- cada id debe ser distinto, y enlaza la misión del mapa con con el missionId de MissionUserControl que sale en MainWindow.xaml-->
+        <!-- MissionId: -->
+        <!-- Representa el id de la misión.-->
+        <!-- Cada id debe ser distinto, y enlaza la misión del mapa con con el missionId de MissionUserControl que sale en MainWindow.xaml-->
         <!-- -->
-        <!-- Tipo de misión: -->
-        <!-- missionTypeId=0 o missionTypeId=1 etc-->
+        <!-- MissionTypeId: -->
+        <!-- Esto representa el tipo de misión (si es una misión humanitaria, militar o lo que sea). -->
+        <!-- Para que esto funcione bien tiene que haber un MissionIconUserControl que representa un tipo de misión en la botonera con el MissionTypeId que utiliza este control. -->
+        <!-- Por ejemplo si hemos definido un tipo de misión humanitaria con un MissionIconUserControl con MissionTypeId=0 y IsMissionTypeControl=true, para los controles de esta -->
+        <!-- sección que queramos que representen una misión de tipo humanitario tendríamos que poner MissionTypeId=0  -->
+        <!-- -->
+        <!-- IsMissionTypeControl: -->
+        <!-- Esto nos dice si el control representa un tipo de misión o una misión concreta en el mundo.  Como en esta sección ponemos las misiones individuales, siempre lo ponemos a false.  -->
+        <!-- -->
+        <!-- PanelDescription: -->
+        <!-- Frase de texto que sale en el popup cuando pulsamos sobre esta misión.  -->
+        <!-- -->
+        <!-- IconImage: -->
+        <!-- Imagen que se muestra como icono de esta misión.  -->
+        <!-- -->
+        <!-- PanelIconImage: -->
+        <!-- Imagen que se muestra en el popup cuando pulsamos sobre esta misión.  -->
         <!-- -->
         <!-- Coordenadas: -->
         <!-- coger coordenadas paises de: http://www.infoplease.com/ipa/A0001769.html -->
-        <!-- latitude = grados_latitud minutos_latitud N/S -->
-        <!-- longitude = grados_longitude minutos_longitude W/E -->
         <!-- he puesto de ejemplo milán, madrid, tokyo, etc.-->
+        <!-- -->
+        <!-- HorizontalAlignment siempre Left -->
+        <!-- VerticalAlignment siempre Top -->
+        <!-- -->
         <local:MissionIconUserControl Panel.ZIndex="3" Height="45" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="39" MissionId="0" MissionTypeId="0" IsMissionTypeControl="false" Latitude="19 49 N" Longitude="072 10 W" PanelDescription="Lorem ipsum ad his scripta blandit partiendo, eum fastidii accumsan euripidis in, eum liber hendrerit an." IconImage="icons/missionIconId0.png" PanelIconImage="icons/missionIconId0.png"/>
         <local:MissionIconUserControl Panel.ZIndex="3" Height="45" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="39" MissionId="1" MissionTypeId="1" IsMissionTypeControl="false" Latitude="11 35 N" Longitude="042 58 E" PanelDescription="description1" IconImage="icons/missionIconId1.png" PanelIconImage="icons/missionIconId1.png"/>
         <local:MissionIconUserControl Panel.ZIndex="3" Height="45" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="39" MissionId="2" MissionTypeId="2" IsMissionTypeControl="false" Latitude="27 08 N" Longitude="014 21 W" PanelDescription="blala lalala" IconImage="icons/missionIconId2.png" PanelIconImage="icons/missionIconId2.png"/>
@@ -201,7 +217,18 @@
         <local:MissionIconUserControl Panel.ZIndex="3" Height="45" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="39" MissionId="9" MissionTypeId="1" IsMissionTypeControl="false" Latitude="33 54 N" Longitude="068 12 E" PanelDescription="holalalal lalala lala" IconImage="icons/missionIconId1.png" PanelIconImage="icons/missionIconId1.png"/>
 
         <!-- Aviones individuales en el glogo terráqueo /////////////////////////////////////////////////////////////////////////////-->
-        <!-- Los parámetros especiales van en el tag, como un string-->
+        <!-- Funciona igual que las misiones-->
+        <!-- -->
+        <!-- PlaneTypeId es el id del tipo de avión de este avión concreto.  es decir que es el id del modelo de avión.  los modelos de avión se declaran más abajo después de esta sección. aquí ponemos 0 si es del modelo 0, 1 si es del modelo 1, y así. -->
+        <!-- IsPlaneTypeControl en esta sección siempre es false porque todos los controles de esta sección representan aviones concretos, no modelos de avión. -->
+        <!-- -->
+        <!-- Latitude y Longitude funciona igual que en las misiones -->
+        <!-- -->
+        <!-- HorizontalAlignment siempre Left -->
+        <!-- VerticalAlignment siempre Top -->
+        <!-- -->
+        <!-- IconImage es la imagen que se muestra como icono de este avión-->
+        <!-- -->
         <local:PlaneIconUserControl Panel.ZIndex="3" PlaneTypeId="0" IsPlaneTypeControl="false" Latitude="57 09 N" Longitude="002 09 W" Height="45" HorizontalAlignment="Left" Margin="50" VerticalAlignment="Top" Width="45" IconImage="icons/planeIconId0.png"/>
         <local:PlaneIconUserControl Panel.ZIndex="3" PlaneTypeId="1" IsPlaneTypeControl="false" Latitude="34 55 S" Longitude="138 36 E" Height="45" HorizontalAlignment="Left" Margin="50" VerticalAlignment="Top" Width="45" IconImage="icons/planeIconId1.png"/>
         <local:PlaneIconUserControl Panel.ZIndex="3" PlaneTypeId="2" IsPlaneTypeControl="false" Latitude="36 50 N" Longitude="003 00 E" Height="45" HorizontalAlignment="Left" Margin="50" VerticalAlignment="Top" Width="45" IconImage="icons/planeIconId2.png"/>
@@ -217,11 +244,37 @@
         <Rectangle Panel.ZIndex="4" Margin="612.381,0,622.619,32" Height="45" VerticalAlignment="Bottom" StrokeDashArray="1 0 1" Stroke="#FF007FC2" StrokeThickness="2" />
         <Rectangle Panel.ZIndex="4" HorizontalAlignment="Right" Margin="0,0,549.495,32" Width="45" Height="45" VerticalAlignment="Bottom" StrokeDashArray="1 0 1" Stroke="#FF007FC2" StrokeThickness="2" />
         <Rectangle Panel.ZIndex="4" HorizontalAlignment="Right" Margin="0,0,471.723,32" Width="45" Height="45" VerticalAlignment="Bottom" StrokeDashArray="1 0 1" Stroke="#FF007FC2" StrokeThickness="2" />
+
+        <!-- Estos controles representan los tipos de avión que existen (es decir los modelos de avión) /////////////////////////////////////////////////////////////////////////////-->
+        <!-- se pueden agregar tantos como quieras-->
+        <!-- -->
+        <!-- PlaneTypeId representa el id del modelo de avión.  no puede haber dos repetidos en esta sección-->
+        <!-- IsPlaneTypeControl en esta sección siempre es true puesto que estos controles representan tipos de avión, no aviones concretos -->
+        <!-- -->
+        <!-- HorizontalAlignment="Right" siempre-->
+        <!-- VerticalAlignment="Bottom" siempre-->
+        <!-- -->
+        <!-- PopupCardImage es la imagen que se muestra en la sección "ficha" del popup -->
+        <!-- -->
+        <!-- PopupInfoDescriptionText es el texto que se muestra en la descripción de la sección "info" del popup-->
+        <!-- PopupInfoMediaFile es el vídeo que se muestra en la sección "info" del popup-->
+        <!-- PopupInfoTitleText es el texto que se muestra en el título de la sección "info" del popup-->
+        <!-- -->
+        <!-- PopupPanoramaImage es la imagen que se muestra en el panorama-->
+        <!-- -->
+        <!-- PopupVideoMediaFile es el vídeo que se muestra para el 3D del avión-->
+        <!-- -->
+        <!-- PopupTitleText es el título que se muestra en el popup-->
+        <!-- PopupSubtitleText es el subtítulo que se muestra en el popup-->
+        <!-- -->
+        <!-- IconImage es la imagen que se muestra como icono de este tipo de avión-->
+        <!-- -->
         <local:PlaneIconUserControl Panel.ZIndex="5" PlaneTypeId="0" IsPlaneTypeControl="true" Margin="0,0,777.724,31.96" Height="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height" PopupCardImage="missionBackgrounds/background0.png" PopupInfoDescriptionText="INFO DESC 0" PopupInfoMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv" PopupInfoTitleText="INFO TITLE 0" PopupPanoramaImage="textures/panoramas/C295-Chile-trasera.jpg" PopupVideoMediaFile="missionIntroVideos/sample_mpeg4.mp4" PopupTitleText="CS 100" PopupSubtitleText="THE CLIENT'S NEEDS 100" IconImage="icons/planeIconId0.png" HorizontalAlignment="Right" Width="45" />
         <local:PlaneIconUserControl Panel.ZIndex="5" PlaneTypeId="1" IsPlaneTypeControl="true" Margin="0,0,700.391,32" Height="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height" PopupCardImage="missionBackgrounds/background1.png" PopupInfoDescriptionText="INFO DESC 1" PopupInfoMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv" PopupInfoTitleText="INFO TITLE 1" PopupPanoramaImage="textures/panoramas/C295-Chile-Delantera.jpg" PopupVideoMediaFile="missionIntroVideos/sample_mpeg4.mp4" PopupSubtitleText="THE CLIENT'S NEEDS 101" PopupTitleText="CS 101" IconImage="icons/planeIconId1.png" HorizontalAlignment="Right" Width="45" />
         <local:PlaneIconUserControl Panel.ZIndex="5" PlaneTypeId="2" IsPlaneTypeControl="true" Margin="0,0,622.619,32" Height="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height" PopupCardImage="missionBackgrounds/background2.png" PopupInfoDescriptionText="INFO DESC 2" PopupInfoMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv" PopupInfoTitleText="INFO TITLE 2" PopupPanoramaImage="textures/panoramas/C295-Chile-consola.jpg" PopupVideoMediaFile="missionIntroVideos/sample_mpeg4.mp4" PopupSubtitleText="THE CLIENT'S NEEDS 102" PopupTitleText="CS 102" IconImage="icons/planeIconId2.png" HorizontalAlignment="Right" Width="45" />
         <local:PlaneIconUserControl Panel.ZIndex="5" PlaneTypeId="3" IsPlaneTypeControl="true" Margin="0,0,549.495,32" Height="45" HorizontalAlignment="Right" Width="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height"  PopupCardImage="missionBackgrounds/background3.png" PopupInfoDescriptionText="INFO DESC 3" PopupInfoMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv" PopupInfoTitleText="INFO TITLE 3" PopupPanoramaImage="textures/panoramas/C295-Portugal.jpg" PopupVideoMediaFile="missionIntroVideos/sample_mpeg4.mp4" PopupSubtitleText="THE CLIENT'S NEEDS 103" PopupTitleText="CS 103" IconImage="icons/planeIconId3.png" />
         <local:PlaneIconUserControl Panel.ZIndex="5" PlaneTypeId="4" IsPlaneTypeControl="true" Margin="0,0,471.723,32" Height="45" HorizontalAlignment="Right" Width="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height"   PopupCardImage="missionBackgrounds/background4.png" PopupInfoDescriptionText="INFO DESC 4" PopupInfoMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv" PopupInfoTitleText="INFO TITLE 4" PopupPanoramaImage="textures/panoramas/A400M.jpg" PopupVideoMediaFile="missionIntroVideos/sample_mpeg4.mp4" PopupSubtitleText="THE CLIENT'S NEEDS 104" PopupTitleText="CS 104" IconImage="icons/planeIconId4.png" />
+        
         <TextBlock Panel.ZIndex="4" HorizontalAlignment="Left" Margin="470.636,0,0,16" TextWrapping="Wrap" Text="C-212" VerticalAlignment="Bottom"/>
         <TextBlock Panel.ZIndex="4" HorizontalAlignment="Left" Margin="534.609,0,0,16.04" TextWrapping="Wrap" Text="CN-235" VerticalAlignment="Bottom"/>
         <TextBlock Panel.ZIndex="4" Margin="612.381,0,622.619,16.04" TextWrapping="Wrap" Text="C-295" VerticalAlignment="Bottom"/>
@@ -231,12 +284,18 @@
         <Grid x:Name="missionTypesGrid" Panel.ZIndex="3" d:IsHidden="True" >
 
             <!-- Mission types -->
+            <!-- Estos controles representan los diferentes tipos de misión que existen-->
+            <!-- -->
+            <!-- MissionTypeId es un identificador para cada tipo de misión.  en esta sección deben ser siempre distintos, puesto que cada control representa un tipo de misión diferente (no una misión concreta). -->
+            <!-- IsMissionTypeControl siempre debe ser "true" en esta sección puesto que todos los controles representan tipos de misión, no misiones concretas.-->
+            <!-- IconImage es la imagen que se muestra como icono de este tipo de misión-->
+            <!-- -->
             <Rectangle RadiusX="12" RadiusY="13" StrokeThickness="0" Fill="#99CECECE" HorizontalAlignment="Left" Width="376" Height="81" VerticalAlignment="Bottom"/>
-            <local:MissionIconUserControl HorizontalAlignment="Left" Margin="11.333,0,0,24" Width="45" Height="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height"  MissionTypeId="0" IsMissionTypeControl="true" IconImage="icons/missionIconId0.png" PanelIconImage="icons/missionIconId0.png"/>
-            <local:MissionIconUserControl HorizontalAlignment="Left" Margin="88.666,0,0,24" Width="45" Height="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height"  MissionTypeId="1" IsMissionTypeControl="true" IconImage="icons/missionIconId1.png" PanelIconImage="icons/missionIconId1.png"/>
-            <local:MissionIconUserControl HorizontalAlignment="Left" Margin="166.438,0,0,24" Width="45" Height="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height" MissionTypeId="2" IsMissionTypeControl="true" IconImage="icons/missionIconId2.png" PanelIconImage="icons/missionIconId2.png"/>
-            <local:MissionIconUserControl Margin="239.562,0,0,24" Height="45" HorizontalAlignment="Left" Width="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height" MissionTypeId="3" IsMissionTypeControl="true" IconImage="icons/missionIconId3.png" PanelIconImage="icons/missionIconId3.png"/>
-            <local:MissionIconUserControl Margin="317.334,0,0,24" Height="45" HorizontalAlignment="Left" Width="45" d:LayoutOverrides="HorizontalAlignment, Height" VerticalAlignment="Bottom" MissionTypeId="4" IsMissionTypeControl="true" IconImage="icons/missionIconId4.png" PanelIconImage="icons/missionIconId4.png"/>
+            <local:MissionIconUserControl HorizontalAlignment="Left" Margin="11.333,0,0,24" Width="45" Height="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height"  MissionTypeId="0" IsMissionTypeControl="true" IconImage="icons/missionIconId0.png"/>
+            <local:MissionIconUserControl HorizontalAlignment="Left" Margin="88.666,0,0,24" Width="45" Height="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height"  MissionTypeId="1" IsMissionTypeControl="true" IconImage="icons/missionIconId1.png"/>
+            <local:MissionIconUserControl HorizontalAlignment="Left" Margin="166.438,0,0,24" Width="45" Height="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height" MissionTypeId="2" IsMissionTypeControl="true" IconImage="icons/missionIconId2.png"/>
+            <local:MissionIconUserControl Margin="239.562,0,0,24" Height="45" HorizontalAlignment="Left" Width="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height" MissionTypeId="3" IsMissionTypeControl="true" IconImage="icons/missionIconId3.png"/>
+            <local:MissionIconUserControl Margin="317.334,0,0,24" Height="45" HorizontalAlignment="Left" Width="45" d:LayoutOverrides="HorizontalAlignment, Height" VerticalAlignment="Bottom" MissionTypeId="4" IsMissionTypeControl="true" IconImage="icons/missionIconId4.png"/>
             <TextBlock HorizontalAlignment="Left" Margin="2.666,0,0,8.04" TextWrapping="Wrap" Text="Humanitary" VerticalAlignment="Bottom"/>
             <TextBlock HorizontalAlignment="Left" Margin="88.666,0,0,8.04" TextWrapping="Wrap" Text="Tactical" VerticalAlignment="Bottom"/>
             <TextBlock HorizontalAlignment="Left" Margin="166.438,0,0,8.04" TextWrapping="Wrap" Text="Transport" VerticalAlignment="Bottom"/>

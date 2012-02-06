@@ -86,6 +86,9 @@ namespace WpfApplication1
             introMediaElement.MediaEnded += new RoutedEventHandler(introMediaElement_MediaEnded);
 
             missionMilestoneUserControl.BackEvent += new MissionMilestoneUserControl.BackEventHandler(missionMilestoneUserControl_BackEvent);
+
+            //hide for the time being
+            missionTimeline.Visibility = System.Windows.Visibility.Hidden;
         }
 
         #endregion
