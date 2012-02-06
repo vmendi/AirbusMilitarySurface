@@ -32,50 +32,39 @@ namespace WpfApplication1
 
             #region Data
 
-            private Button button;//this is the button on the world map which represents this mission
+            private MissionIconUserControl button;//this is the button on the world map which represents this mission
             private Point3D position;
-            private int missionTypeId;
-            private int missionIconId;//this is the id of the icon that gets displayed on the panel that appears when we click on a mission button
-            private string description;//for the mission panel
-            private int missionId; //this identifies individual missions, and allows us to relate each one to the missionId in MainWindow.xaml
 
             #endregion
 
             #region Properties
 
-            public Button Button
+            public MissionIconUserControl Button
             { get { return button; } }
 
             public Point3D Position
             { get { return position; } }
 
             public int MissionTypeId
-            { get { return missionTypeId; } }
+            { get { return button.MissionTypeId; } }
 
-            public int MissionIconId
-            { get { return missionIconId; } }
+            public string PanelDescription
+            { get { return button.PanelDescription; } }
 
-            public string Description
-            { get { return description; } }
+            public ImageSource PanelIconImage
+            { get { return button.PanelIconImage; } }
 
             public int MissionId
-            { get { return missionId; } }
+            { get { return button.MissionId; } }
 
             #endregion
 
             #region Construction
 
-            public MissionInfo(Button button, Point3D position, int missionTypeId, int missionIconId, string description, int missionId)
+            public MissionInfo(MissionIconUserControl button)
             {
                 this.button = button;
-                this.position = position;
-                this.missionTypeId = missionTypeId;
-                this.missionIconId = missionIconId;
-                this.description = description;
-                this.missionId = missionId;
-
-                //hide all mission icons except the one corresponding to the assigned mission
-                HideAllChildrenExcept(FindChildWithName(button, "iconGrid"), "missionIcon" + missionTypeId);
+                this.position = button.GetPosition();
             }
 
             #endregion
@@ -252,13 +241,13 @@ namespace WpfApplication1
         private readonly List<MissionInfo> missionInfos = new List<MissionInfo>();
 
         //array holding the buttons representing the bottom row of available mission types
-        private readonly ToggleButton[] missionTypeToggleButtons;
+        private readonly List<MissionIconUserControl> missionTypeToggleButtons = new List<MissionIconUserControl>();
 
         //array holding information about the planes on the world map
         private List<PlaneInfo> planeInfos = new List<PlaneInfo>();
 
         //array holding the buttons representing the bottom row of available plane types
-        private PlaneTypeInfo[] planeTypeInfos;
+        private List<PlaneTypeInfo> planeTypeInfos = new List<PlaneTypeInfo>();
 
         private PlaneTypeInfo planeTypeInfoButtonMouseDown;
         private DateTime planeTypeInfoButtonMouseDownTime;        
@@ -309,25 +298,6 @@ namespace WpfApplication1
 		{
 			InitializeComponent();
 
-            //store mission type buttons
-            missionTypeToggleButtons = new ToggleButton[5];
-            missionTypeToggleButtons[0] = missionType0;
-            missionTypeToggleButtons[1] = missionType1;
-            missionTypeToggleButtons[2] = missionType2;
-            missionTypeToggleButtons[3] = missionType3;
-            missionTypeToggleButtons[4] = missionType4;
-
-            //subscribe to the checked/unchecked events in the mission type toggle buttons
-            for (int iMissionType = 0; iMissionType < missionTypeToggleButtons.Length; iMissionType++)
-            {
-                missionTypeToggleButtons[iMissionType].Checked += new RoutedEventHandler(missionTypeToggleButton_Checked);
-                missionTypeToggleButtons[iMissionType].PreviewMouseDown += new MouseButtonEventHandler(missionTypeToggleButton_PreviewMouseDown);
-
-                missionTypeToggleButtons[iMissionType].Unchecked += new RoutedEventHandler(missionTypeToggleButton_Unchecked);
-
-                missionTypeToggleButtons[iMissionType].IsChecked = true;
-            }
-
             //read settings
             cameraAngularVelocityDamp = WpfApplication1.Properties.Settings.Default.WorldCameraAngularVelocityDamp;
             cameraZoomVelocityDamp = WpfApplication1.Properties.Settings.Default.WorldCameraZoomVelocityDamp;
@@ -361,6 +331,9 @@ namespace WpfApplication1
             cameraInitialOrientation = new Quaternion(r.Axis, r.Angle);
             cameraInitialZoom = (float)((Vector3D)myPerspectiveCamera.Position).Length;
 
+            //hide mission types for now
+            missionTypesGrid.Visibility = System.Windows.Visibility.Hidden;
+
             Loaded += new RoutedEventHandler(MainWindow_Loaded);
 		}
 
@@ -384,9 +357,9 @@ namespace WpfApplication1
             myPerspectiveCamera.Position = (Point3D)cameraPosition;
 
             //make sure we´re viewing all mission types
-            for (int iMissionType = 0; iMissionType < missionTypeToggleButtons.Length; iMissionType++)
+            for (int iMissionType = 0; iMissionType < missionTypeToggleButtons.Count; iMissionType++)
             {
-                missionTypeToggleButtons[iMissionType].IsChecked = true;
+                missionTypeToggleButtons[iMissionType].Check();
             }
 
             //show all mission buttons in the world
@@ -438,18 +411,18 @@ namespace WpfApplication1
         {
             for (int iMissionInfo = 0; iMissionInfo < missionInfos.Count; iMissionInfo++)
             {
-                Button button = missionInfos[iMissionInfo].Button;
+                MissionIconUserControl button = missionInfos[iMissionInfo].Button;
                 if (missionInfos[iMissionInfo].MissionTypeId == missionTypeId)
                 {
                     if (!visible)
                     {
-                        Storyboard storyboard = (Storyboard)button.Template.Resources["out"];
-                        storyboard.Begin((Grid)button.Template.FindName("layoutGrid", button));
+                        Storyboard storyboard = (Storyboard)button.Resources["out"];
+                        storyboard.Begin();
                     }
                     else
                     {
-                        Storyboard storyboard = (Storyboard)button.Template.Resources["in"];
-                        storyboard.Begin((Grid)button.Template.FindName("layoutGrid", button));
+                        Storyboard storyboard = (Storyboard)button.Resources["in"];
+                        storyboard.Begin();
                     }
                 }
             }
@@ -463,13 +436,13 @@ namespace WpfApplication1
                 PlaneIconUserControl button = planeInfos[iPlaneInfo].Button;
                 if (planeInfos[iPlaneInfo].PlaneTypeId == planeTypeId)
                 {
-                    Storyboard storyboard = (Storyboard)button.Template.Resources["fadeIn"];
-                    storyboard.Begin((Grid)button.Template.FindName("grid", button));
+                    Storyboard storyboard = (Storyboard)button.Resources["fadeIn"];
+                    storyboard.Begin();
                 }
                 else
                 {
-                    Storyboard storyboard = (Storyboard)button.Template.Resources["fadeOut"];
-                    storyboard.Begin((Grid)button.Template.FindName("grid", button));
+                    Storyboard storyboard = (Storyboard)button.Resources["fadeOut"];
+                    storyboard.Begin();
                 }
             }
         }
@@ -480,7 +453,7 @@ namespace WpfApplication1
             //(check for null because this gets called while initializing the window, before we´ve initialised planeTypeInfos)
             if (planeTypeInfos != null)
             {
-                for (int iPlaneTypeInfo = 0; iPlaneTypeInfo < planeTypeInfos.Length; iPlaneTypeInfo++)
+                for (int iPlaneTypeInfo = 0; iPlaneTypeInfo < planeTypeInfos.Count; iPlaneTypeInfo++)
                 {
                     planeTypeInfos[iPlaneTypeInfo].ResetPosition();
                 }
@@ -588,9 +561,9 @@ namespace WpfApplication1
         }
 
         //find the mission type id that is associated to a particular mission ToggleButton
-        private int MissionTypeIdByToggleButton(ToggleButton toggleButton)
+        private int MissionTypeIdByToggleButton(MissionIconUserControl toggleButton)
         {
-            for (int iMissionTypeToggleButton = 0; iMissionTypeToggleButton < missionTypeToggleButtons.Length; iMissionTypeToggleButton++)
+            for (int iMissionTypeToggleButton = 0; iMissionTypeToggleButton < missionTypeToggleButtons.Count; iMissionTypeToggleButton++)
             {
                 if (toggleButton == missionTypeToggleButtons[iMissionTypeToggleButton]) return iMissionTypeToggleButton;
             }
@@ -601,7 +574,7 @@ namespace WpfApplication1
         //find the PlaneTypeInfo that is associated to a particular plane type Button
         private PlaneTypeInfo PlaneTypeInfoByButton(PlaneIconUserControl button)
         {
-            for (int iPlaneTypeInfo = 0; iPlaneTypeInfo < planeTypeInfos.Length; iPlaneTypeInfo++)
+            for (int iPlaneTypeInfo = 0; iPlaneTypeInfo < planeTypeInfos.Count; iPlaneTypeInfo++)
             {
                 if (button == planeTypeInfos[iPlaneTypeInfo].Button) return planeTypeInfos[iPlaneTypeInfo];
             }
@@ -609,7 +582,7 @@ namespace WpfApplication1
             return null;
         }
 
-        private MissionInfo MissionInfoByButton(Button button)
+        private MissionInfo MissionInfoByButton(MissionIconUserControl button)
         {
             for (int iMissionInfo = 0; iMissionInfo < missionInfos.Count; iMissionInfo++)
             {
@@ -837,8 +810,8 @@ namespace WpfApplication1
                 if (viewMissionUserControl.SourceButton != null)
                 {
                     //show mission button again (it was hidden when the view mission panel appeared)
-                    Storyboard storyboard = (Storyboard)viewMissionUserControl.SourceButton.Template.Resources["in"];
-                    storyboard.Begin((Grid)viewMissionUserControl.SourceButton.Template.FindName("layoutGrid", viewMissionUserControl.SourceButton));
+                    Storyboard storyboard = (Storyboard)viewMissionUserControl.SourceButton.Resources["in"];
+                    storyboard.Begin();
                 }
 
                 viewMissionUserControl.HideAnimated();
@@ -905,13 +878,13 @@ namespace WpfApplication1
                 {
                     planePopOutUserControl.PopOut();
 
-                    if (viewMissionUserControl.Opacity == 1.0)
+                    if (viewMissionUserControl.State == ViewMissionUserControl.States.Visible)
                     {
                         if (viewMissionUserControl.SourceButton != null)
                         {
                             //show mission button again (it was hidden when the view mission panel appeared)
-                            Storyboard storyboard = (Storyboard)viewMissionUserControl.SourceButton.Template.Resources["in"];
-                            storyboard.Begin((Grid)viewMissionUserControl.SourceButton.Template.FindName("layoutGrid", viewMissionUserControl.SourceButton));
+                            Storyboard storyboard = (Storyboard)viewMissionUserControl.SourceButton.Resources["in"];
+                            storyboard.Begin();
                         }
 
                         //hide view mission panel
@@ -1070,6 +1043,9 @@ namespace WpfApplication1
                     {
                         //if not dropped on the world, move back to original position
                         planeTypeInfoButtonMouseDown.ResetPosition();
+
+                        //start displaying missions instead of planes
+                        SwitchToDisplayMode(DisplayMode.Missions);
                     }
                 }
             }
@@ -1102,26 +1078,26 @@ namespace WpfApplication1
 
         //this gets called when the user clicks on one of the buttons which represents an actual mission
         //on the world map
-        void missionButton_Click(object sender, RoutedEventArgs e)
+        void missionButton_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Button button = (Button)sender;
+            MissionIconUserControl button = (MissionIconUserControl)sender;
             MissionInfo missionInfo = MissionInfoByButton(button);
 
             //show mission icon of the mission that was last clicked on again
             //(it was hidden when the view mission panel appeared)
             if (viewMissionUserControl.SourceButton != null)
             {
-                Storyboard storyboard = (Storyboard)viewMissionUserControl.SourceButton.Template.Resources["in"];
-                storyboard.Begin((Grid)viewMissionUserControl.SourceButton.Template.FindName("layoutGrid", viewMissionUserControl.SourceButton));
+                Storyboard storyboard = (Storyboard)viewMissionUserControl.SourceButton.Resources["in"];
+                storyboard.Begin();
             }
 
             //display panel with mission information
-            viewMissionUserControl.ViewMissionInfo(missionInfo.MissionIconId, missionInfo.Description, missionInfo.Position, button, missionInfo.MissionId);
+            viewMissionUserControl.ViewMissionInfo(missionInfo.PanelIconImage, missionInfo.PanelDescription, missionInfo.Position, button, missionInfo.MissionId);
 
             //hide mission icon of the mission that has just been clicked on
             {
-                Storyboard storyboard = (Storyboard)button.Template.Resources["out"];
-                storyboard.Begin((Grid)button.Template.FindName("layoutGrid", button));
+                Storyboard storyboard = (Storyboard)button.Resources["out"];
+                storyboard.Begin();
             }
         }
 
@@ -1134,7 +1110,7 @@ namespace WpfApplication1
         //this gets called when the user wants to show a plane's information
         void planePopOutUserControl_ViewPlaneInfoEvent(object sender, PlanePopOutUserControl.ViewPlaneInfoEventArgs e)
         {
-            for (int iPlaneTypeInfo = 0; iPlaneTypeInfo < planeTypeInfos.Length; iPlaneTypeInfo++)
+            for (int iPlaneTypeInfo = 0; iPlaneTypeInfo < planeTypeInfos.Count; iPlaneTypeInfo++)
             {
                 if (planeTypeInfos[iPlaneTypeInfo].PlaneTypeId == e.planeTypeId)
                 {
@@ -1191,8 +1167,8 @@ namespace WpfApplication1
                 || viewMissionUserControl.State == ViewMissionUserControl.States.Visible)
             {
                 //show mission button again (it was hidden when the view mission panel appeared)
-                Storyboard storyboard = (Storyboard)viewMissionUserControl.SourceButton.Template.Resources["in"];
-                storyboard.Begin((Grid)viewMissionUserControl.SourceButton.Template.FindName("layoutGrid", viewMissionUserControl.SourceButton));
+                Storyboard storyboard = (Storyboard)viewMissionUserControl.SourceButton.Resources["in"];
+                storyboard.Begin();
 
                 viewMissionUserControl.HideAnimated();
 
@@ -1201,75 +1177,80 @@ namespace WpfApplication1
         }
 
         //this gets called when one of the mission type toggle buttons is unchecked
-        void missionTypeToggleButton_Unchecked(object sender, RoutedEventArgs e)
+        void missionTypeToggleButton_Unchecked(object sender)
         {
-            SetVisibilityMissionInfoButtonsWithId(MissionTypeIdByToggleButton((ToggleButton)sender), false);            
+            SetVisibilityMissionInfoButtonsWithId(MissionTypeIdByToggleButton((MissionIconUserControl)sender), false);            
         }
 
         //this gets called when one of the mission type toggle buttons is checked
-        void missionTypeToggleButton_Checked(object sender, RoutedEventArgs e)
+        void missionTypeToggleButton_Checked(object sender)
         {
-            SetVisibilityMissionInfoButtonsWithId(MissionTypeIdByToggleButton((ToggleButton)sender), true);
+            SetVisibilityMissionInfoButtonsWithId(MissionTypeIdByToggleButton((MissionIconUserControl)sender), true);
+        }
+
+        public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
+        {
+            if (depObj != null)
+            {
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+                {
+                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
+                    if (child != null && child is T)
+                    {
+                        yield return (T)child;
+                    }
+
+                    foreach (T childOfChild in FindVisualChildren<T>(child))
+                    {
+                        yield return childOfChild;
+                    }
+                }
+            }
         }
 
         //this gets called when the main window is loaded
         //do some additional initialization which can´t take place in constructor
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            //extract mission information from the Button controls representing missions and store it for later use
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(grid); i++)
+            //find controls representing mission types and real world missions and attach ourselves to them
+            IEnumerable<MissionIconUserControl> missionIconUserControls = FindVisualChildren<MissionIconUserControl>(grid);
+            foreach (MissionIconUserControl missionControl in missionIconUserControls)
             {
-                DependencyObject child = VisualTreeHelper.GetChild(grid, i);
-                if (child != null && child.GetType() == typeof(Button))
+                //see if this represents an actual mission (not mission type) on the world map
+                if (!missionControl.IsMissionTypeControl)
                 {
-                    Button button = (Button)child;
-
-                    //see if this represents a mission or a plane on the world map
-                    Point3D spherical;
-                    int typeId;                    
-                    if (ExtractTypeData(button, "mission", out spherical, out typeId))
-                    {
-                        int iconId;
-                        string description;
-                        int id;
-                        if (ExtractMissionData(button, out iconId, out description, out id))
-                        {
-                            missionInfos.Add(new MissionInfo(button, spherical, typeId, iconId, description, id));
-                            button.Click += new RoutedEventHandler(missionButton_Click);
-                        }
-                    }
+                    //the control represents an actual mission on the world map
+                    missionInfos.Add(new MissionInfo(missionControl));
+                    missionControl.MouseDown += new MouseButtonEventHandler(missionButton_MouseDown);
+                    missionControl.CheckBehaviour = false; //we don´t want any toggling behaviour since these represent actual missions on the world map, not mission types
                 }
-                else if (child != null && child.GetType() == typeof(PlaneIconUserControl))
+                else
                 {
-                    PlaneIconUserControl button = (PlaneIconUserControl)child;
-                    if (!button.IsPlaneTypeControl)
-                    {
-                        planeInfos.Add(new PlaneInfo(button));
-                    }
+                    missionTypeToggleButtons.Add(missionControl);
+                    missionControl.Check();
+                    missionControl.PreviewMouseDown += new MouseButtonEventHandler(missionTypeToggleButton_PreviewMouseDown);
+                    missionControl.CheckBehaviour = true; //enable toggle behaviour since these represent mission types, not actual missions
+                    missionControl.Checked += new MissionIconUserControl.CheckedHandler(missionTypeToggleButton_Checked);
+                    missionControl.Unchecked += new MissionIconUserControl.UncheckedHandler(missionTypeToggleButton_Unchecked);
                 }
             }
 
-            //go through the mission type icons and only show the right icon for each mission type
-            for (int iMissionType = 0; iMissionType < missionTypeToggleButtons.Length; iMissionType++)
+            //find controls representing plane types and real world planes and attach ourselves to them
+            IEnumerable<PlaneIconUserControl> planeIconUserControls = FindVisualChildren<PlaneIconUserControl>(grid);
+            foreach (PlaneIconUserControl planeControl in planeIconUserControls)
             {
-                //hide all mission icons except the one corresponding to the assigned mission
-                HideAllChildrenExcept(FindChildWithName(missionTypeToggleButtons[iMissionType], "grid"), "missionIcon" + iMissionType);
-            }
-
-            //create plane type infos
-            planeTypeInfos = new PlaneTypeInfo[5];
-            planeTypeInfos[0] = new PlaneTypeInfo(planeType0);
-            planeTypeInfos[1] = new PlaneTypeInfo(planeType1);
-            planeTypeInfos[2] = new PlaneTypeInfo(planeType2);
-            planeTypeInfos[3] = new PlaneTypeInfo(planeType3);
-            planeTypeInfos[4] = new PlaneTypeInfo(planeType4);
-
-            //attach to the mouse down event of the plane type buttons
-            //note we use "preview" because of bubbling events
-            for (int iPlaneTypeInfo = 0; iPlaneTypeInfo < planeTypeInfos.Length; iPlaneTypeInfo++)
-            {
-                planeTypeInfos[iPlaneTypeInfo].Button.PreviewMouseDown += new MouseButtonEventHandler(planeTypeButton_MouseDown);
-                planeTypeInfos[iPlaneTypeInfo].Button.PreviewMouseUp += new MouseButtonEventHandler(planeTypeButton_MouseUp);
+                //see if this represents an actual plane (not plane type) on the world map
+                if (!planeControl.IsPlaneTypeControl)
+                {
+                    //the control represents an actual plane on the world map
+                    planeInfos.Add(new PlaneInfo(planeControl));
+                }
+                else
+                {
+                    planeTypeInfos.Add(new PlaneTypeInfo(planeControl));
+                    planeControl.PreviewMouseDown += new MouseButtonEventHandler(planeTypeButton_MouseDown);
+                    planeControl.PreviewMouseUp += new MouseButtonEventHandler(planeTypeButton_MouseUp);
+                }
             }
 
             //hide plane type pop up
@@ -1333,7 +1314,7 @@ namespace WpfApplication1
                         planeTypeInfoButtonMouseDown.IsOnWorld = false;
 
                         //move plane type buttons to their original positions (except for the one which we started dragging)
-                        for (int iPlaneTypeInfo = 0; iPlaneTypeInfo < planeTypeInfos.Length; iPlaneTypeInfo++)
+                        for (int iPlaneTypeInfo = 0; iPlaneTypeInfo < planeTypeInfos.Count; iPlaneTypeInfo++)
                         {
                             if (planeTypeInfos[iPlaneTypeInfo] != planeTypeInfoButtonMouseDown)
                                 planeTypeInfos[iPlaneTypeInfo].ResetPosition();
@@ -1400,7 +1381,7 @@ namespace WpfApplication1
                 }
 
                 //PlaneTypeInfos
-                for (int iPlaneTypeInfo = 0; iPlaneTypeInfo < planeTypeInfos.Length; iPlaneTypeInfo++)
+                for (int iPlaneTypeInfo = 0; iPlaneTypeInfo < planeTypeInfos.Count; iPlaneTypeInfo++)
                 {
                     if (planeTypeInfos[iPlaneTypeInfo].IsOnWorld)
                     {

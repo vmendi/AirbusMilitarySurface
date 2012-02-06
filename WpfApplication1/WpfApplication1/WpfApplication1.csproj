@@ -98,6 +98,9 @@
     <Compile Include="Mission9UserControl.xaml.cs">
       <DependentUpon>Mission9UserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MissionIconUserControl.xaml.cs">
+      <DependentUpon>MissionIconUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MissionMilestoneThumbnailUserControl.xaml.cs">
       <DependentUpon>MissionMilestoneThumbnailUserControl.xaml</DependentUpon>
     </Compile>
@@ -180,6 +183,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Mission9UserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MissionIconUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -299,7 +306,7 @@
     <Resource Include="icons\missionIconId5.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="missionIntroVideos\sample_mpeg4.mp4" />
+    <Resource Include="missionIntroVideos\sample_mpeg4.mp4" />
     <Resource Include="planePopup\menuArrow.png" />
     <Resource Include="textures\panoramas\A330MRTT.jpg" />
     <Resource Include="textures\panoramas\A400M.jpg" />

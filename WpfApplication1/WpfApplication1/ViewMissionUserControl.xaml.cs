@@ -70,10 +70,10 @@ namespace WpfApplication1
         private Point3D position;
 
         private Point3D newPosition = new Point3D(0.0f, 0.0f, 0.0f);
-        private int newMissionIconId;
+        private ImageSource newMissionIcon;
         private string newDescription;
         private bool triggerShowAfterHidden = false;
-        private Button sourceButton; //this is the button of the mission on the world map that was clicked on to display us
+        private MissionIconUserControl sourceButton; //this is the button of the mission on the world map that was clicked on to display us
         private int missionId; //id of the mission that we´re displaying
 
         private States state = States.Visible;
@@ -82,7 +82,7 @@ namespace WpfApplication1
 
         #region Properties
 
-        public Button SourceButton
+        public MissionIconUserControl SourceButton
         { get { return sourceButton; } }
 
         public States State
@@ -124,22 +124,21 @@ namespace WpfApplication1
         {
         }
 
-        private void UpdateData(Point3D newPosition, int newMissionIconId, string newDescription)
+        private void UpdateData(Point3D newPosition, ImageSource newMissionIcon, string newDescription)
         {
             position = newPosition;
 
             //replace the mission icon
-            string strUri = Directory.GetCurrentDirectory() + @"\..\..\icons\missionIconId" + newMissionIconId + ".png";
-            missionIcon.Source = new BitmapImage(new Uri(strUri));
+            missionIcon.Source = newMissionIcon;
 
             //set the text description
             description.Text = newDescription;
         }
 
-        public void ViewMissionInfo(int missionIconId, string description, Point3D position, Button button, int missionId)
+        public void ViewMissionInfo(ImageSource missionIcon, string description, Point3D position, MissionIconUserControl button, int missionId)
         {
             newPosition = position;
-            newMissionIconId = missionIconId;
+            newMissionIcon = missionIcon;
             newDescription = description;
             sourceButton = button;
             this.missionId = missionId;
@@ -154,7 +153,7 @@ namespace WpfApplication1
             else
             {
                 //we're already hidden so we can just update the data and show
-                UpdateData(position, missionIconId, description);
+                UpdateData(position, missionIcon, description);
 
                 state = States.Showing;
                 showStoryboard.Begin();
@@ -190,7 +189,7 @@ namespace WpfApplication1
         {
             if (triggerShowAfterHidden)
             {
-                UpdateData(newPosition, newMissionIconId, newDescription);
+                UpdateData(newPosition, newMissionIcon, newDescription);
 
                 state = States.Showing;
                 showStoryboard.Begin();

@@ -24,6 +24,22 @@ namespace WpfApplication1
 
         #region Properties
 
+        //main image shown in the control
+        public static readonly DependencyProperty IconImageProperty = DependencyProperty.Register("IconImageProperty", typeof(ImageSource), typeof(PlaneIconUserControl));
+
+        public ImageSource IconImage
+        {
+            get { return (ImageSource)GetValue(IconImageProperty); }
+            set
+            {
+                SetValue(IconImageProperty, value);
+                image.Source = value;
+            }
+        }
+
+        //
+
+        //id of the type of our plane, used when showing or hiding planes by the id of the type
         public static readonly DependencyProperty PlaneTypeIdProperty = DependencyProperty.Register("PlaneTypeIdProperty", typeof(int), typeof(PlaneIconUserControl));
 
         public int PlaneTypeId
@@ -32,6 +48,7 @@ namespace WpfApplication1
             set { SetValue(PlaneTypeIdProperty, value); }
         }
 
+        //tells us if the control represents a type of plane or an actual plane on the world map
         public static readonly DependencyProperty IsPlaneTypeControlProperty = DependencyProperty.Register("IsPlaneTypeControlProperty", typeof(bool), typeof(PlaneIconUserControl));
 
         public bool IsPlaneTypeControl
@@ -40,6 +57,7 @@ namespace WpfApplication1
             set { SetValue(IsPlaneTypeControlProperty, value); }
         }
 
+        //latitude of the plane on the world map (if representing an actual plane)
         public static readonly DependencyProperty LatitudeProperty = DependencyProperty.Register("LatitudeProperty", typeof(string), typeof(PlaneIconUserControl));
 
         public string Latitude
@@ -48,6 +66,7 @@ namespace WpfApplication1
             set { SetValue(LatitudeProperty, value); }
         }
 
+        //longitude of the plane on the world map (if representing an actual plane)
         public static readonly DependencyProperty LongitudeProperty = DependencyProperty.Register("LongitudeProperty", typeof(string), typeof(PlaneIconUserControl));
 
         public string Longitude
@@ -58,6 +77,7 @@ namespace WpfApplication1
 
         //
 
+        //we use this to fill the title text of the PlanePopupUserControl
         public static readonly DependencyProperty PopupTitleTextProperty = DependencyProperty.Register("PopupTitleTextProperty", typeof(String), typeof(PlaneIconUserControl));
 
         public String PopupTitleText
@@ -66,6 +86,7 @@ namespace WpfApplication1
             set { SetValue(PopupTitleTextProperty, value); }
         }
 
+        //we use this to fill the subtitle text of the PlanePopupUserControl
         public static readonly DependencyProperty PopupSubtitleTextProperty = DependencyProperty.Register("PopupubtitleTextProperty", typeof(String), typeof(PlaneIconUserControl));
 
         public String PopupSubtitleText
@@ -76,6 +97,7 @@ namespace WpfApplication1
 
         //
 
+        //we use this to fill the card image of the PlanePopupUserControl
         public static readonly DependencyProperty PopupCardImageProperty = DependencyProperty.Register("PopupCardImageProperty", typeof(ImageSource), typeof(PlaneIconUserControl));
 
         public ImageSource PopupCardImage
@@ -86,6 +108,7 @@ namespace WpfApplication1
 
         //
 
+        //we use this to fill the title text of the information section of the PlanePopupUserControl
         public static readonly DependencyProperty PopupInfoTitleTextProperty = DependencyProperty.Register("PopupInfoTitleTextProperty", typeof(String), typeof(PlaneIconUserControl));
 
         public string PopupInfoTitleText
@@ -94,6 +117,7 @@ namespace WpfApplication1
             set { SetValue(PopupInfoTitleTextProperty, value); }
         }
 
+        //we use this to fill the description text of the information section of the PlanePopupUserControl
         public static readonly DependencyProperty PopupInfoDescriptionTextProperty = DependencyProperty.Register("PopupDescriptionTextProperty", typeof(String), typeof(PlaneIconUserControl));
 
         public string PopupInfoDescriptionText
@@ -102,6 +126,7 @@ namespace WpfApplication1
             set { SetValue(PopupInfoDescriptionTextProperty, value); }
         }
 
+        //we use this to fill the video file of the information section of the PlanePopupUserControl
         public static readonly DependencyProperty PopupInfoMediaFileProperty = DependencyProperty.Register("PopupMediaFileProperty", typeof(Uri), typeof(PlaneIconUserControl));
 
         public Uri PopupInfoMediaFile
@@ -112,6 +137,7 @@ namespace WpfApplication1
 
         //
 
+        //we use this to fill the panorama image of the PlanePopupUserControl
         public static readonly DependencyProperty PopupPanoramaImageProperty = DependencyProperty.Register("PopupPanoramaImageProperty", typeof(ImageSource), typeof(PlaneIconUserControl));
 
         public ImageSource PopupPanoramaImage
@@ -122,6 +148,7 @@ namespace WpfApplication1
 
         //
 
+        //we use this to fill the video media file of the PlanePopupUserControl
         public static readonly DependencyProperty PopupVideoMediaFileProperty = DependencyProperty.Register("PopupVideoMediaFileProperty", typeof(Uri), typeof(PlaneIconUserControl));
 
         public Uri PopupVideoMediaFile
@@ -137,8 +164,6 @@ namespace WpfApplication1
         public PlaneIconUserControl()
         {
             InitializeComponent();
-
-            Loaded += new RoutedEventHandler(PlaneIconUserControl_Loaded);
         }
 
         #endregion
@@ -202,46 +227,6 @@ namespace WpfApplication1
             }
 
             return spherical;
-        }
-
-        //hides all the children of an object except the one with a particular name (non recursive)
-        private static void HideAllChildrenExcept(DependencyObject dependencyObject, string name)
-        {
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(dependencyObject); i++)
-            {
-                DependencyObject child = VisualTreeHelper.GetChild(dependencyObject, i);
-                if (child != null)
-                {
-                    if (((FrameworkElement)child).Name == name) ((FrameworkElement)child).Visibility = System.Windows.Visibility.Visible;
-                    else ((FrameworkElement)child).Visibility = System.Windows.Visibility.Hidden;
-                }
-            }
-        }
-
-        protected static FrameworkElement FindChildWithName(DependencyObject dependencyObject, string name)
-        {
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(dependencyObject); i++)
-            {
-                DependencyObject child = VisualTreeHelper.GetChild(dependencyObject, i);
-                if (child != null)
-                {
-                    if (((FrameworkElement)child).Name == name) return (FrameworkElement)child;
-
-                    FrameworkElement found = FindChildWithName(child, name);
-                    if (found != null) return found;
-                }
-            }
-            return null;
-        }
-
-        #endregion
-
-        #region Event handlers
-
-        void PlaneIconUserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            //hide all mission icons except the one corresponding to the assigned plane type
-            HideAllChildrenExcept(FindChildWithName(this, "grid"), "planeIcon" + PlaneTypeId);
         }
 
         #endregion
