@@ -42,6 +42,9 @@ namespace WpfApplication1
             for (int iMissionUserControl = 0; iMissionUserControl < missionUserControls.Length; iMissionUserControl++)
             {
                 missionUserControls[iMissionUserControl].BackEvent += new MissionUserControl.BackEventHandler(missionUserControl_BackEvent);
+
+                //all missions use the same PlanePopupUserControl
+                missionUserControls[iMissionUserControl].SetPlanePopupUserControl(planePopup);
             }
 
             worldUserControl.ViewMissionEvent += new WorldUserControl.ViewMissionEventHandler(worldUserControl_ViewMissionEvent);

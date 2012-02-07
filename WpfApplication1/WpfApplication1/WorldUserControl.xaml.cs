@@ -26,6 +26,13 @@ namespace WpfApplication1
 
         #region Classes
 
+        private enum ProjectionType
+        {
+            Plane,
+            Mission,
+            ViewMissionUserControl,
+        }
+
         //represents the data from a single mission, as loaded from the XAML
         private class MissionInfo
         {
@@ -342,19 +349,22 @@ namespace WpfApplication1
         #region Methods
 
         //this resets us to the initial state (camera position, control states, etc)
-        private void Reset()
+        private void Reset(bool resetCamera)
         {
-            //reset camera orientation
-            RotateTransform3D rt = (RotateTransform3D)myPerspectiveCamera.Transform;
-            AxisAngleRotation3D r = (AxisAngleRotation3D)rt.Rotation;
-            r.Axis = cameraInitialOrientation.Axis;
-            r.Angle = cameraInitialOrientation.Angle;
+            if (resetCamera)
+            {
+                //reset camera orientation
+                RotateTransform3D rt = (RotateTransform3D)myPerspectiveCamera.Transform;
+                AxisAngleRotation3D r = (AxisAngleRotation3D)rt.Rotation;
+                r.Axis = cameraInitialOrientation.Axis;
+                r.Angle = cameraInitialOrientation.Angle;
 
-            //reset camera zoom
-            Vector3D cameraPosition = (Vector3D)myPerspectiveCamera.Position;
-            cameraPosition.Normalize();
-            cameraPosition *= cameraInitialZoom;
-            myPerspectiveCamera.Position = (Point3D)cameraPosition;
+                //reset camera zoom
+                Vector3D cameraPosition = (Vector3D)myPerspectiveCamera.Position;
+                cameraPosition.Normalize();
+                cameraPosition *= cameraInitialZoom;
+                myPerspectiveCamera.Position = (Point3D)cameraPosition;
+            }
 
             //make sure we´re viewing all mission types
             for (int iMissionType = 0; iMissionType < missionTypeToggleButtons.Count; iMissionType++)
@@ -369,6 +379,26 @@ namespace WpfApplication1
             }
 
             displayMode = DisplayMode.Missions;
+        }
+
+        public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
+        {
+            if (depObj != null)
+            {
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+                {
+                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
+                    if (child != null && child is T)
+                    {
+                        yield return (T)child;
+                    }
+
+                    foreach (T childOfChild in FindVisualChildren<T>(child))
+                    {
+                        yield return childOfChild;
+                    }
+                }
+            }
         }
 
         public void StartZoom()
@@ -399,7 +429,7 @@ namespace WpfApplication1
 
         public void StartShow()
         {
-            Reset();
+            Reset(true);
 
             //start "in" animation
             Storyboard storyboard = (Storyboard)grid.FindResource("in");
@@ -729,22 +759,35 @@ namespace WpfApplication1
         }
 
         //this projects a point3d to its 2d position on-screen and sets the z-index
-        private void ProjectPoint(FrameworkElement frameworkElement, Point3D point, Matrix3D m, RotateTransform3D rt, bool planeType, ProjectionAlign projectionAlign)
+        private void ProjectPoint(FrameworkElement frameworkElement, Point3D point, Matrix3D m, RotateTransform3D rt, ProjectionType projectionType, ProjectionAlign projectionAlign)
         {
             // Transform the 3D point to 2D
             Point3D transformedPoint = m.Transform(point);
-            if (!planeType)
+            if (projectionType == ProjectionType.Mission)
             {
                 double x = projectionAlign == ProjectionAlign.Right ?   transformedPoint.X :                            transformedPoint.X - frameworkElement.Width / 2;
                 double y = projectionAlign == ProjectionAlign.Top ?     transformedPoint.Y - frameworkElement.Height :  transformedPoint.Y - frameworkElement.Height / 2;
                 frameworkElement.Margin = new Thickness(x, y, 0.0, 0.0);
             }
-            else
+            else if (projectionType == ProjectionType.Plane)
             {
                 //note we don´t support alignment for plane types
                 double x = transformedPoint.X + frameworkElement.Width / 2;
                 double y = transformedPoint.Y + frameworkElement.Height / 2;
                 frameworkElement.Margin = new Thickness(0, 0, ((Grid)frameworkElement.Parent).ActualWidth - x, ((Grid)frameworkElement.Parent).ActualHeight - y);
+            }
+            else if (projectionType == ProjectionType.ViewMissionUserControl)
+            {
+                double x = projectionAlign == ProjectionAlign.Right ? transformedPoint.X : transformedPoint.X - frameworkElement.Width / 2;
+                double y = transformedPoint.Y;
+                x += WpfApplication1.Properties.Settings.Default.ViewMissionUserControlOffsetX;
+                y += WpfApplication1.Properties.Settings.Default.ViewMissionUserControlOffsetY;
+
+                frameworkElement.Margin = new Thickness(x, y, 0.0, 0.0);
+            }
+            else
+            {
+                System.Diagnostics.Debug.Assert(false, "Unexpected projection type");
             }
 
             //set z-index of the mission button according to the side of the sphere that it's on
@@ -791,6 +834,7 @@ namespace WpfApplication1
         void planePopup_HidingEvent(object sender, PlanePopupUserControl.HidingEventArgs e)
         {
             ((Storyboard)Resources["unblur"]).Begin();
+            Reset(false);
         }
 
         protected override void OnMouseWheel(MouseWheelEventArgs e)
@@ -1065,7 +1109,7 @@ namespace WpfApplication1
         void outStoryboard_Completed(object sender, EventArgs e)
         {
             //reset ourselves so we go back to initial state
-            Reset();
+            Reset(true);
         }
 
         //this gets called when the user clicks on the "view mission" button in the ViewMissionUserControl
@@ -1088,8 +1132,8 @@ namespace WpfApplication1
             //(it was hidden when the view mission panel appeared)
             if (viewMissionUserControl.SourceButton != null)
             {
-                Storyboard storyboard = (Storyboard)viewMissionUserControl.SourceButton.Resources["in"];
-                storyboard.Begin();
+                //Storyboard storyboard = (Storyboard)viewMissionUserControl.SourceButton.Resources["in"];
+                //storyboard.Begin();
             }
 
             //display panel with mission information
@@ -1101,7 +1145,7 @@ namespace WpfApplication1
                 //storyboard.Begin();
             }
 
-            //we've processed it so stop propagating message
+            //we've processed it here so stop propagating message
             e.Handled = true;
             isMouseDown = false;
         }
@@ -1191,26 +1235,6 @@ namespace WpfApplication1
         void missionTypeToggleButton_Checked(object sender)
         {
             SetVisibilityMissionInfoButtonsWithId(MissionTypeIdByToggleButton((MissionIconUserControl)sender), true);
-        }
-
-        public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
-        {
-            if (depObj != null)
-            {
-                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
-                {
-                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
-                    if (child != null && child is T)
-                    {
-                        yield return (T)child;
-                    }
-
-                    foreach (T childOfChild in FindVisualChildren<T>(child))
-                    {
-                        yield return childOfChild;
-                    }
-                }
-            }
         }
 
         //this gets called when the main window is loaded
@@ -1376,13 +1400,13 @@ namespace WpfApplication1
                 //MissionInfos
                 for (int iMissionInfo = 0; iMissionInfo < missionInfos.Count; iMissionInfo++)
                 {
-                    ProjectPoint(missionInfos[iMissionInfo].Button, missionInfos[iMissionInfo].Position, m, rt, false, ProjectionAlign.Top);
+                    ProjectPoint(missionInfos[iMissionInfo].Button, missionInfos[iMissionInfo].Position, m, rt, ProjectionType.Mission, ProjectionAlign.Top);
                 }
 
                 //PlaneInfos
                 for (int iPlaneInfo = 0; iPlaneInfo < planeInfos.Count; iPlaneInfo++)
                 {
-                    ProjectPoint(planeInfos[iPlaneInfo].Button, planeInfos[iPlaneInfo].Position, m, rt, false, ProjectionAlign.Center);
+                    ProjectPoint(planeInfos[iPlaneInfo].Button, planeInfos[iPlaneInfo].Position, m, rt, ProjectionType.Mission, ProjectionAlign.Center);
                 }
 
                 //PlaneTypeInfos
@@ -1390,14 +1414,14 @@ namespace WpfApplication1
                 {
                     if (planeTypeInfos[iPlaneTypeInfo].IsOnWorld)
                     {
-                        ProjectPoint(planeTypeInfos[iPlaneTypeInfo].Button, planeTypeInfos[iPlaneTypeInfo].Position, m, rt, true, ProjectionAlign.Center);
+                        ProjectPoint(planeTypeInfos[iPlaneTypeInfo].Button, planeTypeInfos[iPlaneTypeInfo].Position, m, rt, ProjectionType.Plane, ProjectionAlign.Center);
                     }
                 }
 
-                //planePopOutUserControl
+                //viewMissionUserControl
                 if (viewMissionUserControl.State != ViewMissionUserControl.States.Invisible)
                 {
-                    ProjectPoint(viewMissionUserControl, viewMissionUserControl.Position, m, rt, false, ProjectionAlign.Right);
+                    ProjectPoint(viewMissionUserControl, viewMissionUserControl.Position, m, rt, ProjectionType.ViewMissionUserControl, ProjectionAlign.Right);
                 }
             }
         }

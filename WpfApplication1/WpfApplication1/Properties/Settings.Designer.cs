@@ -202,5 +202,29 @@ namespace WpfApplication1.Properties {
                 this["PlaneVideoScrubbingSpeed"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("23")]
+        public double ViewMissionUserControlOffsetX {
+            get {
+                return ((double)(this["ViewMissionUserControlOffsetX"]));
+            }
+            set {
+                this["ViewMissionUserControlOffsetX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-45")]
+        public double ViewMissionUserControlOffsetY {
+            get {
+                return ((double)(this["ViewMissionUserControlOffsetY"]));
+            }
+            set {
+                this["ViewMissionUserControlOffsetY"] = value;
+            }
+        }
     }
 }

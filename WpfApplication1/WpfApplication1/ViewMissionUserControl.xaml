@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" Height="124" Width="99">
+             mc:Ignorable="d" Width="92.25">
 	<UserControl.Resources>
 		<Storyboard x:Key="show">
 			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="grid">
@@ -27,11 +27,24 @@
 		</Storyboard>
 	</UserControl.Resources>
     <Grid x:Name="grid">
-    	<Rectangle Fill="#FFF4F4F5" Stroke="Black" Margin="8,0,0,0"/>
-    	<TextBlock x:Name="description" Margin="16,0,8,36" TextWrapping="Wrap" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque et magna lorem." FontSize="8" Height="32" VerticalAlignment="Bottom"/>
-    	<Button Content="View Mission" Height="24" Margin="16,0,8,8" VerticalAlignment="Bottom" Click="Button_Click" />
-    	<Image x:Name="missionIcon" Margin="16,8,8,67.471" Source="icons/missionIconId0.png"/>
-    	<Path Data="M8.6666667,56.666667 L-0.16699968,64.833001 8.4996733,73.500353" Fill="#FFF4F4F5" Margin="0,56,87,54.8" Stretch="Fill" Stroke="Black"/>
+    	<StackPanel x:Name="stackPanel" Orientation="Horizontal" VerticalAlignment="Top">
+    		<StackPanel.Effect>
+    			<DropShadowEffect ShadowDepth="0" BlurRadius="15"/>
+    		</StackPanel.Effect>
+    		<Grid>
+    			<Image x:Name="missionIcon" Margin="1.357,1.22,0,0" Source="missionMilestoneMedia/mission0/milestone0Thumbnail.png" Stretch="Fill" Height="88" VerticalAlignment="Top" HorizontalAlignment="Left" Width="88"/>
+            
+    			<Rectangle Height="90.749" Stroke="White" VerticalAlignment="Top" RadiusX="5" StrokeThickness="2" HorizontalAlignment="Left" Width="90.573" RadiusY="5"/>
+    			<Rectangle Stroke="White" RadiusX="5" RadiusY="5" StrokeThickness="2" HorizontalAlignment="Left" Width="90.573" Fill="#C9000000" Margin="0,91.46,0,0"/>
+    			<TextBlock x:Name="description" Margin="5.917,96.749,0,41.5" TextWrapping="Wrap" Foreground="#FF8FACC8" Text="LOREM IPSIUM ETC" HorizontalAlignment="Left" Width="82.073" FontFamily="/WpfApplication1;component/fonts/#HelveticaNeue LT 77 BdCn" LineHeight="13.333">
+    				<TextBlock.Effect>
+    					<BlurEffect Radius="1"/>
+    				</TextBlock.Effect>
+    			</TextBlock>
+                <TextBlock MouseDown="Button_Click" Height="17.5" Margin="5.917,0,33.573,0" TextWrapping="Wrap" Text="MORE    &gt;" VerticalAlignment="Bottom" Foreground="White" FontFamily="/WpfApplication1;component/fonts/#HelveticaNeue LT 77 BdCn"/>
+    		</Grid>
+            
+    	</StackPanel>
             
     </Grid>
 </UserControl>

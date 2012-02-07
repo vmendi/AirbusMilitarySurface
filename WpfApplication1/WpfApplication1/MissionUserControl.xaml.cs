@@ -48,6 +48,14 @@ namespace WpfApplication1
         private List<MissionMilestoneThumbnailUserControl> milestoneControls = new List<MissionMilestoneThumbnailUserControl>();
         private MissionMilestoneThumbnailUserControl lastClickedControl = null;
 
+        //this is the control which any PlaneIconUserControls in our mission use to display plane info
+        //inside a PlanePopupUserControl.  Note that there's only one PlanePopupUserControl in the 
+        //whole application
+        private PlanePopupUserControl planePopupUserControl;
+
+        //contains the plane icons that we have found
+        List<PlaneIconUserControl> planeIconUserControls = new List<PlaneIconUserControl>();
+
         #endregion
 
         #region Properties
@@ -94,6 +102,32 @@ namespace WpfApplication1
         #endregion
 
         #region Methods
+
+        public void SetPlanePopupUserControl(PlanePopupUserControl newPlanePopupUserControl)
+        {
+            if (planePopupUserControl != null) planePopupUserControl.HidingEvent -= new PlanePopupUserControl.HidingEventHandler(planePopupUserControl_HidingEvent);
+            planePopupUserControl = newPlanePopupUserControl;
+            planePopupUserControl.HidingEvent += new PlanePopupUserControl.HidingEventHandler(planePopupUserControl_HidingEvent);
+        }
+
+        private void ExtractPlaneControls(FrameworkElement frameworkElement, List<PlaneIconUserControl> planeControls)
+        {
+            //if the current Control is a milestone store it
+            if (frameworkElement.GetType() == typeof(PlaneIconUserControl))
+            {
+                PlaneIconUserControl c = (PlaneIconUserControl)frameworkElement;
+                planeControls.Add(c);
+            }
+
+            //go through children
+            foreach (object logicalChild in LogicalTreeHelper.GetChildren(frameworkElement))
+            {
+                if (logicalChild.GetType().IsSubclassOf(typeof(FrameworkElement)))
+                {
+                    ExtractPlaneControls((FrameworkElement)logicalChild, planeControls);
+                }
+            }
+        }
 
         private void Reset()
         {
@@ -271,6 +305,17 @@ namespace WpfApplication1
 
         #region Event handlers
 
+        //this gets called from the PlanePopupUserControl to tell us that it's hiding
+        void planePopupUserControl_HidingEvent(object sender, PlanePopupUserControl.HidingEventArgs e)
+        {
+            if (e.Tag == this)
+            {
+                //unblur if we started showing the plane popup
+                Storyboard storyboard = (Storyboard)Resources["unblur"];
+                storyboard.Begin();
+            }
+        }
+
         void MissionUserControl_Loaded(object sender, RoutedEventArgs e)
         {
             //this will add the MissionUserControl referenced in our tag, and return it
@@ -304,6 +349,25 @@ namespace WpfApplication1
 
                 missionTimeline.Initialise(timelineTexts, timelineNumbers);
             }
+
+            //find controls representing planes and attach ourselves to them
+            ExtractPlaneControls(missionUserControl, planeIconUserControls);
+            foreach (PlaneIconUserControl planeControl in planeIconUserControls)
+            {
+                planeControl.MouseDown += new MouseButtonEventHandler(planeControl_MouseDown);
+            }
+        }
+
+        //this gets called when the user clicks on an element representing a plane
+        void planeControl_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            PlaneIconUserControl planeControl = (PlaneIconUserControl)sender;
+            planeControl.FillData(planePopupUserControl);
+
+            //show plane popup but pass ourselves as tag so we know when it's our turn to unblur
+            planePopupUserControl.Show(this);
+
+            ((Storyboard)Resources["blur"]).Begin();            
         }
 
         //this gets called when the user clicks on an element representing a milestone

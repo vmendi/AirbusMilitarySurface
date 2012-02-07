@@ -36,12 +36,12 @@
 		<Storyboard x:Key="blur">
 			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(BlurEffect.Radius)" Storyboard.TargetName="blurGrid">
 				<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="100"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="30"/>
 			</DoubleAnimationUsingKeyFrames>
 		</Storyboard>
 		<Storyboard x:Key="unblur">
 			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(BlurEffect.Radius)" Storyboard.TargetName="blurGrid">
-				<EasingDoubleKeyFrame KeyTime="0" Value="100"/>
+				<EasingDoubleKeyFrame KeyTime="0" Value="30"/>
 				<EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0"/>
 			</DoubleAnimationUsingKeyFrames>
 		</Storyboard>

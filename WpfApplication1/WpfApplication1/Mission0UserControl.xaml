@@ -13,7 +13,12 @@
 
     <Grid>
         <Image Source="missionBackgrounds/background0.png" Stretch="Fill"/>
-        
+
+        <!--these are all the controls representing the planes in the mission-->
+        <local:PlaneIconUserControl Margin="0,0,777.724,31.96" Height="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height" PopupCardImage="missionBackgrounds/background0.png" PopupInfoDescriptionText="INFO DESC 0" PopupInfoMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv" PopupInfoTitleText="INFO TITLE 0" PopupPanoramaImage="textures/panoramas/C295-Chile-trasera.jpg" PopupVideoMediaFile="missionIntroVideos/sample_mpeg4.mp4" PopupTitleText="CS 100" PopupSubtitleText="THE CLIENT'S NEEDS 100" IconImage="icons/planeIconId0.png" HorizontalAlignment="Right" Width="45"/>
+        <local:PlaneIconUserControl Margin="0,0,727,32" Height="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height" PopupCardImage="missionBackgrounds/background1.png" PopupInfoDescriptionText="INFO DESC 1" PopupInfoMediaFile="missionMilestoneMedia/mission0/milestone2popup.wmv" PopupInfoTitleText="INFO TITLE 1" PopupPanoramaImage="textures/panoramas/C295-Chile-trasera.jpg" PopupVideoMediaFile="missionIntroVideos/sample_mpeg4.mp4" PopupTitleText="CS 101" PopupSubtitleText="THE CLIENT'S NEEDS 101" IconImage="icons/planeIconId1.png" HorizontalAlignment="Right" Width="45"/>
+        <local:PlaneIconUserControl Margin="0,0,676,32" Height="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height" PopupCardImage="missionBackgrounds/background2.png" PopupInfoDescriptionText="INFO DESC 2" PopupInfoMediaFile="missionMilestoneMedia/mission0/milestone3popup.wmv" PopupInfoTitleText="INFO TITLE 2" PopupPanoramaImage="textures/panoramas/C295-Chile-trasera.jpg" PopupVideoMediaFile="missionIntroVideos/sample_mpeg4.mp4" PopupTitleText="CS 102" PopupSubtitleText="THE CLIENT'S NEEDS 102" IconImage="icons/planeIconId2.png" HorizontalAlignment="Right" Width="45"/>
+
         <!--these are all the controls representing the milestones in the mission-->
         <local:MissionMilestoneThumbnailUserControl HorizontalAlignment="Left" Margin="173,0,0,205" VerticalAlignment="Bottom" Id="1"  ReverseId="False"
                                                     ThumbDescription="RAPID RESPONSE"
