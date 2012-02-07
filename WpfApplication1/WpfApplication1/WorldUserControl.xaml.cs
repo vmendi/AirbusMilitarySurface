@@ -836,6 +836,7 @@ namespace WpfApplication1
 
             //calculate new camera zoom velocity
             cameraZoomVelocity += e.Delta * 0.002f * cameraZoomInputMultiplier;
+            cameraZoomVelocity = 0.0f;//disabled zoom
 
             //clamp camera zoom velocity
             float cameraZoomVelocityMaxScale = 0.8f;
@@ -1378,8 +1379,9 @@ namespace WpfApplication1
                 double distance = cameraPosition.Length;
                 distance += cameraZoomVelocity * elapsed.Milliseconds * 0.2f;
                 float distanceScale = WpfApplication1.Properties.Settings.Default.WorldCameraZoomMultiplier;
-                if (distance > cameraZoomMax * distanceScale) distance = cameraZoomMax * distanceScale;
+                if (distance > cameraZoomMax * distanceScale) distance = cameraZoomMax * distanceScale;                
                 else if (distance < cameraZoomMax * cameraZoomMinRelative * distanceScale) distance = cameraZoomMax * cameraZoomMinRelative * distanceScale;
+                distance = cameraZoomMax * distanceScale;//disabled zoom, locked to maximum zoom
                 cameraPosition.Normalize();
                 cameraPosition *= distance;
                 myPerspectiveCamera.Position = new Point3D(cameraPosition.X, cameraPosition.Y, cameraPosition.Z);

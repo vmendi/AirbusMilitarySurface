@@ -306,6 +306,7 @@
     <Resource Include="icons\missionIconId5.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="planePopup\popoutBackground.png" />
     <Resource Include="planePopup\none.png" />
     <Resource Include="planePopup\3dviewButton.png" />
     <Resource Include="planePopup\cabinButton.png" />
