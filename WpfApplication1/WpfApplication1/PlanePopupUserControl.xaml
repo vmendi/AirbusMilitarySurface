@@ -111,42 +111,6 @@
 				<EasingDoubleKeyFrame KeyTime="0" Value="0.985"/>
 				<EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="1"/>
 			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="infoButton">
-				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="-5"/>
-			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="infoButton">
-				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="-0.5"/>
-			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="videoButton">
-				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="-6.5"/>
-			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="videoButton">
-				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="15.5"/>
-			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="fichaButton">
-				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="-4"/>
-			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="fichaButton">
-				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="6"/>
-			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="hatchButton">
-				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="18"/>
-			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="hatchButton">
-				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="-6"/>
-			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="videoButton">
-				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0.972"/>
-			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="videoButton">
-				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1.133"/>
-			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="infoButton">
-				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
-			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="infoButton">
-				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1.067"/>
-			</DoubleAnimationUsingKeyFrames>
 		</Storyboard>
 		<Storyboard x:Key="hide">
 			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="userControl">
@@ -168,46 +132,6 @@
     <Grid Width="1280" Height="720">
     	<Grid x:Name="infoGrid" Margin="148,8,125.7,0" Panel.ZIndex="1">
     		<Image Margin="-11,0,0,0" Source="planePopup/mainBackground.png" HorizontalAlignment="Left" VerticalAlignment="Top" Height="729.862" Width="1026.3"/>
-    		<Button x:Name="infoButton" Content="Intro" HorizontalAlignment="Left" Height="138" Margin="0,116.535,0,0" VerticalAlignment="Top" Width="103.389" Click="infoButton_Click" RenderTransformOrigin="0.5,0.5" Opacity="0" >
-    			<Button.RenderTransform>
-    				<TransformGroup>
-    					<ScaleTransform/>
-    					<SkewTransform/>
-    					<RotateTransform/>
-    					<TranslateTransform/>
-    				</TransformGroup>
-    			</Button.RenderTransform>
-    		</Button>
-    		<Button x:Name="fichaButton" Content="Tech Data" Margin="0,258.535,0,308.965" Click="fichaButton_Click" HorizontalAlignment="Left" Width="108.889" RenderTransformOrigin="0.5,0.5" Opacity="0" >
-    			<Button.RenderTransform>
-    				<TransformGroup>
-    					<ScaleTransform/>
-    					<SkewTransform/>
-    					<RotateTransform/>
-    					<TranslateTransform/>
-    				</TransformGroup>
-    			</Button.RenderTransform>
-    		</Button>
-    		<Button x:Name="videoButton" Content="3D View" HorizontalAlignment="Left" Height="138.5" Margin="-5.5,0,0,156.965" VerticalAlignment="Bottom" Width="108.889" Click="videoButton_Click" RenderTransformOrigin="0.5,0.5" Opacity="0" >
-    			<Button.RenderTransform>
-    				<TransformGroup>
-    					<ScaleTransform/>
-    					<SkewTransform/>
-    					<RotateTransform/>
-    					<TranslateTransform/>
-    				</TransformGroup>
-    			</Button.RenderTransform>
-    		</Button>
-    		<Button x:Name="hatchButton" Content="Cabin" HorizontalAlignment="Left" Height="140.242" Margin="-5.5,0,0,8" VerticalAlignment="Bottom" Width="108.889" Click="hatchButton_Click" RenderTransformOrigin="0.5,0.5" Opacity="0" >
-    			<Button.RenderTransform>
-    				<TransformGroup>
-    					<ScaleTransform/>
-    					<SkewTransform/>
-    					<RotateTransform/>
-    					<TranslateTransform/>
-    				</TransformGroup>
-    			</Button.RenderTransform>
-    		</Button>
     		<Button x:Name="closeButton" Content="Close" HorizontalAlignment="Right" Height="96.667" Margin="0,0,8,0" VerticalAlignment="Top" Width="94.889" Click="closeButton_Click" Opacity="0" />
     		<TextBlock x:Name="titleText" Height="45.498" TextWrapping="Wrap" Text="TITLE" Margin="17.5,8,88,0" VerticalAlignment="Top" Foreground="White" FontFamily="/WpfApplication1;component/fonts/#HelveticaNeue LT 77 BdCn" FontSize="42.667" TextAlignment="Center"/>
     		<TextBlock x:Name="subtitleText" Height="32.083" TextWrapping="Wrap" FontSize="33.333" FontWeight="Bold" HorizontalAlignment="Left" Width="900.8" Text="SUBTITLE" Margin="17.5,57.498,0,0" VerticalAlignment="Top" FontFamily="/WpfApplication1;component/fonts/#HelveticaNeue LT 77 BdCn" d:LayoutOverrides="VerticalAlignment" TextAlignment="Center">
@@ -227,6 +151,10 @@
     		<local:PlaneCardUserControl x:Name="card" Margin="135.477,138.752,0,0" CardImage="icons/missionIconId0.png" Width="849.3" HorizontalAlignment="Left" VerticalAlignment="Top" Height="548"/>
     		<local:PlaneVideoUserControl x:Name="video" Margin="140.5,138.752,21.523,25.248" Width="Auto" Height="Auto"/>
     		<local:PlanePanoramaUserControl x:Name ="panorama" Margin="135.477,138.752,0,0" PanoramaImage="textures/panoramas/A400M.jpg" Width="849.3" HorizontalAlignment="Left" VerticalAlignment="Top" Height="548"/>
+            <Image x:Name="infoButton" HorizontalAlignment="Left" Margin="8,113.035,0,0" Width="101" Source="planePopup/introButton.png" Height="132" VerticalAlignment="Top" MouseDown="infoButton_Click"/>
+            <Image x:Name="fichaButton" HorizontalAlignment="Left" Margin="8,270.035,0,309.965" Width="101" Source="planePopup/techDataButton.png" MouseDown="fichaButton_Click"/>
+            <Image x:Name="videoButton" HorizontalAlignment="Left" Margin="8,0,0,156.965" Width="101" Source="planePopup/3dviewButton.png" Height="132" VerticalAlignment="Bottom" MouseDown="videoButton_Click"/>
+            <Image x:Name="panoramaButton" HorizontalAlignment="Left" Margin="8,0,0,3" Width="101" Source="planePopup/cabinButton.png" Height="132" VerticalAlignment="Bottom" MouseDown="hatchButton_Click"/>
     	</Grid>
     	<Rectangle x:Name="background" Fill="#00D86300" Margin="0" Height="720" Width="1280" d:IsHidden="True"/>
             

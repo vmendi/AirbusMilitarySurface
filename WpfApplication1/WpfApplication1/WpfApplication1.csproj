@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ExpressionBlendVersion>4.0.20525.0</ExpressionBlendVersion>
+    <ExpressionBlendVersion>4.0.20901.0</ExpressionBlendVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{F0D47875-47B1-4E61-AFBB-2F00FE8AB8A1}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -306,6 +306,11 @@
     <Resource Include="icons\missionIconId5.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="planePopup\none.png" />
+    <Resource Include="planePopup\3dviewButton.png" />
+    <Resource Include="planePopup\cabinButton.png" />
+    <Resource Include="planePopup\introButton.png" />
+    <Resource Include="planePopup\techDataButton.png" />
     <Resource Include="missionIntroVideos\sample_mpeg4.mp4" />
     <Resource Include="planePopup\menuArrow.png" />
     <Resource Include="textures\panoramas\A330MRTT.jpg" />

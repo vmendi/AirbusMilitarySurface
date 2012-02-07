@@ -23,6 +23,7 @@ namespace WpfApplication1
         #region Data
 
         private bool isMediaElementPlaying = false;
+        private bool displayingImage = true;
 
         #endregion
 
@@ -102,13 +103,39 @@ namespace WpfApplication1
 
         #region Methods
 
+        private bool IsMovieMediaFile(string filename)
+        {
+            return filename.EndsWith(".mov")
+                || filename.EndsWith(".qt")
+                || filename.EndsWith(".avi")
+                || filename.EndsWith(".wmv")
+                || filename.EndsWith(".mp4")
+                ;
+        }
+
+        public void UpdateControls()
+        {
+            displayingImage = !IsMovieMediaFile(MediaFile.ToString());
+            if (displayingImage)
+            {
+                playVideoButton.Visibility = System.Windows.Visibility.Hidden;
+            }
+            else
+            {
+                playVideoButton.Visibility = System.Windows.Visibility.Visible;
+            }
+        }
+
         public void StopVideo()
         {
-            playVideoButton.Visibility = System.Windows.Visibility.Visible;
-            isMediaElementPlaying = false;
-            mediaElement.LoadedBehavior = MediaState.Manual;
-            mediaElement.Position = new TimeSpan(0, 0, 0, 0);
-            mediaElement.Stop();
+            if (!displayingImage)
+            {
+                playVideoButton.Visibility = System.Windows.Visibility.Visible;
+                isMediaElementPlaying = false;
+                mediaElement.LoadedBehavior = MediaState.Manual;
+                mediaElement.Position = new TimeSpan(0, 0, 0, 0);
+                mediaElement.Stop();
+            }
         }
 
         #endregion
@@ -118,35 +145,41 @@ namespace WpfApplication1
         //this gets called when the video is finished playing
         void mediaElement_MediaEnded(object sender, RoutedEventArgs e)
         {
-            StopVideo();
+            if (!displayingImage) StopVideo();
         }
 
         //this gets called when the user clicks on the "play video" button
         void playVideoButton_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            mediaElement.LoadedBehavior = MediaState.Manual;
-            mediaElement.Position = new TimeSpan(0, 0, 0, 0);
-            mediaElement.Play();
-            playVideoButton.Visibility = System.Windows.Visibility.Hidden;
-            isMediaElementPlaying = true;
+            if (!displayingImage)
+            {
+                mediaElement.LoadedBehavior = MediaState.Manual;
+                mediaElement.Position = new TimeSpan(0, 0, 0, 0);
+                mediaElement.Play();
+                playVideoButton.Visibility = System.Windows.Visibility.Hidden;
+                isMediaElementPlaying = true;
+            }
         }
 
         //this gets called when the user clicks on the video
         void mediaElement_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (!isMediaElementPlaying)
+            if (!displayingImage)
             {
-                mediaElement.LoadedBehavior = MediaState.Manual;
-                mediaElement.Play();
-                playVideoButton.Visibility = System.Windows.Visibility.Hidden;
-            }
-            else
-            {
-                mediaElement.LoadedBehavior = MediaState.Pause;
-                playVideoButton.Visibility = System.Windows.Visibility.Visible;
-            }
+                if (!isMediaElementPlaying)
+                {
+                    mediaElement.LoadedBehavior = MediaState.Manual;
+                    mediaElement.Play();
+                    playVideoButton.Visibility = System.Windows.Visibility.Hidden;
+                }
+                else
+                {
+                    mediaElement.LoadedBehavior = MediaState.Pause;
+                    playVideoButton.Visibility = System.Windows.Visibility.Visible;
+                }
 
-            isMediaElementPlaying = !isMediaElementPlaying;
+                isMediaElementPlaying = !isMediaElementPlaying;
+            }
         }
 
         #endregion

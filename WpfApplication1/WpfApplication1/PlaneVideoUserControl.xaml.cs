@@ -28,6 +28,10 @@ namespace WpfApplication1
         private DateTime lastTick;
         private double videoSeconds = 0.0;
 
+        private bool isVideoClosed = false;
+
+        private bool displayingImage = true;
+
         #endregion
 
         #region Properties
@@ -53,20 +57,33 @@ namespace WpfApplication1
             mediaElement.MouseMove += new MouseEventHandler(mediaElement_MouseMove);
             mediaElement.MediaOpened += new RoutedEventHandler(mediaElement_MediaOpened);
 
-            //mediaElement.Pause();
-            //mediaElement.Position = new TimeSpan(0, 0, 0, 0);
-
             //attach ourselves to rendering event
             System.Windows.Media.CompositionTarget.Rendering += new EventHandler(CompositionTarget_Rendering);
-
         }
 
         #endregion
 
         #region Methods
 
+        private bool IsMovieMediaFile(string filename)
+        {
+            return filename.EndsWith(".mov")
+                || filename.EndsWith(".qt")
+                || filename.EndsWith(".avi")
+                || filename.EndsWith(".wmv")
+                || filename.EndsWith(".mp4")
+                ;
+        }
+
+        public void UpdateControls()
+        {
+            displayingImage = !IsMovieMediaFile(MediaFile.ToString());
+        }
+
         public void StartVideo()
         {
+            isVideoClosed = false;
+
             tCurrent = 0.0;
             tTarget = 0.0;
 
@@ -88,14 +105,21 @@ namespace WpfApplication1
             //because the length of the video gets loaded when we're told that the media has opened
             videoSeconds = -1.0f;
 
+            //this is needed even if viewing an image
             mediaElement.LoadedBehavior = MediaState.Manual;
             mediaElement.Pause();
         }
 
         public void CloseVideo()
         {
-            mediaElement.LoadedBehavior = MediaState.Manual;
-            mediaElement.Close();
+            isVideoClosed = true;
+
+            if (!displayingImage)
+            {
+                mediaElement.LoadedBehavior = MediaState.Manual;
+                mediaElement.Close();
+                isMouseDown = false;
+            }
         }
 
         #endregion
@@ -105,53 +129,45 @@ namespace WpfApplication1
         //this gets called once per frame
         void CompositionTarget_Rendering(object sender, EventArgs e)
         {
-            if (videoSeconds != -1.0 && Math.Abs(tTarget - tCurrent) > 0.005)
+            if (isVideoClosed) return;
+
+            if (!displayingImage)
             {
-                DateTime now = DateTime.Now;
-                TimeSpan elapsed = now - lastTick;
-                lastTick = now;
-
-                if (Math.Abs(tTarget - tCurrent) < 0.01)
+                if (videoSeconds != -1.0 && Math.Abs(tTarget - tCurrent) > 0.005)
                 {
-                    tCurrent = tTarget;
-                }
-                else
-                {
-                    double delta = (tTarget - tCurrent) * elapsed.TotalMilliseconds * 0.005 * WpfApplication1.Properties.Settings.Default.PanoramaCameraRotationInputMultiplier;
-                    if (delta > 0.01f) delta = 0.01f;
-                    if (delta < -0.01f) delta = -0.01f;
-                    tCurrent += delta;
-                    if (tCurrent < 0.1) tCurrent = 0.1;
-                    if (tCurrent > 0.9) tCurrent = 0.9;
-                }
+                    DateTime now = DateTime.Now;
+                    TimeSpan elapsed = now - lastTick;
+                    lastTick = now;
 
-                TimeSpan time = TimeSpan.FromSeconds(tCurrent * videoSeconds);
-                mediaElement.Position = time;
+                    if (Math.Abs(tTarget - tCurrent) < 0.01)
+                    {
+                        tCurrent = tTarget;
+                    }
+                    else
+                    {
+                        double delta = (tTarget - tCurrent) * elapsed.TotalMilliseconds * 0.005 * WpfApplication1.Properties.Settings.Default.PanoramaCameraRotationInputMultiplier;
+                        if (delta > 0.01f) delta = 0.01f;
+                        if (delta < -0.01f) delta = -0.01f;
+                        tCurrent += delta;
+                        if (tCurrent < 0.1) tCurrent = 0.1;
+                        if (tCurrent > 0.9) tCurrent = 0.9;
+                    }
+
+                    TimeSpan time = TimeSpan.FromSeconds(tCurrent * videoSeconds);
+                    mediaElement.Position = time;
+                }
             }
         }
 
         //this gets called when the user clicks on the video
         void mediaElement_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            isMouseDown = true;
+            if (isVideoClosed) return;
 
-            Point p = e.GetPosition(mediaElement);
-            double t = p.X / mediaElement.ActualWidth;
-            if (t < 0.1) t = 0.1;
-            if (t > 0.9) t = 0.9;
-            tTarget = t;
-        }
-
-        //this gets called when the user clicks on the video
-        void mediaElement_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            isMouseDown = false;
-        }
-
-        void  mediaElement_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (isMouseDown)
+            if (!displayingImage)
             {
+                isMouseDown = true;
+
                 Point p = e.GetPosition(mediaElement);
                 double t = p.X / mediaElement.ActualWidth;
                 if (t < 0.1) t = 0.1;
@@ -160,15 +176,46 @@ namespace WpfApplication1
             }
         }
 
+        //this gets called when the user clicks on the video
+        void mediaElement_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (isVideoClosed) return;
+
+            if (!displayingImage)
+            {
+                isMouseDown = false;
+            }
+        }
+
+        void  mediaElement_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isVideoClosed) return;
+
+            if (!displayingImage)
+            {
+                if (isMouseDown)
+                {
+                    Point p = e.GetPosition(mediaElement);
+                    double t = p.X / mediaElement.ActualWidth;
+                    if (t < 0.1) t = 0.1;
+                    if (t > 0.9) t = 0.9;
+                    tTarget = t;
+                }
+            }
+        }
+
         void mediaElement_MediaOpened(object sender, RoutedEventArgs e)
         {
-            try
+            if (!displayingImage)
             {
-                videoSeconds = mediaElement.NaturalDuration.TimeSpan.TotalSeconds;
-                System.Diagnostics.Debug.WriteLine("loaded video");
-            }
-            catch (Exception)
-            {
+                try
+                {
+                    videoSeconds = mediaElement.NaturalDuration.TimeSpan.TotalSeconds;
+                    System.Diagnostics.Debug.WriteLine("loaded video");
+                }
+                catch (Exception)
+                {
+                }
             }
         }
 

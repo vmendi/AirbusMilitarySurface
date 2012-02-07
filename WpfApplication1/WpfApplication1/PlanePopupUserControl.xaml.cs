@@ -210,6 +210,19 @@ namespace WpfApplication1
             ((Storyboard)Resources["show"]).Begin();
             displayingContent = Content.Info;
             showHideEventTag = tag;
+            info.UpdateControls();
+            video.UpdateControls();
+
+            //hide panorama button if needed
+            if (PanoramaImage.ToString().Contains("none.png"))
+            {
+                panoramaButton.Visibility = System.Windows.Visibility.Hidden;
+            }
+            else
+            {
+                panoramaButton.Visibility = System.Windows.Visibility.Visible;
+            }
+
         }
 
         public void Hide()
@@ -283,8 +296,6 @@ namespace WpfApplication1
                 ((Storyboard)Resources["hideVideo"]).Begin();
                 ((Storyboard)Resources["showPanorama"]).Begin();
                 displayingContent = Content.Panorama;
-
-                System.Diagnostics.Trace.WriteLine("hatch");
             }
         }
 
