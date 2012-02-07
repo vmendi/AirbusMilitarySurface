@@ -113,7 +113,9 @@ namespace WpfApplication1
             hideStoryboard = Resources["hide"] as Storyboard;
 
             showStoryboard.Completed += new EventHandler(showStoryboard_Completed);
-            hideStoryboard.Completed += new EventHandler(hideStoryboard_Completed);            
+            hideStoryboard.Completed += new EventHandler(hideStoryboard_Completed);
+
+            stackPanel.MouseDown += new MouseButtonEventHandler(stackPanel_MouseDown);
         }
 
         #endregion
@@ -175,7 +177,7 @@ namespace WpfApplication1
 
         #region Event handlers
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        void stackPanel_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (ViewMissionEvent != null)
             {

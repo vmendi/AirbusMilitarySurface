@@ -29,9 +29,6 @@
     <Setting Name="WorldRadius" Type="System.Single" Scope="User">
       <Value Profile="(Default)">25</Value>
     </Setting>
-    <Setting Name="WorldPlaneTypePanelShowSeconds" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.3</Value>
-    </Setting>
     <Setting Name="WorldCameraZoomMultiplier" Type="System.Single" Scope="User">
       <Value Profile="(Default)">80</Value>
     </Setting>

@@ -256,8 +256,8 @@ namespace WpfApplication1
         //array holding the buttons representing the bottom row of available plane types
         private List<PlaneTypeInfo> planeTypeInfos = new List<PlaneTypeInfo>();
 
+        //support for dragging plane types and displaying panel
         private PlaneTypeInfo planeTypeInfoButtonMouseDown;
-        private DateTime planeTypeInfoButtonMouseDownTime;        
         private Point planeTypeInfoButtonMouseDownPosition;
         private PlaneTypeButtonStates planeTypeButtonState = PlaneTypeButtonStates.Normal;
 
@@ -797,38 +797,31 @@ namespace WpfApplication1
             Grid.SetZIndex(frameworkElement, dot > 0.0 ? 3 : 1);
         }
 
-        //---------------------------------------------------------
-        //TODO touch events
-
-        protected override void OnTouchDown(TouchEventArgs e)
-        {
-            base.OnTouchDown(e);
-
-            viewport.CaptureTouch(e.TouchDevice);
-
-            TouchPoint p = e.GetTouchPoint(viewport);
-            //touchDownPoints[e.TouchDevice.Id] = p;
-
-        }
-
         protected override void OnTouchMove(TouchEventArgs e)
         {
             base.OnTouchMove(e);
-
+            
+            //this repeated code needs to go here as well as in OnMouseMove,
+            //otherwise the motion of the plane type button won't be smooth
+            //see if we´re dragging a plane type button
             TouchPoint p = e.GetTouchPoint(viewport);
-            System.Diagnostics.Debug.WriteLine(p);
+            if (planeTypeButtonState == PlaneTypeButtonStates.Dragging)
+            {
+                planeTypeInfoButtonMouseDown.IsOnWorld = false;
+                PlaneIconUserControl planeTypeButton = planeTypeInfoButtonMouseDown.Button;
+                planeTypeButton.Margin = new Thickness(0, 0, grid.ActualWidth - p.Position.X - planeTypeButton.ActualWidth / 2, grid.ActualHeight - p.Position.Y - planeTypeButton.ActualHeight / 2);
+            }
         }
 
-        protected override void OnTouchUp(TouchEventArgs e)
-        {
-            base.OnTouchUp(e);
-
-            viewport.ReleaseTouchCapture(e.TouchDevice);
-        }
 
         #endregion
 
         #region Method handlers
+
+        void OnManipulationDelta(object sender, ManipulationDeltaEventArgs e)
+        {
+            System.Diagnostics.Trace.WriteLine("kk");
+        }
 
         //this gets called when the plane popup window closes
         void planePopup_HidingEvent(object sender, PlanePopupUserControl.HidingEventArgs e)
@@ -1180,25 +1173,40 @@ namespace WpfApplication1
             
             //record the fact that a plane type button was clicked
             planeTypeInfoButtonMouseDown = PlaneTypeInfoByButton(button);
-            planeTypeInfoButtonMouseDownTime = DateTime.Now;
             planeTypeInfoButtonMouseDownPosition = e.GetPosition(viewport);
             planeTypeButtonState = PlaneTypeButtonStates.MouseDown;
 
-            ShowPlaneInfoButtonsWithId(-1);
-
-            SwitchToDisplayMode(DisplayMode.Planes);
-
-            //when the mouse goes down it captures the mouse, so we need to claim it back
-            button.CaptureMouse();
+            //capture mouse
+            //button.CaptureMouse();
         }
 
-        //this gets called when the mouse goes down on one of the plane type buttons
+        //this gets called when the mouse goes up on one of the plane type buttons
         void planeTypeButton_MouseUp(object sender, MouseButtonEventArgs e)
         {
+            //users can click outside plane type button then drag then release inside the button
+            if (planeTypeInfoButtonMouseDown == null) return;
+
             PlaneIconUserControl button = (PlaneIconUserControl)sender;
 
-            //when the mouse goes down it captures the mouse, so we need to claim it back
-            button.ReleaseMouseCapture();
+            //hide all planes on the map
+            ShowPlaneInfoButtonsWithId(-1);
+
+            //display planes
+            SwitchToDisplayMode(DisplayMode.Planes);
+
+            //show the panel
+            if (!planeTypeInfoButtonMouseDown.IsOnWorld)
+            {
+                if (planeTypeButtonState != PlaneTypeButtonStates.Dragging)
+                {
+                    planePopOutUserControl.PopIn(new Point(((Grid)planeTypeInfoButtonMouseDown.Button.Parent).ActualWidth - planeTypeInfoButtonMouseDown.Button.Margin.Right - planeTypeInfoButtonMouseDown.Button.ActualWidth / 2 - planePopOutUserControl.ActualWidth / 2, planeTypeInfoButtonMouseDown.Button.Margin.Bottom + planeTypeInfoButtonMouseDown.Button.ActualHeight), planeTypeInfoButtonMouseDown.PlaneTypeId);
+                    planeTypeButtonState = PlaneTypeButtonStates.Popup;
+                }
+                ResetPlaneTypeInfoButtonPositions();
+            }
+            
+            //when the mouse goes down it captures the mouse, so we need to claim it back            
+            //button.ReleaseMouseCapture();
         }
 
         //this gets called when one of the mission type toggle buttons is clicked
@@ -1327,7 +1335,6 @@ namespace WpfApplication1
                 //see if we have to start dragging a plane type button or if it´s time to show the popup for a plane type button
                 if (planeTypeButtonState == PlaneTypeButtonStates.MouseDown)
                 {
-                    TimeSpan elapsedSinceMouseDown = now - planeTypeInfoButtonMouseDownTime;
                     Vector d = (planeTypeInfoButtonMouseDownPosition - lastMousePos);
 
                     //see if the mouse moved far enough to start dragging the plane type button
@@ -1347,16 +1354,6 @@ namespace WpfApplication1
                         {
                             if (planeTypeInfos[iPlaneTypeInfo] != planeTypeInfoButtonMouseDown)
                                 planeTypeInfos[iPlaneTypeInfo].ResetPosition();
-                        }
-                    }
-                    else if (elapsedSinceMouseDown.TotalMilliseconds > WpfApplication1.Properties.Settings.Default.WorldPlaneTypePanelShowSeconds * 1000)
-                    {
-                        //if the mouse went down on a plane type button but the drag didn´t take place in time, we show the panel
-                        if (!planeTypeInfoButtonMouseDown.IsOnWorld)
-                        {
-                            planeTypeButtonState = PlaneTypeButtonStates.Popup;
-                            planePopOutUserControl.PopIn(new Point(((Grid)planeTypeInfoButtonMouseDown.Button.Parent).ActualWidth - planeTypeInfoButtonMouseDown.Button.Margin.Right - planeTypeInfoButtonMouseDown.Button.ActualWidth / 2 - planePopOutUserControl.ActualWidth / 2, planeTypeInfoButtonMouseDown.Button.Margin.Bottom + planeTypeInfoButtonMouseDown.Button.ActualHeight), planeTypeInfoButtonMouseDown.PlaneTypeId);
-                            ResetPlaneTypeInfoButtonPositions();
                         }
                     }
                 }

@@ -133,18 +133,6 @@ namespace WpfApplication1.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.3")]
-        public float WorldPlaneTypePanelShowSeconds {
-            get {
-                return ((float)(this["WorldPlaneTypePanelShowSeconds"]));
-            }
-            set {
-                this["WorldPlaneTypePanelShowSeconds"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("80")]
         public float WorldCameraZoomMultiplier {
             get {

@@ -41,7 +41,7 @@
     					<BlurEffect Radius="1"/>
     				</TextBlock.Effect>
     			</TextBlock>
-                <TextBlock MouseDown="Button_Click" Height="17.5" Margin="5.917,0,33.573,0" TextWrapping="Wrap" Text="MORE    &gt;" VerticalAlignment="Bottom" Foreground="White" FontFamily="/WpfApplication1;component/fonts/#HelveticaNeue LT 77 BdCn"/>
+                <TextBlock Height="23.75" Margin="5.917,0,8,0" TextWrapping="Wrap" Text="MORE    &gt;" VerticalAlignment="Bottom" Foreground="White" FontFamily="/WpfApplication1;component/fonts/#HelveticaNeue LT 77 BdCn"/>
     		</Grid>
             
     	</StackPanel>
