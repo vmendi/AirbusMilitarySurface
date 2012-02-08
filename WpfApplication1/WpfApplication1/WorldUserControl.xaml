@@ -205,16 +205,16 @@
         <!-- HorizontalAlignment siempre Left -->
         <!-- VerticalAlignment siempre Top -->
         <!-- -->
-        <local:MissionIconUserControl Panel.ZIndex="3" Height="45" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="39" MissionId="0" MissionTypeId="0" IsMissionTypeControl="false" Latitude="19 49 N" Longitude="072 10 W" PanelDescription="Lorem ipsum ad his scripta blandit partiendo, eum fastidii accumsan euripidis in, eum liber hendrerit an." IconImage="icons/missionIconId0.png" PanelIconImage="icons/missionIconId0.png"/>
-        <local:MissionIconUserControl Panel.ZIndex="3" Height="45" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="39" MissionId="1" MissionTypeId="1" IsMissionTypeControl="false" Latitude="11 35 N" Longitude="042 58 E" PanelDescription="description1" IconImage="icons/missionIconId1.png" PanelIconImage="icons/missionIconId1.png"/>
-        <local:MissionIconUserControl Panel.ZIndex="3" Height="45" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="39" MissionId="2" MissionTypeId="2" IsMissionTypeControl="false" Latitude="27 08 N" Longitude="014 21 W" PanelDescription="blala lalala" IconImage="icons/missionIconId2.png" PanelIconImage="icons/missionIconId2.png"/>
-        <local:MissionIconUserControl Panel.ZIndex="3" Height="45" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="39" MissionId="3" MissionTypeId="2" IsMissionTypeControl="false" Latitude="29 54 N" Longitude="087 14 W" PanelDescription="holalalal lalala lala" IconImage="icons/missionIconId2.png" PanelIconImage="icons/missionIconId2.png"/>
-        <local:MissionIconUserControl Panel.ZIndex="3" Height="45" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="39" MissionId="4" MissionTypeId="3" IsMissionTypeControl="false" Latitude="20 16 N" Longitude="094 25 W" PanelDescription="holalalal lalala lala" IconImage="icons/missionIconId3.png" PanelIconImage="icons/missionIconId3.png"/>
-        <local:MissionIconUserControl Panel.ZIndex="3" Height="45" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="39" MissionId="5" MissionTypeId="4" IsMissionTypeControl="false" Latitude="25 40 N" Longitude="013 53 E" PanelDescription="holalalal lalala lala" IconImage="icons/missionIconId4.png" PanelIconImage="icons/missionIconId4.png"/>
-        <local:MissionIconUserControl Panel.ZIndex="3" Height="45" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="39" MissionId="6" MissionTypeId="4" IsMissionTypeControl="false" Latitude="28 25 N" Longitude="021 31 E" PanelDescription="holalalal lalala lala" IconImage="icons/missionIconId4.png" PanelIconImage="icons/missionIconId4.png"/>
-        <local:MissionIconUserControl Panel.ZIndex="3" Height="45" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="39" MissionId="7" MissionTypeId="2" IsMissionTypeControl="false" Latitude="26 25 N" Longitude="056 36 E" PanelDescription="holalalal lalala lala" IconImage="icons/missionIconId2.png" PanelIconImage="icons/missionIconId2.png"/>
-        <local:MissionIconUserControl Panel.ZIndex="3" Height="45" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="39" MissionId="8" MissionTypeId="2" IsMissionTypeControl="false" Latitude="33 09 N" Longitude="062 56 E" PanelDescription="holalalal lalala lala" IconImage="icons/missionIconId2.png" PanelIconImage="icons/missionIconId2.png"/>
-        <local:MissionIconUserControl Panel.ZIndex="3" Height="45" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="39" MissionId="9" MissionTypeId="1" IsMissionTypeControl="false" Latitude="33 54 N" Longitude="068 12 E" PanelDescription="holalalal lalala lala" IconImage="icons/missionIconId1.png" PanelIconImage="icons/missionIconId1.png"/>
+        <local:MissionIconUserControl Panel.ZIndex="3" Height="88" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="72" MissionId="0" MissionTypeId="0" IsMissionTypeControl="false" Latitude="19 49 N" Longitude="072 10 W" PanelDescription="EARTHQUAKE IN HAITI" IconImage="icons/missionIcon-Civic-HumanitarianAid.png" PanelIconImage="icons/missionPanelIcon0.png"/>
+        <local:MissionIconUserControl Panel.ZIndex="3" Height="88" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="72" MissionId="1" MissionTypeId="1" IsMissionTypeControl="false" Latitude="11 35 N" Longitude="042 58 E" PanelDescription="ANTI-PIRACY" IconImage="icons/missionIcon-Civic-LawEnforcement.png" PanelIconImage="icons/missionPanelIcon1.png"/>
+        <local:MissionIconUserControl Panel.ZIndex="3" Height="88" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="72" MissionId="2" MissionTypeId="2" IsMissionTypeControl="false" Latitude="27 08 N" Longitude="014 21 W" PanelDescription="IMMIGRATION CONTROL" IconImage="icons/missionIcon-Civic-LawEnforcement.png" PanelIconImage="icons/missionPanelIcon2.png"/>
+        <local:MissionIconUserControl Panel.ZIndex="3" Height="88" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="72" MissionId="3" MissionTypeId="2" IsMissionTypeControl="false" Latitude="29 54 N" Longitude="087 14 W" PanelDescription="ANTIPOLLUTION SURVEILLANCE" IconImage="icons/missionIcon-Civic-LawEnforcement.png" PanelIconImage="icons/missionPanelIcon3.png"/>
+        <local:MissionIconUserControl Panel.ZIndex="3" Height="88" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="72" MissionId="4" MissionTypeId="3" IsMissionTypeControl="false" Latitude="20 16 N" Longitude="094 25 W" PanelDescription="DRUG INTERDICTION" IconImage="icons/missionIcon-Civic-LawEnforcement.png" PanelIconImage="icons/missionPanelIcon4.png"/>
+        <local:MissionIconUserControl Panel.ZIndex="3" Height="88" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="72" MissionId="5" MissionTypeId="4" IsMissionTypeControl="false" Latitude="25 40 N" Longitude="013 53 E" PanelDescription="DEEP STRIKE MISSION" IconImage="icons/missionIcon-Military-AirSupport.png" PanelIconImage="icons/missionPanelIcon5.png"/>
+        <local:MissionIconUserControl Panel.ZIndex="3" Height="88" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="72" MissionId="6" MissionTypeId="4" IsMissionTypeControl="false" Latitude="28 25 N" Longitude="021 31 E" PanelDescription="PEACE ENFORCEMENT MISSION" IconImage="icons/missionIcon-Military-Transport.png" PanelIconImage="icons/missionPanelIcon6.png"/>
+        <local:MissionIconUserControl Panel.ZIndex="3" Height="88" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="72" MissionId="7" MissionTypeId="2" IsMissionTypeControl="false" Latitude="26 25 N" Longitude="056 36 E" PanelDescription="SUBMARINE THREATH" IconImage="icons/missionIcon-Military-ISR.png" PanelIconImage="icons/missionPanelIcon7.png"/>
+        <local:MissionIconUserControl Panel.ZIndex="3" Height="88" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="72" MissionId="8" MissionTypeId="2" IsMissionTypeControl="false" Latitude="33 09 N" Longitude="062 56 E" PanelDescription="EARTHQUAKE IN ASIA" IconImage="icons/missionIcon-Civic-HumanitarianAid.png" PanelIconImage="icons/missionPanelIcon8.png"/>
+        <local:MissionIconUserControl Panel.ZIndex="3" Height="88" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="72" MissionId="9" MissionTypeId="1" IsMissionTypeControl="false" Latitude="33 54 N" Longitude="068 12 E" PanelDescription="MILITARY WITHDRAWAL FROM AFGHANISTAN" IconImage="icons/missionIcon-Military-AirSupport.png" PanelIconImage="icons/missionPanelIcon9.png"/>
 
         <!-- Aviones individuales en el glogo terráqueo /////////////////////////////////////////////////////////////////////////////-->
         <!-- Funciona igual que las misiones-->
@@ -238,13 +238,17 @@
         <local:ViewMissionUserControl x:Name="viewMissionUserControl" Panel.ZIndex="3" Margin="0,120,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="95" />
         
         <!-- Plane types -->
-        <Rectangle x:Name="planeTypesRectangle" Panel.ZIndex="4" RadiusX="12" RadiusY="13" StrokeThickness="0" Fill="#99CECECE" Height="81" VerticalAlignment="Bottom" Margin="442,0,462,8"/>
+        
+        <Rectangle x:Name="planeTypesRectangle" Panel.ZIndex="4" RadiusX="12" RadiusY="13" StrokeThickness="0" Fill="#99CECECE" Height="110" VerticalAlignment="Bottom" Margin="283,0,283,14"/>
+        
         <Rectangle Panel.ZIndex="4" HorizontalAlignment="Left" Margin="457.276,0,0,32" Width="45" Height="45" VerticalAlignment="Bottom" StrokeDashArray="1 0 1" Stroke="#FF007FC2" StrokeThickness="2" />
         <Rectangle Panel.ZIndex="4" HorizontalAlignment="Left" Margin="534.609,0,0,32" Width="45" Height="45" VerticalAlignment="Bottom" StrokeDashArray="1 0 1" Stroke="#FF007FC2" StrokeThickness="2" />
         <Rectangle Panel.ZIndex="4" Margin="612.381,0,622.619,32" Height="45" VerticalAlignment="Bottom" StrokeDashArray="1 0 1" Stroke="#FF007FC2" StrokeThickness="2" />
         <Rectangle Panel.ZIndex="4" HorizontalAlignment="Right" Margin="0,0,549.495,32" Width="45" Height="45" VerticalAlignment="Bottom" StrokeDashArray="1 0 1" Stroke="#FF007FC2" StrokeThickness="2" />
         <Rectangle Panel.ZIndex="4" HorizontalAlignment="Right" Margin="0,0,471.723,32" Width="45" Height="45" VerticalAlignment="Bottom" StrokeDashArray="1 0 1" Stroke="#FF007FC2" StrokeThickness="2" />
-
+        
+        <Image Panel.ZIndex="4" Source="icons/planeIconsBg.png" Width="714" Height="110" Margin="283,595,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+        
         <!-- Estos controles representan los tipos de avión que existen (es decir los modelos de avión) /////////////////////////////////////////////////////////////////////////////-->
         <!-- se pueden agregar tantos como quieras-->
         <!-- -->
@@ -269,11 +273,77 @@
         <!-- -->
         <!-- IconImage es la imagen que se muestra como icono de este tipo de avión-->
         <!-- -->
-        <local:PlaneIconUserControl Panel.ZIndex="5" PlaneTypeId="0" IsPlaneTypeControl="true" Margin="0,0,777.724,31.96" Height="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height" PopupCardImage="missionBackgrounds/background0.png" PopupInfoDescriptionText="INFO DESC 0" PopupInfoMediaFile="icons/planeIconId0.png" PopupInfoTitleText="INFO TITLE 0" PopupPanoramaImage="textures/panoramas/C295-Chile-trasera.jpg" PopupVideoMediaFile="missionBackgrounds/background0.png" PopupTitleText="CS 100" PopupSubtitleText="THE CLIENT'S NEEDS 100" IconImage="icons/planeIconId0.png" HorizontalAlignment="Right" Width="45"/>
-        <local:PlaneIconUserControl Panel.ZIndex="5" PlaneTypeId="1" IsPlaneTypeControl="true" Margin="0,0,700.391,32" Height="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height" PopupCardImage="missionBackgrounds/background1.png" PopupInfoDescriptionText="INFO DESC 1" PopupInfoMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv" PopupInfoTitleText="INFO TITLE 1" PopupPanoramaImage="planePopup/none.png" PopupVideoMediaFile="missionIntroVideos/sample_mpeg4.mp4" PopupSubtitleText="THE CLIENT'S NEEDS 101" PopupTitleText="CS 101" IconImage="icons/planeIconId1.png" HorizontalAlignment="Right" Width="45"/>
-        <local:PlaneIconUserControl Panel.ZIndex="5" PlaneTypeId="2" IsPlaneTypeControl="true" Margin="0,0,622.619,32" Height="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height" PopupCardImage="missionBackgrounds/background2.png" PopupInfoDescriptionText="INFO DESC 2" PopupInfoMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv" PopupInfoTitleText="INFO TITLE 2" PopupPanoramaImage="textures/panoramas/C295-Chile-consola.jpg" PopupVideoMediaFile="missionIntroVideos/sample_mpeg4.mp4" PopupSubtitleText="THE CLIENT'S NEEDS 102" PopupTitleText="CS 102" IconImage="icons/planeIconId2.png" HorizontalAlignment="Right" Width="45"/>
-        <local:PlaneIconUserControl Panel.ZIndex="5" PlaneTypeId="3" IsPlaneTypeControl="true" Margin="0,0,549.495,32" Height="45" HorizontalAlignment="Right" Width="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height"  PopupCardImage="missionBackgrounds/background3.png" PopupInfoDescriptionText="INFO DESC 3" PopupInfoMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv" PopupInfoTitleText="INFO TITLE 3" PopupPanoramaImage="textures/panoramas/C295-Portugal.jpg" PopupVideoMediaFile="missionIntroVideos/sample_mpeg4.mp4" PopupSubtitleText="THE CLIENT'S NEEDS 103" PopupTitleText="CS 103" IconImage="icons/planeIconId3.png"/>
-        <local:PlaneIconUserControl Panel.ZIndex="5" PlaneTypeId="4" IsPlaneTypeControl="true" Margin="0,0,471.723,32" Height="45" HorizontalAlignment="Right" Width="45" VerticalAlignment="Bottom" d:LayoutOverrides="Height"   PopupCardImage="missionBackgrounds/background4.png" PopupInfoDescriptionText="INFO DESC 4" PopupInfoMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv" PopupInfoTitleText="INFO TITLE 4" PopupPanoramaImage="textures/panoramas/A400M.jpg" PopupVideoMediaFile="missionIntroVideos/sample_mpeg4.mp4" PopupSubtitleText="THE CLIENT'S NEEDS 104" PopupTitleText="CS 104" IconImage="icons/planeIconId4.png"/>
+        <local:PlaneIconUserControl Panel.ZIndex="5" PlaneTypeId="0" IsPlaneTypeControl="true" Margin="0,0,902,22" Height="73" VerticalAlignment="Bottom" d:LayoutOverrides="Height" HorizontalAlignment="Right" Width="88"
+                                    PopupCardImage="planePopup/plane0TechData.png"
+                                    PopupInfoDescriptionText="The A400M is the most versatile airlifter currently available and responds to the most varied needs of world Air Forces and other organizations in the 21st century. It can perform three very different types of duties: it is able to perform both short range tactical missions directly to the site of operation, as well as long range strategic/logistic ones."
+                                    PopupInfoMediaFile="planePopup/plane0InfoImg.png"
+                                    PopupInfoTitleText="BORRAR"
+                                    PopupPanoramaImage="textures/panoramas/A400M.jpg"
+                                    PopupVideoMediaFile="missionBackgrounds/background0.png"
+                                    PopupTitleText="A400M"
+                                    PopupSubtitleText="THE VERSATILE AIRLIFTER"
+                                    IconImage="icons/planeIconId0.png"/>
+        <local:PlaneIconUserControl Panel.ZIndex="5" PlaneTypeId="1" IsPlaneTypeControl="true" Margin="0,0,800,22" Height="73" VerticalAlignment="Bottom" d:LayoutOverrides="Height" HorizontalAlignment="Right" Width="88"
+                                    PopupCardImage="planePopup/plane1TechData.png"
+                                    PopupInfoDescriptionText="The A330 MRTT is the only new-generation Multi Role Tanker Transport aircraft flying, and fully certified today, after having demonstrated its capability during an extensive Flight Test campaign. Following a first delivery in early June, it is due to begin operations with the Royal Australian Air Force (RAAF) in early Fall. The A330 MRTT uniquely offers military strategic air transport as well as air-to-air refuelling capabilities."
+                                    PopupInfoMediaFile="planePopup/plane1InfoImg.png"
+                                    PopupInfoTitleText="BORRAR"
+                                    PopupPanoramaImage="textures/panoramas/A330MRTT.jpg"
+                                    PopupVideoMediaFile="missionIntroVideos/sample_mpeg4.mp4"
+                                    PopupSubtitleText="THE 21ST CENTURY BENCHMARK"
+                                    PopupTitleText="A330 MRTT"
+                                    IconImage="icons/planeIconId1.png"/>
+        <local:PlaneIconUserControl Panel.ZIndex="5" PlaneTypeId="2" IsPlaneTypeControl="true" Margin="0,0,698,22" Height="73" VerticalAlignment="Bottom" d:LayoutOverrides="Height" HorizontalAlignment="Right" Width="88"
+                                    PopupCardImage="planePopup/plane2TechData.png"
+                                    PopupInfoDescriptionText="The Airbus Military C295 is a new generation, very robust and reliable, highly versatile tactical airlifter able to carry up to nine tonnes of payload or up to 71 personnel, at a maximum cruise speed of 260 kt - 480 km/h. Fitted with a retractable landing gear and a pressurised cabin, it can cruise at altitudes up to 25,000 ft, while retaining remarkable short take-off and landing (STOL) performance from unprepared short, soft and rough airstrips, as well as low level flight characteristics."
+                                    PopupInfoMediaFile="planePopup/plane2InfoImg.png"
+                                    PopupInfoTitleText="BORRAR"
+                                    PopupPanoramaImage="textures/panoramas/C295-Portugal.jpg"
+                                    PopupVideoMediaFile="missionIntroVideos/sample_mpeg4.mp4"
+                                    PopupSubtitleText="THE TACTICAL WORKHORSE"
+                                    PopupTitleText="C295"
+                                    IconImage="icons/planeIconId2.png"/>
+        <local:PlaneIconUserControl Panel.ZIndex="5" PlaneTypeId="3" IsPlaneTypeControl="true" Margin="0,0,596,22" Height="73" VerticalAlignment="Bottom" d:LayoutOverrides="Height" HorizontalAlignment="Right" Width="88"
+                                    PopupCardImage="planePopup/plane3TechData.png"
+                                    PopupInfoDescriptionText="The well-proven CN235 is the lowest cost solution to meet the needs and requirements of governments and air forces, as well as non-governmental organisations in the light and medium airlift field. Able to carry up to six tonnes / 13,200lb of payload, or up to 51 personnel, the CN235 has gained vast experience in daily airlift missions, in the deployment and logistic support of peacekeeping forces and in disaster relief operations or any other 'civic' missions for the benefit of society."
+                                    PopupInfoMediaFile="planePopup/plane3InfoImg.png"
+                                    PopupInfoTitleText="BORRAR"
+                                    PopupPanoramaImage="planePopup/none.png"
+                                    PopupVideoMediaFile="missionIntroVideos/sample_mpeg4.mp4"
+                                    PopupSubtitleText="THE LOWER COST TACTICAL AIRLIFTER"
+                                    PopupTitleText="CN235"
+                                    IconImage="icons/planeIconId3.png"/>
+        <local:PlaneIconUserControl Panel.ZIndex="5" PlaneTypeId="4" IsPlaneTypeControl="true" Margin="0,0,494,22" Height="73" VerticalAlignment="Bottom" d:LayoutOverrides="Height" HorizontalAlignment="Right" Width="88"
+                                    PopupCardImage="planePopup/plane2TechData.png"
+                                    PopupInfoDescriptionText="The C295 MPA is a military multirole aircraft with optimum characteristics for Maritime Patrol. It is equipped with a new generation mission system, with proven capability for anti-submarine and antisurface (ASW/ ASuW) missions in the NATO environment. And it is ready now!"
+                                    PopupInfoMediaFile="planePopup/plane4InfoImg.png"
+                                    PopupInfoTitleText="BORRAR"
+                                    PopupPanoramaImage="textures/panoramas/C295-Chile.jpg"
+                                    PopupVideoMediaFile="missionIntroVideos/sample_mpeg4.mp4"
+                                    PopupSubtitleText="THE NEW STANDARD FOR MULTI-ROLE MPA AND ASW"
+                                    PopupTitleText="C295 MPA"
+                                    IconImage="icons/planeIconId4.png"/>
+        <local:PlaneIconUserControl Panel.ZIndex="5" PlaneTypeId="5" IsPlaneTypeControl="true" Margin="0,0,392,22" Height="73" VerticalAlignment="Bottom" d:LayoutOverrides="Height" HorizontalAlignment="Right" Width="88"
+                                    PopupCardImage="planePopup/plane3TechData.png"
+                                    PopupInfoDescriptionText="The CN235 MPA is a multirole maritime patrol and surveillance aircraft based on the proven CN235 military transport aircraft. It represents a reference for Maritime Surveillance and Homeland Security missions as well as Search And Rescue (SAR), logistic transport and personnel transport."
+                                    PopupInfoMediaFile="planePopup/plane5InfoImg.png"
+                                    PopupInfoTitleText="BORRAR"
+                                    PopupPanoramaImage="planePopup/none.png"
+                                    PopupVideoMediaFile="missionIntroVideos/sample_mpeg4.mp4"
+                                    PopupSubtitleText="THE MARITIME SURVEILLANCE AIRCRAFT PREFERRED BY COAST GUARDS"
+                                    PopupTitleText="CN235 MPA"
+                                    IconImage="icons/planeIconId5.png"/>
+        <local:PlaneIconUserControl Panel.ZIndex="5" PlaneTypeId="6" IsPlaneTypeControl="true" Margin="0,0,290,22" Height="73" VerticalAlignment="Bottom" d:LayoutOverrides="Height" HorizontalAlignment="Right" Width="88"
+                                    PopupCardImage="planePopup/plane6TechData.png"
+                                    PopupInfoDescriptionText="Able to carry up to 25 personnel or 2.8 tonne/6,200lb max payload, the C212 was designed to operate in austere environments for extended periods of time, without the need for ground support equipment. With the experience accumulated during its 35 years of reliable operations, during which it evolved up from the -100 to the -400 series, the C212 has become the market leader in service with military, government, and civil operators."
+                                    PopupInfoMediaFile="planePopup/plane6InfoImg.png"
+                                    PopupInfoTitleText="BORRAR"
+                                    PopupPanoramaImage="planePopup/none.png"
+                                    PopupVideoMediaFile="missionIntroVideos/sample_mpeg4.mp4"
+                                    PopupSubtitleText="MILITARY TRANSPORT AIRCRAFT"
+                                    PopupTitleText="C212"
+                                    IconImage="icons/planeIconId6.png"/>
+
         <local:PlanePopOutUserControl x:Name="planePopOutUserControl" Panel.ZIndex="4" Margin="8,0,0,135.135" HorizontalAlignment="Left" Width="87" Height="112.865" VerticalAlignment="Bottom"/>        
         <Grid x:Name="missionTypesGrid" Panel.ZIndex="3" d:IsHidden="True" >
 
