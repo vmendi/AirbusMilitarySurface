@@ -26,7 +26,7 @@
                                                     ThumbImage="missionMilestoneMedia/mission4/milestone0Thumbnail.png"
                                                     PopupTitle="DRUG INTERDICTION"
                                                     PopupSubtitle="1. DRUG DEALERS ON GROUND"
-                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupMediaFile="missionMilestoneMedia/mission4/DRUGINTERDICTION-01-DrugDealersOnGround.wmv"
                                                     PopupDescriptionHeading="RADAR WITH GROUND MTI MODE"
                                                     PopupDescriptionBody="The C295 MPA and CN235 MPA multi-mode capable radar detects any moving target on ground, such a car moving." />
 
@@ -36,7 +36,7 @@
                                                     ThumbImage="missionMilestoneMedia/mission4/milestone1Thumbnail.png"
                                                     PopupTitle="DRUG INTERDICTION"
                                                     PopupSubtitle="2. DRUG DEALERS ON BOAT"
-                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupMediaFile="missionMilestoneMedia/mission4/DRUGINTERDICTION-02-DrugDealerOnBoat.wmv"
                                                     PopupDescriptionHeading="RADAR WITH MARITIME MTI MODE"
                                                     PopupDescriptionBody="The C295 MPA and CN235 MPA multi-mode capable radar also identifies any moving target on the sea, such a boat or a vessel." />
 
@@ -46,7 +46,7 @@
                                                     ThumbImage="missionMilestoneMedia/mission4/milestone2Thumbnail.png"
                                                     PopupTitle="DRUG INTERDICTION"
                                                     PopupSubtitle="3. DRUG DEALERS ON FLIGHT"
-                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupMediaFile="missionMilestoneMedia/mission4/DRUGINTERDICTION-03-DrugDealersInFlight.wmv"
                                                     PopupDescriptionHeading="RADAR WITH AIR-TO-AIR MODE"
                                                     PopupDescriptionBody="The C295 MPA and CN235 MPA multi-mode capable radar recognises any moving target on air, such a plane flying at low altitude." />
 
@@ -56,7 +56,7 @@
                                                     ThumbImage="missionMilestoneMedia/mission4/milestone3Thumbnail.png"
                                                     PopupTitle="DRUG INTERDICTION"
                                                     PopupSubtitle="4. COMMAND AND CONTROL"
-                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupMediaFile="missionMilestoneMedia/mission4/DRUGINTERDICTION-04-CommandAndControl.wmv"
                                                     PopupDescriptionHeading="FULLY INTEGRATED TACTICAL SYSTEM (FITS)"
                                                     PopupDescriptionBody="To effectively fight against drug trafficking it is essential to integrate all information provided by the mission sensors.\nBoth CN235 and C295 MPA are provided with a Fully Integrated Tactical System (FITS) that integrates, displays and controls all the information coming from the mission sensors: Electro-Optic/Infra Red cameras, radar, communications and electronic support measures.\nThis information will be disseminated to ground stations via data link." />
 

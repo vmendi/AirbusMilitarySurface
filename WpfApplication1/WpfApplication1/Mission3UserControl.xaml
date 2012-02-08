@@ -26,7 +26,7 @@
                                                     ThumbImage="missionMilestoneMedia/mission3/milestone0Thumbnail.png"
                                                     PopupTitle="ANTIPOLLUTION SURVEILLANCE"
                                                     PopupSubtitle="1. INVESTIGATING A SUSPECTED TARGET"
-                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupMediaFile="missionMilestoneMedia/mission3/ANTIPOLUTION-01-TakeOff.wmv"
                                                     PopupDescriptionHeading="CN235 MPA: ALWAYS READY FOR A MISSION"
                                                     PopupDescriptionBody="A CN235 MPA moves rapidly where and when needed, covering a wider surveillance area and at higher speed than a helicopter." />
 
@@ -36,7 +36,7 @@
                                                     ThumbImage="missionMilestoneMedia/mission3/milestone1Thumbnail.png"
                                                     PopupTitle="ANTIPOLLUTION SURVEILLANCE"
                                                     PopupSubtitle="2. LONG PATROL ENDURANCE"
-                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupMediaFile="missionMilestoneMedia/mission3/ANTIPOLUTION-02-Patrols.wmv"
                                                     PopupDescriptionHeading="CN235 MPA: THE PERSISTENT SURVEILLANCE"
                                                     PopupDescriptionBody="If necessary the CN235 MPA can be patrolling up to 11 hours over the affected area aiming to monitor and provide a clear picture of the situation to other platforms." />
 
@@ -46,7 +46,7 @@
                                                     ThumbImage="missionMilestoneMedia/mission3/milestone2Thumbnail.png"
                                                     PopupTitle="ANTIPOLLUTION SURVEILLANCE"
                                                     PopupSubtitle="3. POLLUTION CONTROL"
-                                                    PopupMediaFile="missionMilestoneMedia/mission0/milestone1popup.wmv"
+                                                    PopupMediaFile="missionMilestoneMedia/mission3/ANTIPOLUTION-03-Night.wmv"
                                                     PopupDescriptionHeading="POLLUTION LOCALIZATION, IDENTIFICATION AND REPORTING IN REAL TIME"
                                                     PopupDescriptionBody="The CN235 MPA acts as a Command and Control Centre, capable of transmitting images of the polluting boat to law enforcement agencies, who will take immediate actions." />
 
